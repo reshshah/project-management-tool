@@ -3,569 +3,928 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Protocol Submission Tracker</title>
+<title>Protocol & Regulatory Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #F7F6F2;
-  --surface: #FFFFFF;
-  --surface2: #F0EEE8;
-  --surface3: #E8E5DE;
-  --border: #E2DED4;
-  --border2: #C8C3B8;
-  --text: #1A1916;
-  --text2: #6B6760;
-  --text3: #A09C95;
-  --blue: #1A4FBF;
-  --blue-bg: #EBF0FB;
-  --blue-border: #B8C9F2;
-  --purple: #5B3FB5;
-  --purple-bg: #EEEBF9;
-  --purple-border: #C9C0ED;
-  --teal: #0F7A5A;
-  --teal-bg: #E3F4EE;
-  --teal-border: #A8DDC9;
-  --red: #B91C1C;
-  --red-bg: #FEF2F2;
-  --red-border: #FECACA;
-  --amber: #92400E;
-  --amber-bg: #FFFBEB;
-  --amber-border: #FDE68A;
-  --green: #166534;
-  --green-bg: #F0FDF4;
-  --green-border: #BBF7D0;
-  --font: 'IBM Plex Sans', sans-serif;
-  --mono: 'IBM Plex Mono', monospace;
-  --r: 6px;
-  --rl: 10px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; font-size: 12px; line-height: 1.4; -webkit-font-smoothing: antialiased; }
-.app { display: flex; min-height: 100vh; }
-
-/* Sidebar */
-.sidebar { width: 200px; flex-shrink: 0; background: var(--text); display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; overflow-y: auto; }
-.logo { padding: 16px 14px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.logo-eyebrow { font-family: var(--mono); font-size: 8px; color: rgba(255,255,255,0.3); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; }
-.logo-name { font-size: 14px; font-weight: 600; color: #fff; letter-spacing: -0.02em; }
-.logo-sub { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; }
-.nav-section { padding: 14px 10px 3px; font-family: var(--mono); font-size: 8px; color: rgba(255,255,255,0.25); letter-spacing: 0.12em; text-transform: uppercase; }
-.nav-item { display: flex; align-items: center; gap: 8px; padding: 6px 10px; margin: 1px 4px; border-radius: var(--r); cursor: pointer; font-size: 12px; color: rgba(255,255,255,0.5); transition: all 0.12s; border: 1px solid transparent; }
-.nav-item:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); }
-.nav-item.active { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.1); }
-.nav-icon { width: 13px; height: 13px; flex-shrink: 0; opacity: 0.6; }
-.nav-item.active .nav-icon { opacity: 1; }
-.nav-badge { margin-left: auto; font-family: var(--mono); font-size: 9px; padding: 1px 5px; border-radius: 8px; background: rgba(248,113,113,0.2); color: #FCA5A5; border: 1px solid rgba(248,113,113,0.2); }
-.nav-badge.amber { background: rgba(251,191,36,0.15); color: #FCD34D; border-color: rgba(251,191,36,0.2); }
-.sidebar-bottom { margin-top: auto; padding: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
-.sb-metric { display: flex; justify-content: space-between; align-items: center; padding: 3px 4px; font-size: 10px; color: rgba(255,255,255,0.3); }
-.sb-val { font-family: var(--mono); font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.6); }
-.sb-val.red { color: #FCA5A5; }
-.sb-val.amber { color: #FCD34D; }
-.sb-val.green { color: #6EE7B7; }
-.live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #6EE7B7; margin-right: 4px; }
-
-/* Main */
-.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
-.topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
-.topbar-title { font-size: 13px; font-weight: 600; letter-spacing: -0.02em; }
-.topbar-sub { font-size: 10px; color: var(--text3); margin-top: 1px; }
-.topbar-right { display: flex; align-items: center; gap: 7px; }
-.btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: var(--r); font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text2); transition: all 0.12s; font-family: var(--font); }
-.btn:hover { background: var(--surface2); border-color: var(--border2); color: var(--text); }
-.btn-primary { background: var(--text); color: #fff; border-color: var(--text); }
-.btn-primary:hover { background: #333; }
-.btn-blue { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-border); }
-.btn-blue:hover { background: #dce8f9; }
-
-/* Integration bar */
-.int-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 5px 20px; display: flex; align-items: center; gap: 7px; font-size: 10px; color: var(--text3); }
-.int-chip { display: flex; align-items: center; gap: 4px; padding: 2px 8px; border: 1px solid var(--border); border-radius: 20px; color: var(--text3); font-size: 10px; background: var(--surface2); }
-.int-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border2); }
-.int-dot.on { background: #16a34a; }
-
-/* Stats */
-.stats-strip { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--border); background: var(--surface); }
-.stat-cell { padding: 12px 20px; border-right: 1px solid var(--border); }
-.stat-cell:last-child { border-right: none; }
-.stat-label { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text3); margin-bottom: 5px; }
-.stat-num { font-size: 26px; font-weight: 300; color: var(--text); letter-spacing: -0.04em; line-height: 1; font-family: var(--mono); }
-.stat-num.red { color: var(--red); }
-.stat-num.amber { color: #B45309; }
-.stat-num.green { color: var(--green); }
-.stat-sub { font-size: 9px; color: var(--text3); margin-top: 3px; }
-
-/* Board */
-.board-wrap { padding: 14px 20px; flex: 1; }
-.board-controls { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.view-tabs { display: flex; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 2px; gap: 2px; }
-.vtab { padding: 4px 10px; font-size: 11px; border-radius: 4px; cursor: pointer; color: var(--text3); transition: all 0.12s; font-weight: 500; }
-.vtab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
-.filters { display: flex; gap: 5px; align-items: center; }
-.fchip { padding: 3px 10px; border-radius: 20px; font-size: 10px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; color: var(--text2); transition: all 0.12s; font-weight: 500; }
-.fchip:hover { border-color: var(--border2); color: var(--text); }
-.fchip.active { background: var(--text); color: #fff; border-color: var(--text); }
-
-/* Kanban */
-.kanban { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 8px; align-items: start; }
-.col { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--rl); overflow: hidden; }
-.col-head { padding: 8px 10px; border-bottom: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: space-between; }
-.col-name { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text3); font-weight: 500; }
-.col-count { font-family: var(--mono); font-size: 9px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 1px 6px; }
-.col-body { padding: 6px; display: flex; flex-direction: column; gap: 5px; min-height: 120px; }
-
-/* Cards */
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 9px; cursor: pointer; transition: all 0.12s; }
-.card:hover { border-color: var(--border2); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-.card.sel { border-color: var(--blue); border-width: 1.5px; }
-.card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.type-pill { font-family: var(--mono); font-size: 8px; font-weight: 500; padding: 1px 6px; border-radius: 3px; letter-spacing: 0.04em; }
-.tp-IND { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
-.tp-NDA { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
-.tp-BLA { background: var(--teal-bg); color: var(--teal); border: 1px solid var(--teal-border); }
-.urgency { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-.urg-high { background: var(--red); }
-.urg-med { background: #B45309; }
-.urg-low { background: var(--green); }
-.card-name { font-size: 11px; font-weight: 500; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
-.card-flags { display: flex; flex-wrap: wrap; gap: 3px; }
-.flag { font-family: var(--mono); font-size: 8px; padding: 1px 5px; border-radius: 3px; font-weight: 500; }
-.fl-miss { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
-.fl-pend { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
-.fl-ok { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
-.card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 7px; padding-top: 6px; border-top: 1px solid var(--border); }
-.card-owner { font-size: 9px; color: var(--text3); }
-.card-date { font-family: var(--mono); font-size: 8px; color: var(--text3); }
-
-/* Detail */
-.detail-panel { margin-top: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--rl); overflow: hidden; }
-.detail-head { padding: 12px 16px; border-bottom: 1px solid var(--border); }
-.detail-title { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 5px; }
-.detail-meta { display: flex; flex-wrap: wrap; gap: 12px; }
-.meta-item { font-size: 10px; color: var(--text3); }
-.meta-item span { color: var(--text2); }
-.detail-body { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
-.detail-sec { padding: 12px 16px; border-right: 1px solid var(--border); }
-.detail-sec:last-child { border-right: none; }
-.sec-head { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); margin-bottom: 8px; font-weight: 500; }
-.doc-row { display: flex; align-items: center; gap: 7px; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 11px; color: var(--text2); }
-.doc-row:last-child { border-bottom: none; }
-.doc-row.miss { color: var(--red); }
-.doc-row .doc-label { flex: 1; }
-.ddot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.ddot-ok { background: var(--green); }
-.ddot-miss { background: var(--red); }
-.upload-btn { font-size: 9px; padding: 2px 7px; border-radius: 3px; border: 1px solid var(--blue-border); background: var(--blue-bg); color: var(--blue); cursor: pointer; font-family: var(--font); font-weight: 500; white-space: nowrap; flex-shrink: 0; }
-.upload-btn:hover { background: #dce8f9; }
-.upload-done { font-size: 9px; padding: 2px 7px; border-radius: 3px; background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); font-weight: 500; white-space: nowrap; flex-shrink: 0; font-family: var(--mono); }
-.appr-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
-.appr-row:last-child { border-bottom: none; }
-.appr-name { color: var(--text2); }
-.appr-tag { font-family: var(--mono); font-size: 8px; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
-.at-approved { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
-.at-pending { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
-.at-needed { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
-.tl-row { display: flex; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 11px; align-items: flex-start; }
-.tl-row:last-child { border-bottom: none; }
-.tl-date { font-family: var(--mono); font-size: 9px; color: var(--text3); min-width: 55px; padding-top: 1px; flex-shrink: 0; }
-.tl-event { color: var(--text2); }
-.detail-foot { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; gap: 7px; background: var(--surface2); }
-
-.empty-detail { margin-top: 12px; padding: 24px; text-align: center; color: var(--text3); font-size: 11px; border: 1px dashed var(--border2); border-radius: var(--rl); }
-
-/* Upload toast */
-.toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: #fff; padding: 10px 16px; border-radius: var(--rl); font-size: 12px; z-index: 200; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
-.toast.show { opacity: 1; }
-
-/* Modal */
-.modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: center; justify-content: center; }
-.modal-bg.open { display: flex; }
-.modal { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--rl); width: 480px; max-height: 80vh; overflow-y: auto; }
-.modal-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.modal-title { font-size: 13px; font-weight: 600; }
-.modal-close { cursor: pointer; color: var(--text3); font-size: 15px; padding: 4px; line-height: 1; }
-.modal-close:hover { color: var(--text); }
-.modal-body { padding: 16px 18px; }
-.modal-foot { padding: 10px 18px; border-top: 1px solid var(--border); display: flex; gap: 7px; justify-content: flex-end; background: var(--surface2); }
-.r-section { margin-bottom: 16px; }
-.r-section-title { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text3); margin-bottom: 7px; }
-.r-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 11px; color: var(--text2); }
-.r-row:last-child { border-bottom: none; }
-.r-val { font-family: var(--mono); color: var(--text); }
-.r-val.red { color: var(--red); }
-.r-val.amber { color: #B45309; }
-.r-val.green { color: var(--green); }
-.placeholder-note { background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: var(--r); padding: 7px 10px; font-size: 10px; color: var(--amber); margin-bottom: 12px; font-family: var(--mono); }
-.modal-input { width: 100%; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r); padding: 7px 10px; font-size: 11px; color: var(--text); font-family: var(--font); outline: none; }
-.modal-input:focus { border-color: var(--blue); }
+:root{--bg:#F7F6F2;--surface:#FFF;--surface2:#F0EEE8;--surface3:#E8E5DE;--border:#E2DED4;--border2:#C8C3B8;--text:#1A1916;--text2:#6B6760;--text3:#A09C95;--blue:#1A4FBF;--blue-bg:#EBF0FB;--blue-bd:#B8C9F2;--purple:#5B3FB5;--purple-bg:#EEEBF9;--purple-bd:#C9C0ED;--teal:#0F7A5A;--teal-bg:#E3F4EE;--teal-bd:#A8DDC9;--red:#B91C1C;--red-bg:#FEF2F2;--red-bd:#FECACA;--amber:#92400E;--amber-bg:#FFFBEB;--amber-bd:#FDE68A;--green:#166534;--green-bg:#F0FDF4;--green-bd:#BBF7D0;--coral:#9A3412;--coral-bg:#FFF7ED;--coral-bd:#FED7AA;--font:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace;--r:6px;--rl:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:12px;line-height:1.4;-webkit-font-smoothing:antialiased}
+.app{display:flex;min-height:100vh}
+.sidebar{width:210px;flex-shrink:0;background:var(--text);display:flex;flex-direction:column;height:100vh;position:sticky;top:0;overflow-y:auto}
+.logo{padding:16px 14px 14px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.logo-eyebrow{font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.3);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:4px}
+.logo-name{font-size:14px;font-weight:600;color:#fff;letter-spacing:-0.02em}
+.logo-sub{font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px}
+.nav-section{padding:14px 10px 3px;font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:0.12em;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:8px;padding:6px 10px;margin:1px 4px;border-radius:var(--r);cursor:pointer;font-size:12px;color:rgba(255,255,255,0.5);transition:all 0.12s;border:1px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.85)}
+.nav-item.active{background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.1)}
+.nav-icon{width:13px;height:13px;flex-shrink:0;opacity:0.6}
+.nav-item.active .nav-icon{opacity:1}
+.nav-badge{margin-left:auto;font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:8px;background:rgba(248,113,113,0.2);color:#FCA5A5;border:1px solid rgba(248,113,113,0.2)}
+.nav-badge.amber{background:rgba(251,191,36,0.15);color:#FCD34D;border-color:rgba(251,191,36,0.2)}
+.nav-badge.coral{background:rgba(251,146,60,0.2);color:#FDBA74;border-color:rgba(251,146,60,0.2)}
+.sb-bottom{margin-top:auto;padding:10px;border-top:1px solid rgba(255,255,255,0.08)}
+.sb-metric{display:flex;justify-content:space-between;align-items:center;padding:3px 4px;font-size:10px;color:rgba(255,255,255,0.3)}
+.sb-val{font-family:var(--mono);font-size:11px;font-weight:500;color:rgba(255,255,255,0.6)}
+.sb-val.red{color:#FCA5A5}.sb-val.amber{color:#FCD34D}.sb-val.green{color:#6EE7B7}.sb-val.coral{color:#FDBA74}
+.live-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#6EE7B7;margin-right:4px}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar-title{font-size:13px;font-weight:600;letter-spacing:-0.02em}
+.topbar-sub{font-size:10px;color:var(--text3);margin-top:1px}
+.topbar-right{display:flex;align-items:center;gap:7px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:var(--r);font-size:11px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:all 0.12s;font-family:var(--font)}
+.btn:hover{background:var(--surface2);border-color:var(--border2);color:var(--text)}
+.btn-primary{background:var(--text);color:#fff;border-color:var(--text)}
+.btn-primary:hover{background:#333}
+.btn-blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
+.btn-blue:hover{background:#dce8f9}
+.int-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:5px 20px;display:flex;align-items:center;gap:7px;font-size:10px;color:var(--text3)}
+.int-chip{display:flex;align-items:center;gap:4px;padding:2px 8px;border:1px solid var(--border);border-radius:20px;color:var(--text3);font-size:10px;background:var(--surface2)}
+.int-dot{width:4px;height:4px;border-radius:50%;background:var(--border2)}
+.int-dot.on{background:#16a34a}
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);background:var(--surface)}
+.stat-cell{padding:12px 20px;border-right:1px solid var(--border)}
+.stat-cell:last-child{border-right:none}
+.stat-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text3);margin-bottom:5px}
+.stat-num{font-size:26px;font-weight:300;color:var(--text);letter-spacing:-0.04em;line-height:1;font-family:var(--mono)}
+.stat-num.red{color:var(--red)}.stat-num.amber{color:#B45309}.stat-num.green{color:var(--green)}.stat-num.blue{color:var(--blue)}.stat-num.coral{color:var(--coral)}
+.stat-sub{font-size:9px;color:var(--text3);margin-top:3px}
+.board-wrap{padding:14px 20px;flex:1}
+.board-controls{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.view-tabs{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:2px;gap:2px}
+.vtab{padding:4px 10px;font-size:11px;border-radius:4px;cursor:pointer;color:var(--text3);transition:all 0.12s;font-weight:500}
+.vtab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,0.06)}
+.filters{display:flex;gap:5px;align-items:center}
+.fchip{padding:3px 10px;border-radius:20px;font-size:10px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--text2);transition:all 0.12s;font-weight:500}
+.fchip:hover{border-color:var(--border2);color:var(--text)}
+.fchip.active{background:var(--text);color:#fff;border-color:var(--text)}
+.kanban{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:start}
+.col{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.col-head{padding:8px 10px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between}
+.col-name{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-weight:500}
+.col-count{font-family:var(--mono);font-size:9px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1px 6px}
+.col-body{padding:6px;display:flex;flex-direction:column;gap:5px;min-height:120px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:9px;cursor:pointer;transition:all 0.12s}
+.card:hover{border-color:var(--border2);box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.card.sel{border-color:var(--blue);border-width:1.5px}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.type-pill{font-family:var(--mono);font-size:8px;font-weight:500;padding:1px 6px;border-radius:3px;letter-spacing:0.04em}
+.tp-IND{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.urgency{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.urg-high{background:var(--red)}.urg-med{background:#B45309}.urg-low{background:var(--green)}
+.card-name{font-size:11px;font-weight:500;color:var(--text);margin-bottom:6px;line-height:1.3}
+.card-flags{display:flex;flex-wrap:wrap;gap:3px}
+.flag{font-family:var(--mono);font-size:8px;padding:1px 5px;border-radius:3px;font-weight:500}
+.fl-miss{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.fl-pend{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
+.fl-ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:7px;padding-top:6px;border-top:1px solid var(--border)}
+.card-owner{font-size:9px;color:var(--text3)}
+.card-date{font-family:var(--mono);font-size:8px;color:var(--text3)}
+.detail-panel{margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.detail-head{padding:12px 16px;border-bottom:1px solid var(--border)}
+.detail-title{font-size:14px;font-weight:600;letter-spacing:-0.02em;margin-bottom:5px}
+.detail-meta{display:flex;flex-wrap:wrap;gap:12px}
+.meta-item{font-size:10px;color:var(--text3)}
+.detail-body{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.detail-sec{padding:12px 16px;border-right:1px solid var(--border)}
+.detail-sec:last-child{border-right:none}
+.sec-head{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px;font-weight:500}
+.doc-row{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text2)}
+.doc-row:last-child{border-bottom:none}
+.doc-row.miss{color:var(--red)}
+.doc-label{flex:1}
+.ddot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ddot-ok{background:var(--green)}.ddot-miss{background:var(--red)}
+.upload-btn{font-size:9px;padding:2px 7px;border-radius:3px;border:1px solid var(--blue-bd);background:var(--blue-bg);color:var(--blue);cursor:pointer;font-family:var(--font);font-weight:500;white-space:nowrap;flex-shrink:0}
+.upload-done{font-size:9px;padding:2px 7px;border-radius:3px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);font-weight:500;white-space:nowrap;flex-shrink:0;font-family:var(--mono)}
+.appr-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px}
+.appr-row:last-child{border-bottom:none}
+.appr-name{color:var(--text2)}
+.appr-tag{font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:0.04em;font-weight:500}
+.at-approved{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.at-pending{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
+.at-needed{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.tl-row{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px}
+.tl-row:last-child{border-bottom:none}
+.tl-date{font-family:var(--mono);font-size:9px;color:var(--text3);min-width:55px;padding-top:1px;flex-shrink:0}
+.tl-event{color:var(--text2)}
+.detail-foot{padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:7px;background:var(--surface2)}
+.empty-detail{margin-top:12px;padding:24px;text-align:center;color:var(--text3);font-size:11px;border:1px dashed var(--border2);border-radius:var(--rl)}
+.list-view{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.list-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.list-table th{padding:8px 14px;text-align:left;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);background:var(--surface2);border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
+.list-table th:hover{color:var(--text2)}
+.list-table td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:11px;color:var(--text2)}
+.list-table tr:last-child td{border-bottom:none}
+.list-table tr:hover td{background:var(--surface2)}
+.list-table tr.sel-row td{background:var(--blue-bg)}
+.list-name{font-weight:500;color:var(--text)}
+.stage-badge{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;background:var(--surface2);color:var(--text3);border:1px solid var(--border)}
+.gantt-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.gantt-row{display:flex;border-bottom:1px solid var(--border);cursor:pointer}
+.gantt-row:hover{background:var(--surface2)}
+.gantt-label{padding:10px 14px;border-right:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;justify-content:center;gap:3px;width:220px}
+.gantt-protocol-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.2}
+/* REGULATORY */
+.reg-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.reg-track{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;display:flex;flex-direction:column}
+.reg-track-head{padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between}
+.reg-track-title{font-size:13px;font-weight:600}
+.reg-track-sub{font-size:10px;color:var(--text3);margin-top:2px}
+.pathway-badge{font-family:var(--mono);font-size:9px;padding:3px 9px;border-radius:3px;font-weight:500}
+.pb-510k{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.pb-dn{background:var(--coral-bg);color:var(--coral);border:1px solid var(--coral-bd)}
+.reg-progress{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.prog-wrap{flex:1;height:6px;background:var(--surface2);border-radius:3px;border:1px solid var(--border);overflow:hidden}
+.prog-fill{height:100%;border-radius:3px}
+.prog-pct{font-family:var(--mono);font-size:10px;color:var(--text3);min-width:30px;text-align:right}
+.reg-steps{padding:0 16px;overflow-y:auto;max-height:540px}
+.phase-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);padding:10px 0 5px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:500;position:sticky;top:0;background:var(--surface)}
+.step-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.step-row:last-child{border-bottom:none}
+.step-num{font-family:var(--mono);font-size:9px;color:var(--text3);min-width:18px;padding-top:2px;flex-shrink:0}
+.step-icon{width:18px;height:18px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;margin-top:1px;font-weight:600}
+.si-done{background:var(--green-bg);border:1px solid var(--green-bd);color:var(--green)}
+.si-active{background:var(--blue-bg);border:1px solid var(--blue-bd);color:var(--blue)}
+.si-waiting{background:var(--amber-bg);border:1px solid var(--amber-bd);color:var(--amber)}
+.si-fda{background:var(--coral-bg);border:1px solid var(--coral-bd);color:var(--coral)}
+.si-todo{background:var(--surface2);border:1px solid var(--border);color:var(--text3)}
+.step-content{flex:1}
+.step-name{font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px}
+.step-desc{font-size:10px;color:var(--text3);line-height:1.4}
+.step-docs{margin-top:4px;display:flex;flex-wrap:wrap;gap:3px}
+.doc-chip{font-size:9px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-family:var(--mono)}
+.step-tag{font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;margin-top:4px;display:inline-block}
+.st-done{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.st-active{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.st-waiting{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
+.st-fda{background:var(--coral-bg);color:var(--coral);border:1px solid var(--coral-bd)}
+.st-todo{background:var(--surface2);color:var(--text3);border:1px solid var(--border)}
+.step-date{font-family:var(--mono);font-size:9px;color:var(--text3);flex-shrink:0;padding-top:3px;min-width:60px;text-align:right}
+.reg-legend{display:flex;gap:12px;padding:10px 16px;border-top:1px solid var(--border);background:var(--surface2);flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3)}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 16px;border-radius:var(--rl);font-size:12px;z-index:200;opacity:0;transition:opacity 0.2s;pointer-events:none}
+.toast.show{opacity:1}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);width:480px;max-height:80vh;overflow-y:auto}
+.modal-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-title{font-size:13px;font-weight:600}
+.modal-close{cursor:pointer;color:var(--text3);font-size:15px;padding:4px;line-height:1}
+.modal-body{padding:16px 18px}
+.modal-foot{padding:10px 18px;border-top:1px solid var(--border);display:flex;gap:7px;justify-content:flex-end;background:var(--surface2)}
+.r-section{margin-bottom:16px}
+.r-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text3);margin-bottom:7px}
+.r-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text2)}
+.r-row:last-child{border-bottom:none}
+.r-val{font-family:var(--mono);color:var(--text)}
+.r-val.red{color:var(--red)}.r-val.amber{color:#B45309}.r-val.green{color:var(--green)}
+.note-bar{background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:var(--r);padding:7px 10px;font-size:10px;color:var(--amber);margin-bottom:12px;font-family:var(--mono)}
+.modal-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:11px;color:var(--text);font-family:var(--font);outline:none}
 </style>
 </head>
 <body>
-
 <div class="app">
-  <aside class="sidebar">
-    <div class="logo">
-      <div class="logo-eyebrow">FDA Regulatory</div>
-      <div class="logo-name">Protocol Hub</div>
-      <div class="logo-sub">Submission tracker</div>
-    </div>
-    <div class="nav-section">Workspace</div>
-    <div class="nav-item active">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
-      Kanban board
-    </div>
-    <div class="nav-item">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-      Documents
-      <span class="nav-badge" id="sb-doc-badge">7</span>
-    </div>
-    <div class="nav-item">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-      Approvals
-      <span class="nav-badge amber">4</span>
-    </div>
-    <div class="nav-item">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
-      Reports
-    </div>
-    <div class="nav-section">Submissions</div>
-    <div class="nav-item">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
-      Timeline view
-    </div>
-    <div class="nav-item">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
-      Team & approvers
-    </div>
-    <div class="nav-item">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-      Settings
-    </div>
-    <div class="sidebar-bottom">
-      <div class="sb-metric"><span><span class="live-dot"></span>System</span><span class="sb-val green">Live</span></div>
-      <div class="sb-metric"><span>Missing docs</span><span class="sb-val red" id="sb-missing">7</span></div>
-      <div class="sb-metric"><span>Pending approvals</span><span class="sb-val amber">4</span></div>
-      <div class="sb-metric"><span>Quarter</span><span class="sb-val">Q2 2026</span></div>
-    </div>
-  </aside>
 
-  <main class="main">
-    <div class="topbar">
-      <div>
-        <div class="topbar-title">Submission tracker</div>
-        <div class="topbar-sub">FDA · IND / NDA / BLA protocols · Q2 2026</div>
-      </div>
-      <div class="topbar-right">
-        <button class="btn" onclick="openReport()">Weekly report</button>
-        <button class="btn btn-primary">+ New protocol</button>
-      </div>
-    </div>
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-eyebrow">FDA Regulatory</div>
+    <div class="logo-name">Protocol Hub</div>
+    <div class="logo-sub">Clinical &amp; regulatory tracker</div>
+  </div>
 
-    <div class="int-bar">
-      <span>Integrations:</span>
-      <div class="int-chip"><div class="int-dot on"></div>Email</div>
-      <div class="int-chip"><div class="int-dot"></div>SharePoint</div>
-      <div class="int-chip"><div class="int-dot"></div>Jira</div>
-      <div class="int-chip"><div class="int-dot"></div>Confluence</div>
-      <div class="int-chip"><div class="int-dot"></div>DocuSign</div>
-    </div>
+  <div class="nav-section">Clinical</div>
+  <div class="nav-item active" id="nav-kanban" onclick="navTo('kanban')">
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+    Protocol board
+  </div>
+  <div class="nav-item" id="nav-list" onclick="navTo('list')">
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+    Documents
+    <span class="nav-badge" id="sb-doc-badge">3</span>
+  </div>
+  <div class="nav-item" id="nav-timeline" onclick="navTo('timeline')">
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+    Timeline
+    <span class="nav-badge amber">3</span>
+  </div>
 
-    <div class="stats-strip">
-      <div class="stat-cell">
-        <div class="stat-label">Active protocols</div>
-        <div class="stat-num">6</div>
-        <div class="stat-sub">2 IND · 2 NDA · 2 BLA</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-label">Documents missing</div>
-        <div class="stat-num red" id="stat-missing">7</div>
-        <div class="stat-sub" id="stat-missing-sub">Across 4 protocols</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-label">Approvals pending</div>
-        <div class="stat-num amber">4</div>
-        <div class="stat-sub">Blocking 3 protocols</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-label">Ready to submit</div>
-        <div class="stat-num green">1</div>
-        <div class="stat-sub">IND Rare Disease — P12</div>
-      </div>
-    </div>
+  <div class="nav-section">Regulatory</div>
+  <div class="nav-item" id="nav-regulatory" onclick="navTo('regulatory')">
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"/></svg>
+    Regulatory tracker
+    <span class="nav-badge coral">2</span>
+  </div>
 
-    <div class="board-wrap">
-      <div class="board-controls">
-        <div class="view-tabs">
-          <div class="vtab active">Kanban</div>
-          <div class="vtab">List</div>
-          <div class="vtab">Timeline</div>
-        </div>
-        <div class="filters">
-          <span style="font-size:10px;color:var(--text3)">Filter:</span>
-          <div class="fchip active" onclick="setFilter('ALL',this)">All</div>
-          <div class="fchip" onclick="setFilter('IND',this)">IND</div>
-          <div class="fchip" onclick="setFilter('NDA',this)">NDA</div>
-          <div class="fchip" onclick="setFilter('BLA',this)">BLA</div>
-          <div class="fchip" onclick="setFilter('MISSING',this)">Missing docs</div>
-        </div>
-      </div>
+  <div class="nav-section">General</div>
+  <div class="nav-item" onclick="navTo('kanban')">
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+    Reports
+  </div>
+  <div class="nav-item" onclick="navTo('kanban')">
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+    Settings
+  </div>
 
-      <div class="kanban" id="kanban"></div>
-      <div id="detail"></div>
-    </div>
-  </main>
+  <div class="sb-bottom">
+    <div class="sb-metric"><span><span class="live-dot"></span>System</span><span class="sb-val green">Live</span></div>
+    <div class="sb-metric"><span>Missing docs</span><span class="sb-val red" id="sb-missing">3</span></div>
+    <div class="sb-metric"><span>Reg. pathways</span><span class="sb-val coral">2 active</span></div>
+    <div class="sb-metric"><span>Quarter</span><span class="sb-val">Q2 2026</span></div>
+  </div>
+</aside>
+
+<main class="main" id="main"></main>
 </div>
 
 <div class="toast" id="toast"></div>
 <input type="file" id="file-input" style="display:none">
 
-<!-- Report modal -->
 <div class="modal-bg" id="modal">
   <div class="modal">
     <div class="modal-head">
       <div class="modal-title">Weekly status report — w/c 5 May 2026</div>
-      <div class="modal-close" onclick="closeReport()">&#x2715;</div>
+      <div class="modal-close" onclick="closeModal()">&#x2715;</div>
     </div>
     <div class="modal-body">
-      <div class="placeholder-note">Placeholder — in production auto-generates and emails to group head every Monday 08:00</div>
+      <div class="note-bar">Placeholder — auto-generates and emails to group head every Monday 08:00</div>
       <div class="r-section">
-        <div class="r-section-title">Executive summary</div>
-        <div class="r-row"><span>Active protocols</span><span class="r-val">6</span></div>
-        <div class="r-row"><span>Missing documents</span><span class="r-val red" id="report-missing">7</span></div>
-        <div class="r-row"><span>Pending approvals</span><span class="r-val amber">4</span></div>
-        <div class="r-row"><span>Ready to submit</span><span class="r-val green">1</span></div>
+        <div class="r-label">Clinical summary</div>
+        <div class="r-row"><span>Active protocols</span><span class="r-val">1</span></div>
+        <div class="r-row"><span>Missing documents</span><span class="r-val red" id="rpt-missing">3</span></div>
+        <div class="r-row"><span>Pending approvals</span><span class="r-val amber">3</span></div>
       </div>
       <div class="r-section">
-        <div class="r-section-title">Needs immediate attention</div>
-        <div class="r-row"><span>Phase II Oncology — Protocol 101 · docs missing</span><span class="r-val red">High</span></div>
-        <div class="r-row"><span>Phase I CNS — Protocol 204 · docs missing</span><span class="r-val red">High</span></div>
-        <div class="r-row"><span>NDA Neurology — Protocol 88 · RA Lead approval needed</span><span class="r-val amber">Med</span></div>
+        <div class="r-label">Regulatory summary</div>
+        <div class="r-row"><span>510(k) — CardioSense ECG hardware</span><span class="r-val" style="color:var(--blue)">Pre-submission</span></div>
+        <div class="r-row"><span>De Novo — CardioSense AI algorithm</span><span class="r-val" style="color:var(--coral)">Pre-submission</span></div>
       </div>
       <div class="r-section">
-        <div class="r-section-title">Ready to advance</div>
-        <div class="r-row"><span>IND Rare Disease — Protocol 12 · all docs and approvals complete</span><span class="r-val green">Ready</span></div>
-      </div>
-      <div class="r-section">
-        <div class="r-section-title">Send to</div>
+        <div class="r-label">Send to</div>
         <input class="modal-input" type="email" placeholder="group.head@company.com">
       </div>
     </div>
     <div class="modal-foot">
-      <button class="btn" onclick="closeReport()">Cancel</button>
+      <button class="btn" onclick="closeModal()">Cancel</button>
       <button class="btn btn-primary">Send report</button>
     </div>
   </div>
 </div>
 
 <script>
-const protocols = [
-  { id:1, name:"Phase II Oncology — Protocol 101", type:"IND", stage:0, urgency:"high", owner:"Dr. Mehta", date:"May 15",
-    docs:[
-      {id:"d1a", n:"Form FDA 1571", ok:true},
-      {id:"d1b", n:"Investigator Brochure", ok:true},
-      {id:"d1c", n:"Protocol synopsis", ok:false},
-      {id:"d1d", n:"Informed consent form", ok:true}
-    ],
-    approvals:[{n:"Investigator (Dr. Mehta)",s:"approved"},{n:"Medical Monitor",s:"pending"},{n:"Regulatory Affairs Lead",s:"needed"},{n:"Legal / Compliance",s:"needed"}],
-    timeline:[{d:"Apr 2",e:"Pre-IND meeting completed"},{d:"Apr 18",e:"IND package initiated"},{d:"May 15",e:"Target: IND submission"}] },
-  { id:2, name:"Phase I CNS — Protocol 204", type:"IND", stage:0, urgency:"high", owner:"Dr. Osei", date:"Jun 1",
-    docs:[
-      {id:"d2a", n:"Form FDA 1571", ok:false},
-      {id:"d2b", n:"Investigator Brochure draft", ok:true},
-      {id:"d2c", n:"CMC section", ok:false},
-      {id:"d2d", n:"Pharmacology data package", ok:true}
-    ],
-    approvals:[{n:"Investigator (Dr. Osei)",s:"needed"},{n:"Medical Monitor",s:"needed"},{n:"Regulatory Affairs Lead",s:"needed"},{n:"Legal / Compliance",s:"needed"}],
-    timeline:[{d:"Mar 30",e:"Program initiated"},{d:"May 3",e:"IB draft v1 complete"},{d:"Jun 1",e:"Target: IND filing"}] },
-  { id:3, name:"NDA Neurology — Protocol 88", type:"NDA", stage:1, urgency:"med", owner:"Dr. Park", date:"May 28",
-    docs:[
-      {id:"d3a", n:"Module 1 — Administrative", ok:true},
-      {id:"d3b", n:"Module 2 — Summaries", ok:true},
-      {id:"d3c", n:"Module 5 — Clinical reports", ok:false},
-      {id:"d3d", n:"Pediatric study plan", ok:false}
-    ],
-    approvals:[{n:"Investigator (Dr. Park)",s:"approved"},{n:"Medical Monitor",s:"approved"},{n:"Regulatory Affairs Lead",s:"pending"},{n:"Legal / Compliance",s:"needed"}],
-    timeline:[{d:"Jan 10",e:"Pre-NDA meeting with FDA"},{d:"Mar 5",e:"Rolling review declined"},{d:"May 28",e:"Target: NDA submission"}] },
-  { id:4, name:"BLA Cardiology — Protocol 33", type:"BLA", stage:2, urgency:"med", owner:"Dr. Chen", date:"Jun 15",
-    docs:[
-      {id:"d4a", n:"Form FDA 356h", ok:true},
-      {id:"d4b", n:"Biologics license application", ok:true},
-      {id:"d4c", n:"REMS program summary", ok:true},
-      {id:"d4d", n:"Labeling draft", ok:false}
-    ],
-    approvals:[{n:"Investigator (Dr. Chen)",s:"approved"},{n:"Medical Monitor",s:"approved"},{n:"Regulatory Affairs Lead",s:"approved"},{n:"Legal / Compliance",s:"pending"}],
-    timeline:[{d:"Feb 14",e:"BLA package initiated"},{d:"Apr 20",e:"REMS program submitted"},{d:"Jun 15",e:"Target: BLA submission"}] },
-  { id:5, name:"NDA Rare Disease — Protocol 17", type:"NDA", stage:3, urgency:"low", owner:"Dr. Santos", date:"May 20",
-    docs:[
-      {id:"d5a", n:"Complete Response Letter", ok:true},
-      {id:"d5b", n:"Amended labeling", ok:true},
-      {id:"d5c", n:"Updated risk analysis", ok:true},
-      {id:"d5d", n:"Resubmission cover letter", ok:false}
-    ],
-    approvals:[{n:"Investigator (Dr. Santos)",s:"approved"},{n:"Medical Monitor",s:"approved"},{n:"Regulatory Affairs Lead",s:"approved"},{n:"Legal / Compliance",s:"pending"}],
-    timeline:[{d:"Nov 2025",e:"CRL received from FDA"},{d:"Feb 2026",e:"Response strategy approved"},{d:"May 20",e:"Target: resubmission"}] },
-  { id:6, name:"IND Rare Disease — Protocol 12", type:"IND", stage:4, urgency:"low", owner:"Dr. Liu", date:"Submitted",
-    docs:[
-      {id:"d6a", n:"All IND sections complete", ok:true},
-      {id:"d6b", n:"FDA acknowledgment received", ok:true},
-      {id:"d6c", n:"Clinical hold clearance", ok:true},
-      {id:"d6d", n:"Amendment log current", ok:true}
-    ],
-    approvals:[{n:"Investigator (Dr. Liu)",s:"approved"},{n:"Medical Monitor",s:"approved"},{n:"Regulatory Affairs Lead",s:"approved"},{n:"Legal / Compliance",s:"approved"}],
-    timeline:[{d:"Jan 5",e:"IND submitted to FDA"},{d:"Feb 4",e:"FDA 30-day review passed"},{d:"Feb 10",e:"No clinical hold — cleared"}] }
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+var protocol = {
+  id: 1, name: "CardioSense ECG — Phase II Clinical Study", type: "IND",
+  stage: 1, urgency: "high", owner: "Dr. Mehta", date: "Jun 30",
+  startMonth: 1, endMonth: 6, submitMonth: 6,
+  docs: [
+    {id:"d1", n:"Form FDA 1571", ok:true},
+    {id:"d2", n:"Investigator Brochure (v2)", ok:true},
+    {id:"d3", n:"Protocol synopsis", ok:false},
+    {id:"d4", n:"Informed consent form", ok:true},
+    {id:"d5", n:"Statistical analysis plan", ok:false},
+    {id:"d6", n:"Case report forms (CRFs)", ok:false}
+  ],
+  approvals: [
+    {n:"Principal Investigator (Dr. Mehta)", s:"approved"},
+    {n:"Medical Monitor", s:"pending"},
+    {n:"Regulatory Affairs Lead", s:"needed"},
+    {n:"Legal / Compliance", s:"needed"}
+  ],
+  timeline: [
+    {d:"Feb 10", e:"IND submitted to FDA"},
+    {d:"Mar 12", e:"30-day FDA review — no clinical hold"},
+    {d:"Apr 1",  e:"Site initiation visit completed"},
+    {d:"Jun 30", e:"Target: Phase II enrollment complete"}
+  ]
+};
+
+var stages = [
+  {l:"Pre-submission", k:0}, {l:"In preparation", k:1},
+  {l:"Internal review", k:2}, {l:"Pending approval", k:3}, {l:"Submitted", k:4}
 ];
 
-const stages = [{l:"Pre-submission",k:0},{l:"In preparation",k:1},{l:"Internal review",k:2},{l:"Pending approval",k:3},{l:"Submitted",k:4}];
-let selected = null, filter = "ALL";
-let pendingUploadDocId = null;
+var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"];
 
-const mc = p => p.docs.filter(d=>!d.ok).length;
-const pc = p => p.approvals.filter(a=>a.s!=="approved").length;
-const totalMissing = () => protocols.reduce((sum,p)=>sum+mc(p),0);
+// ── REGULATORY DATA ───────────────────────────────────────────────────────────
 
-function setFilter(f,el) {
-  filter=f; selected=null;
-  document.querySelectorAll(".fchip").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
+var track510k = {
+  title: "510(k) — ECG Hardware",
+  sub: "CardioSense ECG sensor & signal acquisition",
+  badge: "510(k)",
+  badgeClass: "pb-510k",
+  color: "var(--blue)",
+  phases: [
+    { label: "Phase 1 — Pre-submission", steps: [
+      { n:"Classify device", desc:"Confirm Class II under 21 CFR 870.2340. Identify predicate: iRhythm Zio Patch (K192614).", status:"done", date:"Jan 2026", docs:["Device classification memo","Predicate search report"] },
+      { n:"Pre-submission Q-Sub meeting", desc:"Request Q-Sub with FDA to align on testing requirements, software level, and predicate strategy.", status:"done", date:"Feb 2026", docs:["Q-Sub request letter","FDA meeting minutes"] },
+      { n:"Substantial equivalence analysis", desc:"Document same intended use and technological characteristics as predicate with no new safety questions.", status:"done", date:"Feb 2026", docs:["SE comparison table","Predicate device labeling"] },
+      { n:"Design & performance testing", desc:"Bench: signal accuracy, electrode impedance, battery life, EMC/EMI. Clinical: sensitivity/specificity vs. 12-lead ECG.", status:"done", date:"Mar 2026", docs:["Bench test report","Clinical performance data","Biocompatibility — ISO 10993"] },
+      { n:"Software documentation (SaMD Level 2)", desc:"Software Description Document, risk management per IEC 62304, hazard analysis, cybersecurity plan.", status:"done", date:"Mar 2026", docs:["Software Description Document","IEC 62304 lifecycle records","Cybersecurity plan"] },
+      { n:"Labeling & IFU draft", desc:"Draft Instructions for Use, device labeling, indications for use aligned with predicate.", status:"active", date:"Apr 2026", docs:["Draft IFU","Indications for use statement"] }
+    ]},
+    { label: "Phase 2 — Submission", steps: [
+      { n:"Compile 510(k) package", desc:"Assemble all sections: cover letter, indications for use, device description, SE discussion, performance testing, software, labeling.", status:"active", date:"May 2026", docs:["510(k) cover letter","Complete submission package"] },
+      { n:"Submit via FDA eSTAR portal", desc:"Submit electronically. Pay MDUFA user fee (~$22,205 small business rate).", status:"todo", date:"May 2026", docs:["eSTAR submission file","MDUFA fee payment confirmation"] }
+    ]},
+    { label: "Phase 3 — FDA Review (90-day clock)", steps: [
+      { n:"Acceptance review (Day 1–15)", desc:"FDA confirms submission is complete. Refusal to Accept (RTA) possible if deficiencies found.", status:"waiting", date:"Jun 2026", docs:[] },
+      { n:"Substantive review", desc:"FDA evaluates SE, performance data, labeling. May issue Additional Information (AI) request — clock stops.", status:"todo", date:"Jun–Aug 2026", docs:[] },
+      { n:"Respond to Additional Information", desc:"Prepare written response to FDA AI request. Clock restarts upon FDA receipt.", status:"todo", date:"TBD", docs:["AI response letter","Supplemental test data"] }
+    ]},
+    { label: "Phase 4 — Decision & Post-Market", steps: [
+      { n:"510(k) clearance received", desc:"FDA issues clearance letter with K-number. Device may now be commercially distributed in the US.", status:"todo", date:"Aug 2026", docs:["FDA clearance letter (K-number)"] },
+      { n:"Post-market obligations", desc:"Register establishment, list device, implement MDR procedures and complaint handling system.", status:"todo", date:"Sep 2026", docs:["FDA establishment registration","Device listing (eList)","MDR procedures SOP"] }
+    ]}
+  ]
+};
+
+var trackDeNovo = {
+  title: "De Novo — AI Algorithm",
+  sub: "CardioSense AI atrial fibrillation detection",
+  badge: "De Novo",
+  badgeClass: "pb-dn",
+  color: "var(--coral)",
+  phases: [
+    { label: "Phase 1 — Pre-submission (longer runway)", steps: [
+      { n:"Confirm De Novo eligibility", desc:"Verify no predicate for AI/ML AF detection algorithm. Confirm Class II moderate-risk profile.", status:"done", date:"Nov 2025", docs:["De Novo eligibility memo","Predicate search — negative"] },
+      { n:"Pre-submission Q-Sub meeting", desc:"Align with FDA on AI/ML documentation per Action Plan, clinical validation design, and proposed special controls.", status:"done", date:"Jan 2026", docs:["Q-Sub request","FDA meeting minutes","AI/ML documentation plan"] },
+      { n:"Algorithm development & validation", desc:"Train on 50,000+ labeled ECG recordings. Validate on independent dataset. Document architecture, training data, performance (sensitivity ≥97%, specificity ≥95%).", status:"done", date:"Feb 2026", docs:["Algorithm validation report","Training/test dataset description","Model performance metrics"] },
+      { n:"Clinical study — AI algorithm", desc:"Prospective study comparing AI detection vs. cardiologist adjudication. 1,000+ subjects, 24-hour wear.", status:"active", date:"Mar–May 2026", docs:["Clinical study protocol (IRB approved)","Interim data analysis","Final study report (pending)"] },
+      { n:"AI/ML & PCCP documentation", desc:"Predetermined Change Control Plan, SaMD risk categorization, IEC 62304, Algorithm Change Protocol, transparency docs per FDA AI/ML guidance.", status:"active", date:"Apr 2026", docs:["PCCP","SaMD risk categorization","IEC 62304 records","Algorithm Change Protocol"] },
+      { n:"Cybersecurity documentation", desc:"Threat model, SBOM (Software Bill of Materials), security testing, postmarket cybersecurity plan per FDA 2023 guidance.", status:"todo", date:"May 2026", docs:["Cybersecurity threat model","SBOM","Security test report"] }
+    ]},
+    { label: "Phase 2 — Submission", steps: [
+      { n:"Compile De Novo request", desc:"Assemble: cover letter, device description, proposed classification, special controls, clinical data, AI/ML docs, labeling.", status:"todo", date:"Jun 2026", docs:["De Novo request package","Proposed special controls","Draft classification regulation"] },
+      { n:"Submit De Novo request", desc:"Submit via FDA eSTAR. Pay user fee (~$32,500 small business). FDA has 150 calendar days to respond.", status:"todo", date:"Jun 2026", docs:["eSTAR submission","MDUFA fee confirmation"] }
+    ]},
+    { label: "Phase 3 — FDA Review (150-day clock)", steps: [
+      { n:"Acceptance review", desc:"FDA reviews completeness. If accepted, 150-day clock starts. RTA issued if deficiencies found.", status:"todo", date:"Jul 2026", docs:[] },
+      { n:"Substantive review & AI deep dive", desc:"FDA reviews algorithm validation, clinical data, special controls, PCCP. Likely to issue Deficiency Letter.", status:"todo", date:"Jul–Oct 2026", docs:[] },
+      { n:"Respond to Deficiency Letter", desc:"Written responses, supplemental clinical data, updated algorithm documentation. Clock extension possible.", status:"todo", date:"TBD", docs:["Deficiency response letter","Supplemental clinical data","Updated PCCP"] },
+      { n:"Advisory panel (if applicable)", desc:"FDA may convene advisory committee for novel AI diagnostic claims. Prepare panel presentation.", status:"todo", date:"TBD", docs:["Advisory panel presentation","Clinical evidence dossier"] }
+    ]},
+    { label: "Phase 4 — Authorization & Post-Market", steps: [
+      { n:"De Novo authorization granted", desc:"FDA issues De Novo order and classification regulation. Device becomes a predicate for future 510(k)s.", status:"todo", date:"Nov 2026", docs:["De Novo authorization letter","Classification regulation","New product code"] },
+      { n:"Special controls implementation", desc:"Implement all special controls in De Novo order: labeling requirements, performance standards, post-market surveillance.", status:"todo", date:"Dec 2026", docs:["Special controls implementation plan","Updated labeling","PMS protocol"] },
+      { n:"Post-market surveillance & PCCP", desc:"Execute Predetermined Change Control Plan for algorithm updates. Submit annual performance reports. MDR active.", status:"todo", date:"Ongoing", docs:["Annual performance report","PCCP update log","MDR SOPs"] }
+    ]}
+  ]
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+
+var currentView = "kanban";
+var selectedId = null;
+var pendingUpload = null;
+var sortCol = "name", sortDir = 1;
+
+function missingCount() {
+  return protocol.docs.filter(function(d) { return !d.ok; }).length;
+}
+
+function pendingCount() {
+  return protocol.approvals.filter(function(a) { return a.s !== "approved"; }).length;
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+
+function navTo(view) {
+  document.querySelectorAll(".nav-item").forEach(function(el) { el.classList.remove("active"); });
+  var navEl = document.getElementById("nav-" + view);
+  if (navEl) navEl.classList.add("active");
+  currentView = view;
+  selectedId = null;
   render();
 }
 
-function filtered() {
-  if(filter==="ALL") return protocols;
-  if(filter==="MISSING") return protocols.filter(p=>mc(p)>0);
-  return protocols.filter(p=>p.type===filter);
-}
-
-function updateGlobalStats() {
-  const total = totalMissing();
-  document.getElementById("stat-missing").textContent = total;
-  document.getElementById("sb-missing").textContent = total;
-  document.getElementById("sb-doc-badge").textContent = total;
-  if(document.getElementById("report-missing")) document.getElementById("report-missing").textContent = total;
-  const affected = protocols.filter(p=>mc(p)>0).length;
-  document.getElementById("stat-missing-sub").textContent = affected > 0 ? `Across ${affected} protocol${affected>1?"s":""}` : "All docs complete";
-}
-
-function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"), 3000);
-}
-
-function triggerUpload(docId, protocolId) {
-  pendingUploadDocId = {docId, protocolId};
-  document.getElementById("file-input").click();
-}
-
-document.getElementById("file-input").addEventListener("change", function(e) {
-  if(!e.target.files.length || !pendingUploadDocId) return;
-  const {docId, protocolId} = pendingUploadDocId;
-  const file = e.target.files[0];
-  const p = protocols.find(x=>x.id===protocolId);
-  const doc = p.docs.find(d=>d.id===docId);
-  if(doc) {
-    doc.ok = true;
-    doc.uploadedFile = file.name;
-  }
-  pendingUploadDocId = null;
-  e.target.value = "";
-  updateGlobalStats();
-  render();
-  showToast(`"${file.name}" uploaded — document marked complete`);
-});
+// ── MAIN RENDER ───────────────────────────────────────────────────────────────
 
 function render() {
-  const kb = document.getElementById("kanban");
-  kb.innerHTML = "";
-  stages.forEach(st => {
-    const cards = filtered().filter(p=>p.stage===st.k);
-    const col = document.createElement("div");
-    col.className = "col";
-    col.innerHTML = `<div class="col-head"><span class="col-name">${st.l}</span><span class="col-count">${cards.length}</span></div>`;
-    const body = document.createElement("div");
-    body.className = "col-body";
-    cards.forEach(p => {
-      const m=mc(p), pa=pc(p);
-      const card = document.createElement("div");
-      card.className = "card"+(selected===p.id?" sel":"");
-      card.innerHTML = `
-        <div class="card-top"><span class="type-pill tp-${p.type}">${p.type}</span><div class="urgency urg-${p.urgency}"></div></div>
-        <div class="card-name">${p.name}</div>
-        <div class="card-flags">
-          ${m>0?`<span class="flag fl-miss">${m} missing</span>`:`<span class="flag fl-ok">docs complete</span>`}
-          ${pa>0?`<span class="flag fl-pend">${pa} approval${pa>1?"s":""}</span>`:`<span class="flag fl-ok">approved</span>`}
-        </div>
-        <div class="card-foot"><span class="card-owner">${p.owner}</span><span class="card-date">${p.date}</span></div>`;
-      card.onclick = () => { selected = selected===p.id?null:p.id; render(); };
-      body.appendChild(card);
+  var main = document.getElementById("main");
+  main.innerHTML = "";
+
+  if (currentView === "regulatory") {
+    renderRegulatoryPage(main);
+  } else {
+    renderClinicalPage(main);
+  }
+}
+
+// ── CLINICAL PAGE ─────────────────────────────────────────────────────────────
+
+function renderClinicalPage(main) {
+  // Topbar
+  var topbar = el("div", "topbar");
+  var tl = el("div");
+  tl.appendChild(elText("div", "topbar-title", "Clinical protocol tracker"));
+  tl.appendChild(elText("div", "topbar-sub", "FDA · IND · CardioSense AI Wearable ECG · Q2 2026"));
+  topbar.appendChild(tl);
+  var tr = el("div", "topbar-right");
+  var rptBtn = elText("button", "btn", "Weekly report");
+  rptBtn.onclick = openModal;
+  tr.appendChild(rptBtn);
+  var newBtn = elText("button", "btn btn-primary", "+ New protocol");
+  tr.appendChild(newBtn);
+  topbar.appendChild(tr);
+  main.appendChild(topbar);
+
+  // Integration bar
+  main.appendChild(makeIntBar(["Email","SharePoint","Jira","Confluence","DocuSign"]));
+
+  // Stats
+  var strip = el("div", "stats-strip");
+  strip.appendChild(makeStatCell("Active protocols", "1", "", "Phase II IND"));
+  var mc = missingCount();
+  strip.appendChild(makeStatCell("Documents missing", String(mc), mc > 0 ? "red" : "green", "In active protocol", "stat-missing"));
+  var pc = pendingCount();
+  strip.appendChild(makeStatCell("Approvals pending", String(pc), "amber", "Blocking submission"));
+  strip.appendChild(makeStatCell("Enrollment target", "Jun", "green", "Phase II complete"));
+  main.appendChild(strip);
+
+  // Board wrap
+  var board = el("div", "board-wrap");
+  var controls = el("div", "board-controls");
+
+  // View tabs
+  var tabs = el("div", "view-tabs");
+  ["kanban","list","timeline"].forEach(function(v) {
+    var t = elText("div", "vtab" + (currentView === v ? " active" : ""), v.charAt(0).toUpperCase() + v.slice(1));
+    t.onclick = function() {
+      currentView = v; selectedId = null;
+      document.querySelectorAll(".nav-item").forEach(function(n) { n.classList.remove("active"); });
+      var map = {kanban:"nav-kanban", list:"nav-list", timeline:"nav-timeline"};
+      var ne = document.getElementById(map[v]);
+      if (ne) ne.classList.add("active");
+      render();
+    };
+    tabs.appendChild(t);
+  });
+  controls.appendChild(tabs);
+  board.appendChild(controls);
+
+  var viewArea = el("div");
+  viewArea.id = "view-area";
+  board.appendChild(viewArea);
+  main.appendChild(board);
+
+  renderView();
+}
+
+function renderView() {
+  var area = document.getElementById("view-area");
+  if (!area) return;
+  area.innerHTML = "";
+  if (currentView === "kanban") renderKanban(area);
+  else if (currentView === "list") renderList(area);
+  else renderTimeline(area);
+  updateStats();
+}
+
+function updateStats() {
+  var mc = missingCount();
+  var sm = document.getElementById("stat-missing");
+  if (sm) { sm.textContent = mc; sm.className = "stat-num " + (mc > 0 ? "red" : "green"); }
+  var sb = document.getElementById("sb-missing");
+  if (sb) sb.textContent = mc;
+  var sbd = document.getElementById("sb-doc-badge");
+  if (sbd) sbd.textContent = mc;
+  var rm = document.getElementById("rpt-missing");
+  if (rm) rm.textContent = mc;
+}
+
+function renderKanban(area) {
+  var kb = el("div", "kanban");
+  stages.forEach(function(st) {
+    var inStage = st.k === protocol.stage ? [protocol] : [];
+    var col = el("div", "col");
+    var head = el("div", "col-head");
+    head.appendChild(elText("span", "col-name", st.l));
+    head.appendChild(elText("span", "col-count", String(inStage.length)));
+    col.appendChild(head);
+    var body = el("div", "col-body");
+    inStage.forEach(function(p) {
+      body.appendChild(makeCard(p));
     });
     col.appendChild(body);
     kb.appendChild(col);
   });
-  renderDetail();
-  updateGlobalStats();
+  area.appendChild(kb);
+  appendDetail(area);
 }
 
-function renderDetail() {
-  const area = document.getElementById("detail");
-  if(!selected) {
-    area.innerHTML = `<div class="empty-detail">Select a protocol card above to view documents, approval chain, and submission timeline</div>`;
+function makeCard(p) {
+  var mc = missingCount(), pc = pendingCount();
+  var card = el("div", "card" + (selectedId === p.id ? " sel" : ""));
+  var top = el("div", "card-top");
+  top.appendChild(elText("span", "type-pill tp-" + p.type, p.type));
+  var urg = el("div", "urgency urg-" + p.urgency);
+  top.appendChild(urg);
+  card.appendChild(top);
+  card.appendChild(elText("div", "card-name", p.name));
+  var flags = el("div", "card-flags");
+  flags.appendChild(elText("span", mc > 0 ? "flag fl-miss" : "flag fl-ok", mc > 0 ? mc + " missing" : "docs complete"));
+  flags.appendChild(elText("span", pc > 0 ? "flag fl-pend" : "flag fl-ok", pc > 0 ? pc + " pending" : "approved"));
+  card.appendChild(flags);
+  var foot = el("div", "card-foot");
+  foot.appendChild(elText("span", "card-owner", p.owner));
+  foot.appendChild(elText("span", "card-date", p.date));
+  card.appendChild(foot);
+  card.onclick = function() { selectedId = selectedId === p.id ? null : p.id; renderView(); };
+  return card;
+}
+
+function appendDetail(area) {
+  if (!selectedId) {
+    area.appendChild(elText("div", "empty-detail", "Select the protocol card to view documents, approval chain, and timeline"));
     return;
   }
-  const p = protocols.find(x=>x.id===selected);
-  const m=mc(p), pa=pc(p), stl=stages.find(s=>s.k===p.stage).l;
-  area.innerHTML = `
-    <div class="detail-panel">
-      <div class="detail-head">
-        <div class="detail-title">${p.name}</div>
-        <div class="detail-meta">
-          <span class="meta-item">${p.type}</span>
-          <span class="meta-item">Stage: <span>${stl}</span></span>
-          <span class="meta-item">Lead: <span>${p.owner}</span></span>
-          <span class="meta-item" style="color:${m>0?"var(--red)":"var(--green)"};font-weight:500">${m} doc${m!==1?"s":""} missing</span>
-          <span class="meta-item" style="color:${pa>0?"var(--amber)":"var(--green)"};">${pa} approval${pa!==1?"s":""} pending</span>
-        </div>
-      </div>
-      <div class="detail-body">
-        <div class="detail-sec">
-          <div class="sec-head">Required documents — click "Upload" to submit</div>
-          ${p.docs.map(d=>`
-            <div class="doc-row${d.ok?"":" miss"}">
-              <div class="ddot ${d.ok?"ddot-ok":"ddot-miss"}"></div>
-              <span class="doc-label">${d.n}${d.uploadedFile?` <span style="color:var(--text3);font-size:9px;">(${d.uploadedFile})</span>`:""}</span>
-              ${d.ok
-                ? `<span class="upload-done">Uploaded</span>`
-                : `<button class="upload-btn" onclick="triggerUpload('${d.id}',${p.id})">Upload</button>`
-              }
-            </div>`).join("")}
-        </div>
-        <div class="detail-sec">
-          <div class="sec-head">Approval chain</div>
-          ${p.approvals.map(a=>`<div class="appr-row"><span class="appr-name">${a.n}</span><span class="appr-tag at-${a.s}">${a.s}</span></div>`).join("")}
-        </div>
-        <div class="detail-sec">
-          <div class="sec-head">Timeline</div>
-          ${p.timeline.map(t=>`<div class="tl-row"><span class="tl-date">${t.d}</span><span class="tl-event">${t.e}</span></div>`).join("")}
-        </div>
-      </div>
-      <div class="detail-foot">
-        <button class="btn">Edit protocol</button>
-        <button class="btn btn-blue" onclick="triggerUpload(null,${p.id})" style="pointer-events:${m>0?"auto":"none"};opacity:${m>0?1:0.4}">Upload document</button>
-        <button class="btn">Request approval</button>
-        <button class="btn btn-primary" style="margin-left:auto" onclick="openReport()">Generate report</button>
-      </div>
-    </div>`;
+  var p = protocol;
+  var mc = missingCount(), pc = pendingCount();
+  var stl = stages.find(function(s) { return s.k === p.stage; }).l;
+  var panel = el("div", "detail-panel");
 
-  if(m===0 && pa===0 && document.querySelector(".card.sel")) {
-    document.querySelector(".card.sel").querySelector(".card-flags").innerHTML =
-      `<span class="flag fl-ok">docs complete</span><span class="flag fl-ok">approved</span>`;
-  }
+  var head = el("div", "detail-head");
+  head.appendChild(elText("div", "detail-title", p.name));
+  var meta = el("div", "detail-meta");
+  meta.appendChild(elText("span", "meta-item", p.type));
+  meta.appendChild(elText("span", "meta-item", "Stage: " + stl));
+  meta.appendChild(elText("span", "meta-item", "Lead: " + p.owner));
+  var ms = elText("span", "meta-item", mc + " doc" + (mc !== 1 ? "s" : "") + " missing");
+  ms.style.color = mc > 0 ? "var(--red)" : "var(--green)"; ms.style.fontWeight = "500";
+  meta.appendChild(ms);
+  var ps = elText("span", "meta-item", pc + " approval" + (pc !== 1 ? "s" : "") + " pending");
+  ps.style.color = pc > 0 ? "var(--amber)" : "var(--green)";
+  meta.appendChild(ps);
+  head.appendChild(meta);
+  panel.appendChild(head);
+
+  var body = el("div", "detail-body");
+
+  // Docs section
+  var docSec = el("div", "detail-sec");
+  docSec.appendChild(elText("div", "sec-head", "Required documents — click Upload"));
+  p.docs.forEach(function(d) {
+    var row = el("div", "doc-row" + (d.ok ? "" : " miss"));
+    var dot = el("div", "ddot " + (d.ok ? "ddot-ok" : "ddot-miss"));
+    row.appendChild(dot);
+    var lbl = el("span", "doc-label");
+    lbl.textContent = d.n;
+    if (d.uploadedFile) {
+      var fn = el("span"); fn.style.cssText = "color:var(--text3);font-size:9px;"; fn.textContent = " (" + d.uploadedFile + ")";
+      lbl.appendChild(fn);
+    }
+    row.appendChild(lbl);
+    if (d.ok) {
+      row.appendChild(elText("span", "upload-done", "Uploaded"));
+    } else {
+      var btn = elText("button", "upload-btn", "Upload");
+      (function(docId) { btn.onclick = function(e) { e.stopPropagation(); triggerUpload(docId); }; })(d.id);
+      row.appendChild(btn);
+    }
+    docSec.appendChild(row);
+  });
+  body.appendChild(docSec);
+
+  // Approvals section
+  var apSec = el("div", "detail-sec");
+  apSec.appendChild(elText("div", "sec-head", "Approval chain"));
+  p.approvals.forEach(function(a) {
+    var row = el("div", "appr-row");
+    row.appendChild(elText("span", "appr-name", a.n));
+    row.appendChild(elText("span", "appr-tag at-" + a.s, a.s));
+    apSec.appendChild(row);
+  });
+  body.appendChild(apSec);
+
+  // Timeline section
+  var tlSec = el("div", "detail-sec");
+  tlSec.appendChild(elText("div", "sec-head", "Milestones"));
+  p.timeline.forEach(function(t) {
+    var row = el("div", "tl-row");
+    row.appendChild(elText("span", "tl-date", t.d));
+    row.appendChild(elText("span", "tl-event", t.e));
+    tlSec.appendChild(row);
+  });
+  body.appendChild(tlSec);
+  panel.appendChild(body);
+
+  // Footer
+  var foot = el("div", "detail-foot");
+  foot.appendChild(elText("button", "btn", "Edit protocol"));
+  var upBtn = elText("button", "btn btn-blue", "Upload document");
+  upBtn.style.opacity = mc > 0 ? "1" : "0.4";
+  upBtn.style.pointerEvents = mc > 0 ? "auto" : "none";
+  upBtn.onclick = function() { triggerUpload(null); };
+  foot.appendChild(upBtn);
+  foot.appendChild(elText("button", "btn", "Request approval"));
+  var rptBtn = elText("button", "btn btn-primary", "Generate report");
+  rptBtn.style.marginLeft = "auto";
+  rptBtn.onclick = openModal;
+  foot.appendChild(rptBtn);
+  panel.appendChild(foot);
+  area.appendChild(panel);
 }
 
-function openReport() { document.getElementById("modal").classList.add("open"); }
-function closeReport() { document.getElementById("modal").classList.remove("open"); }
+function renderList(area) {
+  var wrap = el("div", "list-view");
+  var tbl = document.createElement("table");
+  tbl.className = "list-table";
+  var thead = document.createElement("thead");
+  var hr = document.createElement("tr");
+  var cols = [
+    {k:"name",l:"Protocol",w:"40%"},
+    {k:"stage",l:"Stage",w:"20%"},
+    {k:"missing",l:"Missing docs",w:"15%"},
+    {k:"approvals",l:"Approvals",w:"15%"},
+    {k:"date",l:"Target",w:"10%"}
+  ];
+  cols.forEach(function(c) {
+    var th = document.createElement("th");
+    th.style.width = c.w;
+    th.textContent = c.l + (sortCol === c.k ? (sortDir === 1 ? " ↑" : " ↓") : "");
+    th.onclick = function() { if (sortCol === c.k) sortDir *= -1; else { sortCol = c.k; sortDir = 1; } renderView(); };
+    hr.appendChild(th);
+  });
+  thead.appendChild(hr);
+  tbl.appendChild(thead);
+  var tbody = document.createElement("tbody");
+  var tr = document.createElement("tr");
+  if (selectedId === protocol.id) tr.classList.add("sel-row");
+  var mc = missingCount(), pc = pendingCount();
+  var td1 = document.createElement("td"); td1.appendChild(elText("span","list-name", protocol.name)); tr.appendChild(td1);
+  var td2 = document.createElement("td"); td2.appendChild(elText("span","stage-badge", stages.find(function(s){return s.k===protocol.stage;}).l)); tr.appendChild(td2);
+  var td3 = document.createElement("td");
+  var mcEl = elText("span", "stat-num " + (mc > 0 ? "red" : "green"), mc === 0 ? "None" : mc + " missing");
+  mcEl.style.fontSize = "11px"; td3.appendChild(mcEl); tr.appendChild(td3);
+  var td4 = document.createElement("td");
+  var pcEl = elText("span", "", pc === 0 ? "All approved" : pc + " pending");
+  pcEl.style.color = pc > 0 ? "var(--amber)" : "var(--green)"; pcEl.style.fontFamily = "var(--mono)"; pcEl.style.fontSize = "10px";
+  td4.appendChild(pcEl); tr.appendChild(td4);
+  var td5 = document.createElement("td"); td5.textContent = protocol.date; td5.style.fontFamily = "var(--mono)"; td5.style.fontSize = "10px"; td5.style.color = "var(--text3)"; tr.appendChild(td5);
+  tr.onclick = function() { selectedId = selectedId === protocol.id ? null : protocol.id; renderView(); };
+  tbody.appendChild(tr);
+  tbl.appendChild(tbody);
+  wrap.appendChild(tbl);
+  area.appendChild(wrap);
+  appendDetail(area);
+}
 
+function renderTimeline(area) {
+  var p = protocol;
+  var labelW = 220, totalCols = months.length, todayIdx = 4;
+  var wrap = el("div", "gantt-wrap");
+
+  // Month header
+  var mRow = el("div");
+  mRow.style.cssText = "display:flex;background:var(--surface2);border-bottom:1px solid var(--border);";
+  var lhd = elText("div", "", "Protocol");
+  lhd.style.cssText = "width:" + labelW + "px;flex-shrink:0;padding:6px 14px;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);border-right:1px solid var(--border);";
+  mRow.appendChild(lhd);
+  var mGrid = el("div");
+  mGrid.style.cssText = "flex:1;display:grid;grid-template-columns:repeat(" + totalCols + ",1fr);";
+  months.forEach(function(m, i) {
+    var mc2 = elText("div", "", m + " '26");
+    mc2.style.cssText = "padding:6px 0;text-align:center;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.08em;color:" + (i === todayIdx ? "var(--red)" : "var(--text3)") + ";font-weight:" + (i === todayIdx ? "500" : "400") + ";border-right:1px solid var(--border);";
+    mGrid.appendChild(mc2);
+  });
+  mRow.appendChild(mGrid);
+  wrap.appendChild(mRow);
+
+  // Protocol row
+  var mc = missingCount();
+  var row = el("div", "gantt-row");
+  row.style.cssText = "display:flex;border-bottom:1px solid var(--border);cursor:pointer;" + (selectedId === p.id ? "background:var(--blue-bg);" : "");
+  var lbl = el("div", "gantt-label");
+  lbl.style.cssText = "width:" + labelW + "px;flex-shrink:0;border-right:1px solid var(--border);padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;";
+  lbl.appendChild(elText("div","gantt-protocol-name", p.name));
+  var sub = el("div"); sub.style.cssText = "display:flex;gap:4px;margin-top:3px;";
+  sub.appendChild(elText("span","type-pill tp-" + p.type, p.type));
+  sub.appendChild(elText("span", mc > 0 ? "flag fl-miss" : "flag fl-ok", mc > 0 ? mc + " missing" : "docs ok"));
+  lbl.appendChild(sub);
+  row.appendChild(lbl);
+
+  var barArea = el("div");
+  barArea.style.cssText = "flex:1;position:relative;height:54px;";
+  for (var i = 0; i < totalCols; i++) {
+    var gl = el("div");
+    gl.style.cssText = "position:absolute;top:0;bottom:0;width:1px;background:var(--border);left:" + ((i/totalCols)*100) + "%;";
+    barArea.appendChild(gl);
+  }
+  var tp = ((todayIdx + 0.1) / totalCols) * 100;
+  var todayLine = el("div");
+  todayLine.style.cssText = "position:absolute;top:0;bottom:0;width:1.5px;background:#B91C1C;opacity:0.5;left:" + tp + "%;z-index:2;";
+  barArea.appendChild(todayLine);
+  var tlbl = elText("div","","Today");
+  tlbl.style.cssText = "position:absolute;top:2px;font-family:var(--mono);font-size:7px;color:#B91C1C;left:" + (tp+0.3) + "%;white-space:nowrap;opacity:0.7;";
+  barArea.appendChild(tlbl);
+  var bar = el("div");
+  bar.style.cssText = "position:absolute;top:50%;transform:translateY(-50%);height:18px;border-radius:3px;left:" + ((p.startMonth/totalCols)*100) + "%;width:" + (((p.endMonth-p.startMonth)/totalCols)*100) + "%;background:var(--blue-bg);border:1px solid var(--blue-bd);display:flex;align-items:center;padding:0 7px;overflow:hidden;";
+  bar.appendChild(elText("span","","Dr. Mehta"));
+  bar.firstChild.style.cssText = "font-family:var(--mono);font-size:8px;font-weight:500;color:var(--blue);white-space:nowrap;";
+  barArea.appendChild(bar);
+  var ml = (p.submitMonth / totalCols) * 100;
+  var diamond = el("div");
+  diamond.style.cssText = "position:absolute;top:50%;transform:translateY(-50%) rotate(45deg);width:9px;height:9px;background:" + (mc > 0 ? "var(--red)" : "var(--green)") + ";border-radius:1px;left:calc(" + ml + "% - 4px);z-index:3;";
+  barArea.appendChild(diamond);
+  row.appendChild(barArea);
+  row.onclick = function() { selectedId = selectedId === p.id ? null : p.id; renderView(); };
+  wrap.appendChild(row);
+
+  var legend = el("div");
+  legend.style.cssText = "display:flex;gap:16px;padding:9px 14px;border-top:1px solid var(--border);background:var(--surface2);align-items:center;";
+  legend.innerHTML = '<span style="font-family:var(--mono);font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;">Legend:</span>' +
+    '<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:22px;height:10px;border-radius:2px;background:var(--blue-bg);border:1px solid var(--blue-bd);"></div>Clinical protocol</div>' +
+    '<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:9px;height:9px;transform:rotate(45deg);background:var(--green);border-radius:1px;flex-shrink:0;"></div>Target date (docs ok)</div>' +
+    '<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:9px;height:9px;transform:rotate(45deg);background:var(--red);border-radius:1px;flex-shrink:0;"></div>Target date (docs missing)</div>' +
+    '<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:1.5px;height:14px;background:#B91C1C;opacity:0.5;"></div>Today</div>';
+  wrap.appendChild(legend);
+  area.appendChild(wrap);
+  appendDetail(area);
+}
+
+// ── REGULATORY PAGE ───────────────────────────────────────────────────────────
+
+function renderRegulatoryPage(main) {
+  var topbar = el("div", "topbar");
+  var tl = el("div");
+  tl.appendChild(elText("div","topbar-title","Regulatory submission tracker"));
+  tl.appendChild(elText("div","topbar-sub","CardioSense AI — FDA 510(k) & De Novo · Medical device authorization"));
+  topbar.appendChild(tl);
+  var tr = el("div","topbar-right");
+  var rBtn = elText("button","btn","Weekly report"); rBtn.onclick = openModal; tr.appendChild(rBtn);
+  tr.appendChild(elText("button","btn btn-primary","+ New submission"));
+  topbar.appendChild(tr);
+  main.appendChild(topbar);
+
+  main.appendChild(makeIntBar(["Email","FDA eSTAR portal","DocuSign","SharePoint"]));
+
+  // Stats
+  var all510 = track510k.phases.flatMap(function(ph){return ph.steps;});
+  var allDN  = trackDeNovo.phases.flatMap(function(ph){return ph.steps;});
+  var done510 = all510.filter(function(s){return s.status==="done";}).length;
+  var doneDN  = allDN.filter(function(s){return s.status==="done";}).length;
+  var pct510 = Math.round(done510/all510.length*100);
+  var pctDN  = Math.round(doneDN/allDN.length*100);
+
+  var strip = el("div","stats-strip");
+  strip.appendChild(makeStatCell("Active pathways","2","","510(k) + De Novo"));
+  strip.appendChild(makeStatCell("510(k) progress", pct510+"%","blue", done510+"/"+all510.length+" steps complete"));
+  strip.appendChild(makeStatCell("De Novo progress", pctDN+"%","coral", doneDN+"/"+allDN.length+" steps complete"));
+  strip.appendChild(makeStatCell("Est. 510(k) clearance","Aug '26","green","De Novo: Nov '26"));
+  main.appendChild(strip);
+
+  var board = el("div","board-wrap");
+  var regWrap = el("div","reg-wrap");
+  regWrap.appendChild(buildRegTrack(track510k, pct510));
+  regWrap.appendChild(buildRegTrack(trackDeNovo, pctDN));
+  board.appendChild(regWrap);
+  main.appendChild(board);
+}
+
+function buildRegTrack(track, pct) {
+  var wrap = el("div","reg-track");
+
+  // Head
+  var head = el("div","reg-track-head");
+  var headLeft = el("div");
+  headLeft.appendChild(elText("div","reg-track-title", track.title));
+  headLeft.appendChild(elText("div","reg-track-sub", track.sub));
+  head.appendChild(headLeft);
+  head.appendChild(elText("span","pathway-badge " + track.badgeClass, track.badge));
+  wrap.appendChild(head);
+
+  // Progress bar
+  var prog = el("div","reg-progress");
+  var pw = el("div","prog-wrap");
+  var pf = el("div","prog-fill");
+  pf.style.cssText = "width:" + pct + "%;background:" + track.color + ";";
+  pw.appendChild(pf); prog.appendChild(pw);
+  prog.appendChild(elText("span","prog-pct", pct + "%"));
+  wrap.appendChild(prog);
+
+  // Steps
+  var stepsWrap = el("div","reg-steps");
+  var stepNum = 0;
+  track.phases.forEach(function(phase) {
+    stepsWrap.appendChild(elText("div","phase-label", phase.label));
+    phase.steps.forEach(function(step) {
+      stepNum++;
+      var row = el("div","step-row");
+      row.appendChild(elText("span","step-num", String(stepNum).padStart(2,"0")));
+      var icon = elText("div","step-icon si-" + step.status, statusIcon(step.status));
+      row.appendChild(icon);
+      var content = el("div","step-content");
+      content.appendChild(elText("div","step-name", step.n));
+      content.appendChild(elText("div","step-desc", step.desc));
+      if (step.docs.length > 0) {
+        var docsEl = el("div","step-docs");
+        step.docs.forEach(function(d) { docsEl.appendChild(elText("span","doc-chip", d)); });
+        content.appendChild(docsEl);
+      }
+      var tagLabels = {done:"Complete",active:"In progress",waiting:"Awaiting FDA",fda:"FDA action",todo:"Not started"};
+      content.appendChild(elText("span","step-tag st-" + step.status, tagLabels[step.status]));
+      row.appendChild(content);
+      row.appendChild(elText("div","step-date", step.date));
+      stepsWrap.appendChild(row);
+    });
+  });
+  wrap.appendChild(stepsWrap);
+
+  // Legend
+  var leg = el("div","reg-legend");
+  [["si-done","Complete","var(--green)"],["si-active","In progress","var(--blue)"],["si-waiting","Awaiting FDA","var(--amber)"],["si-fda","FDA action","var(--coral)"],["si-todo","Not started","var(--border2)"]].forEach(function(item) {
+    var li = el("div","leg-item");
+    var dot = el("div","leg-dot"); dot.style.background = item[2]; li.appendChild(dot);
+    li.appendChild(document.createTextNode(item[1]));
+    leg.appendChild(li);
+  });
+  wrap.appendChild(leg);
+  return wrap;
+}
+
+function statusIcon(s) {
+  return {done:"✓",active:"→",waiting:"⏳",fda:"★",todo:"·"}[s] || "·";
+}
+
+// ── UPLOAD ────────────────────────────────────────────────────────────────────
+
+function triggerUpload(docId) {
+  pendingUpload = docId;
+  document.getElementById("file-input").click();
+}
+
+document.getElementById("file-input").addEventListener("change", function(e) {
+  if (!e.target.files.length) return;
+  var file = e.target.files[0];
+  var doc;
+  if (pendingUpload) {
+    doc = protocol.docs.find(function(d) { return d.id === pendingUpload; });
+  } else {
+    doc = protocol.docs.find(function(d) { return !d.ok; });
+  }
+  if (doc) { doc.ok = true; doc.uploadedFile = file.name; }
+  pendingUpload = null;
+  e.target.value = "";
+  renderView();
+  showToast('"' + file.name + '" uploaded — marked complete');
+});
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+
+function openModal() { document.getElementById("modal").classList.add("open"); }
+function closeModal() { document.getElementById("modal").classList.remove("open"); }
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+
+function el(tag, cls) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  return e;
+}
+
+function elText(tag, cls, text) {
+  var e = el(tag, cls);
+  e.textContent = text;
+  return e;
+}
+
+function makeIntBar(chips) {
+  var bar = el("div","int-bar");
+  bar.appendChild(document.createTextNode("Integrations:"));
+  chips.forEach(function(label, i) {
+    var chip = el("div","int-chip");
+    var dot = el("div","int-dot" + (i===0?" on":""));
+    chip.appendChild(dot);
+    chip.appendChild(document.createTextNode(label));
+    bar.appendChild(chip);
+  });
+  return bar;
+}
+
+function makeStatCell(label, num, numClass, sub, id) {
+  var cell = el("div","stat-cell");
+  cell.appendChild(elText("div","stat-label", label));
+  var n = elText("div","stat-num" + (numClass ? " "+numClass : ""), num);
+  if (id) n.id = id;
+  cell.appendChild(n);
+  cell.appendChild(elText("div","stat-sub", sub));
+  return cell;
+}
+
+function showToast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(function() { t.classList.remove("show"); }, 3000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
 render();
 </script>
 </body>
