@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocol Submission Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --surface2: #F0EEE8;
+    --border: #E2DED4;
+    --border2: #C8C3B8;
+    --text: #1A1916;
+    --text2: #6B6760;
+    --text3: #A09C95;
+    --blue: #1A4FBF;
+    --blue-bg: #EBF0FB;
+    --purple: #5B3FB5;
+    --purple-bg: #EEEBF9;
+    --teal: #0F7A5A;
+    --teal-bg: #E3F4EE;
+    --red: #C0392B;
+    --red-bg: #FCECEA;
+    --amber: #9A6200;
+    --amber-bg: #FEF3DC;
+    --green: #2E7D32;
+    --green-bg: #EBF5EB;
+    --font: 'IBM Plex Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --radius: 6px;
+    --radius-lg: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Layout */
+  .app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--text);
+    color: #E8E4DC;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 220px;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .logo-mark {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.12em;
+    margin-bottom: 4px;
+  }
+
+  .logo-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+  }
+
+  .sidebar-section {
+    padding: 16px 12px 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin: 1px 8px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+
+  .nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .nav-item.active { background: rgba(255,255,255,0.12); color: #fff; }
+
+  .nav-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .sidebar-stats {
+    margin-top: auto;
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .sidebar-stat-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .sidebar-stat-val.warn { color: #F5A623; }
+  .sidebar-stat-val.danger { color: #FF6B6B; }
+
+  /* Main */
+  .main {
+    margin-left: 220px;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Topbar */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .page-title { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }
+  .page-sub { font-size: 12px; color: var(--text2); }
+
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.15s;
+    font-family: var(--font);
+  }
+
+  .btn:hover { background: var(--surface2); border-color: var(--border2); }
+
+  .btn-primary {
+    background: var(--text);
+    color: #fff;
+    border-color: var(--text);
+  }
+
+  .btn-primary:hover { background: #333; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-block {
+    background: var(--surface);
+    padding: 18px 28px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--mono);
+    margin-bottom: 6px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    font-family: var(--mono);
+    line-height: 1;
+  }
+
+  .stat-number.danger { color: var(--red); }
+  .stat-number.warn { color: var(--amber); }
+  .stat-number.ok { color: var(--teal); }
+
+  .stat-delta {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 4px;
+  }
+
+  /* Board */
+  .board-area { padding: 24px 28px; flex: 1; }
+
+  .board-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .view-tabs {
+    display: flex;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .view-tab {
+    padding: 5px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text2);
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+
+  .view-tab.active {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .filter-row { display: flex; gap: 8px; align-items: center; }
+
+  .filter-chip {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    color: var(--text2);
+    transition: all 0.15s;
+  }
+
+  .filter-chip:hover { border-color: var(--border2); color: var(--text); }
+  .filter-chip.active { background: var(--text); color: #fff; border-color: var(--text); }
+
+  /* Kanban */
+  .kanban {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
+  }
+
+  .column {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .col-header {
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .col-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text2);
+    font-family: var(--mono);
+  }
+
+  .col-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1px 8px;
+  }
+
+  .col-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .card:hover { border-color: var(--border2); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .card.selected { border-color: var(--blue); border-width: 1.5px; }
+
+  .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+
+  .type-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+
+  .type-IND { background: var(--blue-bg); color: var(--blue); }
+  .type-NDA { background: var(--purple-bg); color: var(--purple); }
+  .type-BLA { background: var(--teal-bg); color: var(--teal); }
+
+  .card-urgency {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .urgency-high { background: var(--red); }
+  .urgency-med { background: #F5A623; }
+  .urgency-low { background: var(--green); }
+
+  .card-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .card-flags { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  .flag {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-family: var(--mono);
+  }
+
+  .flag-miss { background: var(--red-bg); color: var(--red); }
+  .flag-pend { background: var(--amber-bg); color: var(--amber); }
+  .flag-good { background: var(--green-bg); color: var(--green); }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-owner {
+    font-size: 11px;
+    color: var(--text3);
+  }
+
+  .card-date {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  /* Detail Panel */
+  .detail-panel {
+    margin-top: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .detail-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .detail-title { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 3px; }
+  .detail-meta { font-size: 12px; color: var(--text2); display: flex; gap: 12px; }
+  .detail-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .detail-body { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+
+  .detail-section {
+    padding: 16px 20px;
+    border-right: 1px solid var(--border);
+  }
+
+  .detail-section:last-child { border-right: none; }
+
+  .section-head {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .doc-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .doc-row:last-child { border-bottom: none; }
+
+  .doc-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .doc-ok { background: var(--green); }
+  .doc-miss { background: var(--red); }
+  .doc-pend { background: #F5A623; }
+
+  .appr-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+
+  .appr-row:last-child { border-bottom: none; }
+  .appr-name { color: var(--text); }
+
+  .appr-badge {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .appr-approved { background: var(--green-bg); color: var(--green); }
+  .appr-pending { background: var(--amber-bg); color: var(--amber); }
+  .appr-needed { background: var(--red-bg); color: var(--red); }
+
+  .timeline-row {
+    display: flex;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    align-items: flex-start;
+  }
+
+  .timeline-row:last-child { border-bottom: none; }
+
+  .timeline-date {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    min-width: 70px;
+    padding-top: 1px;
+  }
+
+  .timeline-event { color: var(--text); }
+
+  .detail-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    background: var(--surface2);
+  }
+
+  .empty-detail {
+    padding: 32px;
+    text-align: center;
+    color: var(--text3);
+    font-size: 13px;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-lg);
+    margin-top: 20px;
+  }
+
+  /* Integration stubs */
+  .integrations-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text3);
+  }
+
+  .int-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text2);
+    font-size: 11px;
+    background: var(--surface2);
+  }
+
+  .int-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border2); }
+  .int-dot.connected { background: var(--teal); }
+
+  /* Report modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    width: 560px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+  }
+
+  .modal-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-title { font-size: 15px; font-weight: 600; }
+  .modal-close { cursor: pointer; color: var(--text2); font-size: 18px; line-height: 1; padding: 4px; }
+  .modal-body { padding: 20px; }
+  .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+
+  .report-section { margin-bottom: 20px; }
+  .report-section-title { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; font-family: var(--mono); }
+
+  .report-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .report-item:last-child { border-bottom: none; }
+
+  .placeholder-banner {
+    background: var(--amber-bg);
+    border: 1px solid #F5C842;
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    font-size: 11px;
+    color: var(--amber);
+    margin-bottom: 12px;
+    font-family: var(--mono);
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">FDA TRACKER</div>
+      <div class="logo-name">Protocol Hub</div>
+    </div>
+
+    <div class="sidebar-section">Navigation</div>
+
+    <a class="nav-item active" href="#">
+      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+      Kanban board
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg>
+      Documents
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+      Approvals
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+      Reports
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      Settings
+    </a>
+
+    <div class="sidebar-stats">
+      <div class="sidebar-stat">
+        <span>Active protocols</span>
+        <span class="sidebar-stat-val" id="sb-active">6</span>
+      </div>
+      <div class="sidebar-stat">
+        <span>Missing docs</span>
+        <span class="sidebar-stat-val danger" id="sb-missing">9</span>
+      </div>
+      <div class="sidebar-stat">
+        <span>Pending approvals</span>
+        <span class="sidebar-stat-val warn" id="sb-pending">4</span>
+      </div>
+      <div class="sidebar-stat">
+        <span>Q2 2026</span>
+        <span class="sidebar-stat-val">Active</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div>
+          <div class="page-title">Submission tracker</div>
+          <div class="page-sub">FDA — IND / NDA / BLA protocols</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn" onclick="openReport()">Weekly report</button>
+        <button class="btn btn-primary">+ Add protocol</button>
+      </div>
+    </div>
+
+    <!-- Integration stubs -->
+    <div class="integrations-bar">
+      <span>Integrations:</span>
+      <div class="int-chip"><div class="int-dot connected"></div> Email</div>
+      <div class="int-chip"><div class="int-dot"></div> SharePoint</div>
+      <div class="int-chip"><div class="int-dot"></div> Jira</div>
+      <div class="int-chip"><div class="int-dot"></div> Confluence</div>
+      <div class="int-chip"><div class="int-dot"></div> DocuSign</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-block">
+        <div class="stat-label">Active protocols</div>
+        <div class="stat-number">6</div>
+        <div class="stat-delta">2 IND · 2 NDA · 1 BLA · 1 IND</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Missing documents</div>
+        <div class="stat-number danger">9</div>
+        <div class="stat-delta">Across 4 protocols</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Pending approvals</div>
+        <div class="stat-number warn">4</div>
+        <div class="stat-delta">Blocking 3 protocols</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Ready to submit</div>
+        <div class="stat-number ok">1</div>
+        <div class="stat-delta">PRISM-07 CNS</div>
+      </div>
+    </div>
+
+    <!-- Board area -->
+    <div class="board-area">
+      <div class="board-controls">
+        <div class="view-tabs">
+          <div class="view-tab active">Kanban</div>
+          <div class="view-tab">List</div>
+          <div class="view-tab">Timeline</div>
+        </div>
+        <div class="filter-row">
+          <span style="font-size:12px;color:var(--text3);">Filter:</span>
+          <div class="filter-chip active" onclick="setFilter('ALL', this)">All</div>
+          <div class="filter-chip" onclick="setFilter('IND', this)">IND</div>
+          <div class="filter-chip" onclick="setFilter('NDA', this)">NDA</div>
+          <div class="filter-chip" onclick="setFilter('BLA', this)">BLA</div>
+          <div class="filter-chip" onclick="setFilter('MISSING', this)">Missing docs</div>
+        </div>
+      </div>
+
+      <div class="kanban" id="kanban"></div>
+      <div id="detail-area"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Report Modal -->
+<div class="modal-overlay" id="report-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Weekly status report — w/c May 5, 2026</div>
+      <div class="modal-close" onclick="closeReport()">x</div>
+    </div>
+    <div class="modal-body">
+      <div class="placeholder-banner">PLACEHOLDER — In production this will auto-generate and email to group head every Monday at 08:00</div>
+
+      <div class="report-section">
+        <div class="report-section-title">Summary</div>
+        <div class="report-item"><span>Active protocols</span><span>6</span></div>
+        <div class="report-item"><span>Missing documents (total)</span><span style="color:var(--red);font-weight:500;">9</span></div>
+        <div class="report-item"><span>Pending approvals</span><span style="color:var(--amber);font-weight:500;">4</span></div>
+        <div class="report-item"><span>Ready to submit</span><span style="color:var(--teal);font-weight:500;">1</span></div>
+      </div>
+
+      <div class="report-section">
+        <div class="report-section-title">Needs immediate attention</div>
+        <div class="report-item"><span>ORYX-101 — Protocol synopsis missing</span><span style="color:var(--red);font-size:11px;">HIGH</span></div>
+        <div class="report-item"><span>VELA-204 — FDA Form 1571 not submitted</span><span style="color:var(--red);font-size:11px;">HIGH</span></div>
+        <div class="report-item"><span>NEXUS-88 — Awaiting RA Lead approval</span><span style="color:var(--amber);font-size:11px;">MED</span></div>
+      </div>
+
+      <div class="report-section">
+        <div class="report-section-title">Ready to advance</div>
+        <div class="report-item"><span>PRISM-07 CNS — All docs complete, all approvals signed</span><span style="color:var(--teal);font-size:11px;">READY</span></div>
+      </div>
+
+      <div class="report-section">
+        <div class="report-section-title">Send report to</div>
+        <input type="email" placeholder="head.of.group@company.com" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font);font-size:13px;background:var(--surface);color:var(--text);">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeReport()">Cancel</button>
+      <button class="btn btn-primary">Send report</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const protocols = [
+  {
+    id: 1, name: "ORYX-101 Phase II", type: "IND", stage: 0, urgency: "high",
+    owner: "Dr. Mehta", nextDate: "May 15",
+    docs: [
+      {name:"Form FDA 1571", ok:true},
+      {name:"Investigator Brochure", ok:true},
+      {name:"Protocol synopsis", ok:false},
+      {name:"Informed consent form", ok:false}
+    ],
+    approvals: [
+      {name:"Investigator (Dr. Mehta)", status:"approved"},
+      {name:"Medical Monitor", status:"pending"},
+      {name:"Regulatory Affairs Lead", status:"needed"},
+      {name:"Legal / Compliance", status:"needed"}
+    ],
+    timeline: [
+      {date:"Apr 2", event:"Pre-IND meeting completed"},
+      {date:"Apr 18", event:"IND package initiated"},
+      {date:"May 15", event:"Target: IND submission"}
+    ]
+  },
+  {
+    id: 2, name: "VELA-204 Phase I", type: "IND", stage: 0, urgency: "high",
+    owner: "Dr. Osei", nextDate: "Jun 1",
+    docs: [
+      {name:"Form FDA 1571", ok:false},
+      {name:"Investigator Brochure draft", ok:true},
+      {name:"CMC section", ok:false},
+      {name:"Pharmacology data package", ok:true}
+    ],
+    approvals: [
+      {name:"Investigator (Dr. Osei)", status:"needed"},
+      {name:"Medical Monitor", status:"needed"},
+      {name:"Regulatory Affairs Lead", status:"needed"},
+      {name:"Legal / Compliance", status:"needed"}
+    ],
+    timeline: [
+      {date:"Mar 30", event:"Program initiated"},
+      {date:"May 3", event:"IB draft v1 complete"},
+      {date:"Jun 1", event:"Target: IND filing"}
+    ]
+  },
+  {
+    id: 3, name: "NEXUS-88 Oncology", type: "NDA", stage: 1, urgency: "med",
+    owner: "Dr. Park", nextDate: "May 28",
+    docs: [
+      {name:"Module 1 — Administrative", ok:true},
+      {name:"Module 2 — Summaries", ok:true},
+      {name:"Module 5 — Clinical study reports", ok:false},
+      {name:"Pediatric study plan", ok:false}
+    ],
+    approvals: [
+      {name:"Investigator (Dr. Park)", status:"approved"},
+      {name:"Medical Monitor", status:"approved"},
+      {name:"Regulatory Affairs Lead", status:"pending"},
+      {name:"Legal / Compliance", status:"needed"}
+    ],
+    timeline: [
+      {date:"Jan 10", event:"Pre-NDA meeting with FDA"},
+      {date:"Mar 5", event:"Rolling review option declined"},
+      {date:"May 28", event:"Target: NDA submission"}
+    ]
+  },
+  {
+    id: 4, name: "SOLIS-12 Cardiology", type: "BLA", stage: 2, urgency: "med",
+    owner: "Dr. Chen", nextDate: "Jun 15",
+    docs: [
+      {name:"Form FDA 356h", ok:true},
+      {name:"Biologics license application", ok:true},
+      {name:"REMS program summary", ok:true},
+      {name:"Labeling draft (Prescribing Info)", ok:false}
+    ],
+    approvals: [
+      {name:"Investigator (Dr. Chen)", status:"approved"},
+      {name:"Medical Monitor", status:"approved"},
+      {name:"Regulatory Affairs Lead", status:"approved"},
+      {name:"Legal / Compliance", status:"pending"}
+    ],
+    timeline: [
+      {date:"Feb 14", event:"BLA package initiated"},
+      {date:"Apr 20", event:"REMS program submitted"},
+      {date:"Jun 15", event:"Target: BLA submission"}
+    ]
+  },
+  {
+    id: 5, name: "HELIX-33 Rare Disease", type: "NDA", stage: 3, urgency: "low",
+    owner: "Dr. Santos", nextDate: "May 20",
+    docs: [
+      {name:"Complete Response Letter", ok:true},
+      {name:"Amended labeling", ok:true},
+      {name:"Updated risk analysis", ok:true},
+      {name:"Resubmission cover letter", ok:false}
+    ],
+    approvals: [
+      {name:"Investigator (Dr. Santos)", status:"approved"},
+      {name:"Medical Monitor", status:"approved"},
+      {name:"Regulatory Affairs Lead", status:"approved"},
+      {name:"Legal / Compliance", status:"pending"}
+    ],
+    timeline: [
+      {date:"Nov 2025", event:"CRL received from FDA"},
+      {date:"Feb 2026", event:"Response strategy approved"},
+      {date:"May 20", event:"Target: resubmission"}
+    ]
+  },
+  {
+    id: 6, name: "PRISM-07 CNS", type: "IND", stage: 4, urgency: "low",
+    owner: "Dr. Liu", nextDate: "Submitted",
+    docs: [
+      {name:"All IND sections (complete)", ok:true},
+      {name:"FDA acknowledgment received", ok:true},
+      {name:"Clinical hold clearance", ok:true},
+      {name:"Amendment log current", ok:true}
+    ],
+    approvals: [
+      {name:"Investigator (Dr. Liu)", status:"approved"},
+      {name:"Medical Monitor", status:"approved"},
+      {name:"Regulatory Affairs Lead", status:"approved"},
+      {name:"Legal / Compliance", status:"approved"}
+    ],
+    timeline: [
+      {date:"Jan 5", event:"IND submitted to FDA"},
+      {date:"Feb 4", event:"FDA 30-day review passed"},
+      {date:"Feb 10", event:"No clinical hold — cleared"}
+    ]
+  }
+];
+
+const stages = [
+  { label: "Pre-submission", key: 0 },
+  { label: "In preparation", key: 1 },
+  { label: "Internal review", key: 2 },
+  { label: "Pending approval", key: 3 },
+  { label: "Submitted", key: 4 },
+];
+
+let selected = null;
+let activeFilter = "ALL";
+
+function missingCount(p) { return p.docs.filter(d => !d.ok).length; }
+function pendingCount(p) { return p.approvals.filter(a => a.status !== "approved").length; }
+
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+  el.classList.add("active");
+  selected = null;
+  renderBoard();
+  renderDetail();
+}
+
+function filteredProtocols() {
+  if (activeFilter === "ALL") return protocols;
+  if (activeFilter === "MISSING") return protocols.filter(p => missingCount(p) > 0);
+  return protocols.filter(p => p.type === activeFilter);
+}
+
+function renderBoard() {
+  const kanban = document.getElementById("kanban");
+  kanban.innerHTML = "";
+  const fps = filteredProtocols();
+
+  stages.forEach(stage => {
+    const cards = fps.filter(p => p.stage === stage.key);
+    const col = document.createElement("div");
+    col.className = "column";
+    col.innerHTML = `<div class="col-header"><span class="col-title">${stage.label}</span><span class="col-badge">${cards.length}</span></div>`;
+
+    const body = document.createElement("div");
+    body.className = "col-body";
+
+    cards.forEach(p => {
+      const mc = missingCount(p);
+      const pa = pendingCount(p);
+      const card = document.createElement("div");
+      card.className = "card" + (selected === p.id ? " selected" : "");
+      card.innerHTML = `
+        <div class="card-top">
+          <span class="type-badge type-${p.type}">${p.type}</span>
+          <div class="card-urgency urgency-${p.urgency}"></div>
+        </div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-flags">
+          ${mc > 0 ? `<span class="flag flag-miss">${mc} missing</span>` : `<span class="flag flag-good">docs ok</span>`}
+          ${pa > 0 ? `<span class="flag flag-pend">${pa} approval${pa>1?"s":""}</span>` : `<span class="flag flag-good">approved</span>`}
+        </div>
+        <div class="card-footer">
+          <span class="card-owner">${p.owner}</span>
+          <span class="card-date">${p.nextDate}</span>
+        </div>
+      `;
+      card.onclick = () => {
+        selected = selected === p.id ? null : p.id;
+        renderBoard();
+        renderDetail();
+      };
+      body.appendChild(card);
+    });
+
+    col.appendChild(body);
+    kanban.appendChild(col);
+  });
+}
+
+function renderDetail() {
+  const area = document.getElementById("detail-area");
+  if (!selected) {
+    area.innerHTML = `<div class="empty-detail">Select a protocol card above to view documents, approval chain, and timeline</div>`;
+    return;
+  }
+
+  const p = protocols.find(x => x.id === selected);
+  const mc = missingCount(p);
+  const pa = pendingCount(p);
+
+  area.innerHTML = `
+    <div class="detail-panel">
+      <div class="detail-header">
+        <div>
+          <div class="detail-title">${p.name}</div>
+          <div class="detail-meta">
+            <span>${p.type}</span>
+            <span>Stage: ${stages[p.stage].label}</span>
+            <span>Lead: ${p.owner}</span>
+            <span style="color:${mc>0?'var(--red)':'var(--teal)'};">${mc} doc${mc!==1?"s":""} missing</span>
+            <span style="color:${pa>0?'var(--amber)':'var(--teal)'};">${pa} approval${pa!==1?"s":""} pending</span>
+          </div>
+        </div>
+      </div>
+      <div class="detail-body">
+        <div class="detail-section">
+          <div class="section-head">Required documents</div>
+          ${p.docs.map(d => `
+            <div class="doc-row">
+              <div class="doc-dot ${d.ok ? 'doc-ok' : 'doc-miss'}"></div>
+              <span style="${!d.ok ? 'color:var(--red);' : ''}">${d.name}</span>
+            </div>
+          `).join("")}
+        </div>
+        <div class="detail-section">
+          <div class="section-head">Approval chain</div>
+          ${p.approvals.map(a => `
+            <div class="appr-row">
+              <span class="appr-name">${a.name}</span>
+              <span class="appr-badge appr-${a.status}">${a.status}</span>
+            </div>
+          `).join("")}
+        </div>
+        <div class="detail-section">
+          <div class="section-head">Timeline</div>
+          ${p.timeline.map(t => `
+            <div class="timeline-row">
+              <span class="timeline-date">${t.date}</span>
+              <span class="timeline-event">${t.event}</span>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+      <div class="detail-footer">
+        <button class="btn">Edit protocol</button>
+        <button class="btn">Upload document</button>
+        <button class="btn">Request approval</button>
+        <button class="btn btn-primary" style="margin-left:auto;">Generate report</button>
+      </div>
+    </div>
+  `;
+}
+
+function openReport() {
+  document.getElementById("report-modal").classList.add("open");
+}
+
+function closeReport() {
+  document.getElementById("report-modal").classList.remove("open");
+}
+
+renderBoard();
+renderDetail();
+</script>
+</body>
+</html>
