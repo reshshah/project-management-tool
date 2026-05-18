@@ -10,7 +10,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:12px;line-height:1.4;-webkit-font-smoothing:antialiased}
 .app{display:flex;min-height:100vh}
-.sidebar{width:210px;flex-shrink:0;background:var(--text);display:flex;flex-direction:column;height:100vh;position:sticky;top:0;overflow-y:auto}
+.sidebar{width:214px;flex-shrink:0;background:var(--text);display:flex;flex-direction:column;height:100vh;position:sticky;top:0;overflow-y:auto}
 .logo{padding:16px 14px 14px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .logo-eyebrow{font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.3);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:4px}
 .logo-name{font-size:14px;font-weight:600;color:#fff;letter-spacing:-0.02em}
@@ -24,6 +24,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .nav-badge{margin-left:auto;font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:8px;background:rgba(248,113,113,0.2);color:#FCA5A5;border:1px solid rgba(248,113,113,0.2)}
 .nav-badge.amber{background:rgba(251,191,36,0.15);color:#FCD34D;border-color:rgba(251,191,36,0.2)}
 .nav-badge.coral{background:rgba(251,146,60,0.2);color:#FDBA74;border-color:rgba(251,146,60,0.2)}
+.nav-badge.green{background:rgba(74,222,128,0.15);color:#6EE7B7;border-color:rgba(74,222,128,0.2)}
 .sb-bottom{margin-top:auto;padding:10px;border-top:1px solid rgba(255,255,255,0.08)}
 .sb-metric{display:flex;justify-content:space-between;align-items:center;padding:3px 4px;font-size:10px;color:rgba(255,255,255,0.3)}
 .sb-val{font-family:var(--mono);font-size:11px;font-weight:500;color:rgba(255,255,255,0.6)}
@@ -40,10 +41,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .btn-primary:hover{background:#333}
 .btn-blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
 .btn-blue:hover{background:#dce8f9}
+.btn-grey{background:var(--surface2);color:var(--text2);border-color:var(--border2)}
+.btn-grey:hover{background:var(--surface3);color:var(--text);border-color:var(--border2)}
+.btn-red{background:var(--red-bg);color:var(--red);border-color:var(--red-bd)}
 .int-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:5px 20px;display:flex;align-items:center;gap:7px;font-size:10px;color:var(--text3)}
 .int-chip{display:flex;align-items:center;gap:4px;padding:2px 8px;border:1px solid var(--border);border-radius:20px;color:var(--text3);font-size:10px;background:var(--surface2)}
 .int-dot{width:4px;height:4px;border-radius:50%;background:var(--border2)}
 .int-dot.on{background:#16a34a}
+.alert-bar{background:var(--red-bg);border-bottom:1px solid var(--red-bd);padding:7px 20px;display:flex;align-items:center;gap:12px;font-size:11px;color:var(--red)}
+.alert-item{display:flex;align-items:center;gap:5px}
+.alert-dot{width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0}
 .stats-strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);background:var(--surface)}
 .stat-cell{padding:12px 20px;border-right:1px solid var(--border)}
 .stat-cell:last-child{border-right:none}
@@ -56,36 +63,47 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .view-tabs{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:2px;gap:2px}
 .vtab{padding:4px 10px;font-size:11px;border-radius:4px;cursor:pointer;color:var(--text3);transition:all 0.12s;font-weight:500}
 .vtab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,0.06)}
-.filters{display:flex;gap:5px;align-items:center}
 .fchip{padding:3px 10px;border-radius:20px;font-size:10px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--text2);transition:all 0.12s;font-weight:500}
 .fchip:hover{border-color:var(--border2);color:var(--text)}
 .fchip.active{background:var(--text);color:#fff;border-color:var(--text)}
-.kanban{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:start}
+.kanban{display:flex;flex-direction:column;gap:12px}
+.kanban-row{display:grid;gap:6px;align-items:start}
+.kanban-row.row1{grid-template-columns:repeat(5,minmax(0,1fr))}
+.kanban-row.row2{grid-template-columns:repeat(3,minmax(0,1fr))}
+.kanban-divider{display:flex;align-items:center;gap:10px;margin:2px 0}
+.kanban-divider-line{flex:1;height:1px;background:var(--border)}
+.kanban-divider-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text3);white-space:nowrap}
 .col{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
-.col-head{padding:8px 10px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between}
-.col-name{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-weight:500}
-.col-count{font-family:var(--mono);font-size:9px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1px 6px}
-.col-body{padding:6px;display:flex;flex-direction:column;gap:5px;min-height:120px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:9px;cursor:pointer;transition:all 0.12s}
+.col-head{padding:7px 9px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between}
+.col-name{font-family:var(--mono);font-size:7px;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-weight:500}
+.col-count{font-family:var(--mono);font-size:9px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1px 5px}
+.col-body{padding:5px;display:flex;flex-direction:column;gap:5px;min-height:100px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px;cursor:pointer;transition:all 0.12s}
 .card:hover{border-color:var(--border2);box-shadow:0 1px 4px rgba(0,0,0,0.06)}
 .card.sel{border-color:var(--blue);border-width:1.5px}
-.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.type-pill{font-family:var(--mono);font-size:8px;font-weight:500;padding:1px 6px;border-radius:3px;letter-spacing:0.04em}
-.tp-IND{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.card.overdue{border-left:3px solid var(--red)}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.type-pill{font-family:var(--mono);font-size:7px;font-weight:500;padding:1px 5px;border-radius:3px;letter-spacing:0.04em}
+.tp-IND,.tp-IDE,.tp-510{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.tp-De,.tp-DNov{background:var(--coral-bg);color:var(--coral);border:1px solid var(--coral-bd)}
+.tp-PMA{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bd)}
+.tp-EUA{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
 .urgency{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .urg-high{background:var(--red)}.urg-med{background:#B45309}.urg-low{background:var(--green)}
-.card-name{font-size:11px;font-weight:500;color:var(--text);margin-bottom:6px;line-height:1.3}
+.card-name{font-size:10px;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.3}
 .card-flags{display:flex;flex-wrap:wrap;gap:3px}
-.flag{font-family:var(--mono);font-size:8px;padding:1px 5px;border-radius:3px;font-weight:500}
+.flag{font-family:var(--mono);font-size:7px;padding:1px 4px;border-radius:3px;font-weight:500}
 .fl-miss{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
 .fl-pend{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
 .fl-ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
-.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:7px;padding-top:6px;border-top:1px solid var(--border)}
-.card-owner{font-size:9px;color:var(--text3)}
-.card-date{font-family:var(--mono);font-size:8px;color:var(--text3)}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding-top:5px;border-top:1px solid var(--border)}
+.card-owner{font-size:8px;color:var(--text3)}
+.card-date{font-family:var(--mono);font-size:7px;color:var(--text3)}
 .detail-panel{margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
 .detail-head{padding:12px 16px;border-bottom:1px solid var(--border)}
-.detail-title{font-size:14px;font-weight:600;letter-spacing:-0.02em;margin-bottom:5px}
+.detail-title{font-size:14px;font-weight:600;letter-spacing:-0.02em;margin-bottom:5px;outline:none;border-bottom:1px dashed transparent;transition:border-color 0.15s}
+.detail-title:focus{border-bottom-color:var(--blue)}
+.detail-title[contenteditable]{cursor:text}
 .detail-meta{display:flex;flex-wrap:wrap;gap:12px}
 .meta-item{font-size:10px;color:var(--text3)}
 .detail-body{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -100,17 +118,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .ddot-ok{background:var(--green)}.ddot-miss{background:var(--red)}
 .upload-btn{font-size:9px;padding:2px 7px;border-radius:3px;border:1px solid var(--blue-bd);background:var(--blue-bg);color:var(--blue);cursor:pointer;font-family:var(--font);font-weight:500;white-space:nowrap;flex-shrink:0}
 .upload-done{font-size:9px;padding:2px 7px;border-radius:3px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);font-weight:500;white-space:nowrap;flex-shrink:0;font-family:var(--mono)}
-.appr-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px}
+.appr-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px}
 .appr-row:last-child{border-bottom:none}
-.appr-name{color:var(--text2)}
-.appr-tag{font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:0.04em;font-weight:500}
+.appr-name{color:var(--text2);flex:1;min-width:0}
+.appr-tag{font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:0.04em;font-weight:500;cursor:pointer;flex-shrink:0}
 .at-approved{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
 .at-pending{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
 .at-needed{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.notify-btn{font-size:9px;padding:2px 6px;border-radius:3px;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);cursor:pointer;font-family:var(--font);white-space:nowrap;flex-shrink:0}
 .tl-row{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px}
 .tl-row:last-child{border-bottom:none}
 .tl-date{font-family:var(--mono);font-size:9px;color:var(--text3);min-width:55px;padding-top:1px;flex-shrink:0}
-.tl-event{color:var(--text2)}
+.tl-event{color:var(--text2);flex:1}
 .detail-foot{padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:7px;background:var(--surface2)}
 .empty-detail{margin-top:12px;padding:24px;text-align:center;color:var(--text3);font-size:11px;border:1px dashed var(--border2);border-radius:var(--rl)}
 .list-view{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
@@ -126,8 +145,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .gantt-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
 .gantt-row{display:flex;border-bottom:1px solid var(--border);cursor:pointer}
 .gantt-row:hover{background:var(--surface2)}
-.gantt-label{padding:10px 14px;border-right:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;justify-content:center;gap:3px;width:220px}
-.gantt-protocol-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.2}
 /* REGULATORY */
 .reg-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .reg-track{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;display:flex;flex-direction:column}
@@ -139,14 +156,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .pb-dn{background:var(--coral-bg);color:var(--coral);border:1px solid var(--coral-bd)}
 .reg-progress{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
 .prog-wrap{flex:1;height:6px;background:var(--surface2);border-radius:3px;border:1px solid var(--border);overflow:hidden}
-.prog-fill{height:100%;border-radius:3px}
+.prog-fill{height:100%;border-radius:3px;transition:width 0.3s}
 .prog-pct{font-family:var(--mono);font-size:10px;color:var(--text3);min-width:30px;text-align:right}
 .reg-steps{padding:0 16px;overflow-y:auto;max-height:540px}
-.phase-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);padding:10px 0 5px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:500;position:sticky;top:0;background:var(--surface)}
-.step-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.phase-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);padding:10px 0 5px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:500;position:sticky;top:0;background:var(--surface);z-index:1}
+.step-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s}
 .step-row:last-child{border-bottom:none}
+.step-row:hover{background:var(--surface2);margin:0 -16px;padding:8px 16px}
 .step-num{font-family:var(--mono);font-size:9px;color:var(--text3);min-width:18px;padding-top:2px;flex-shrink:0}
-.step-icon{width:18px;height:18px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;margin-top:1px;font-weight:600}
+.step-icon{width:18px;height:18px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;margin-top:1px;font-weight:600;transition:all 0.15s}
 .si-done{background:var(--green-bg);border:1px solid var(--green-bd);color:var(--green)}
 .si-active{background:var(--blue-bg);border:1px solid var(--blue-bd);color:var(--blue)}
 .si-waiting{background:var(--amber-bg);border:1px solid var(--amber-bd);color:var(--amber)}
@@ -155,9 +173,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .step-content{flex:1}
 .step-name{font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px}
 .step-desc{font-size:10px;color:var(--text3);line-height:1.4}
-.step-docs{margin-top:4px;display:flex;flex-wrap:wrap;gap:3px}
-.doc-chip{font-size:9px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-family:var(--mono)}
-.step-tag{font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;margin-top:4px;display:inline-block}
+.step-docs{margin-top:5px;display:flex;flex-wrap:wrap;gap:3px}
+.doc-chip{font-size:9px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-family:var(--mono);cursor:pointer;transition:all 0.12s}
+.doc-chip:hover{border-color:var(--blue-bd);color:var(--blue)}
+.doc-chip.uploaded{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
+.step-tag{font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;display:inline-block;margin-top:4px}
 .st-done{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
 .st-active{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
 .st-waiting{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
@@ -167,16 +187,68 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .reg-legend{display:flex;gap:12px;padding:10px 16px;border-top:1px solid var(--border);background:var(--surface2);flex-wrap:wrap}
 .leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3)}
 .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 16px;border-radius:var(--rl);font-size:12px;z-index:200;opacity:0;transition:opacity 0.2s;pointer-events:none}
-.toast.show{opacity:1}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center}
+/* COMMAND CENTER */
+.cc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.cc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:14px 16px}
+.cc-card-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text3);margin-bottom:6px}
+.cc-card-num{font-size:28px;font-weight:300;letter-spacing:-0.04em;line-height:1;font-family:var(--mono);color:var(--text)}
+.cc-card-delta{font-size:9px;color:var(--text3);margin-top:3px}
+.cc-card-delta.pos{color:var(--green)}
+.cc-card-delta.neg{color:var(--red)}
+.cc-row2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.cc-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.cc-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.cc-panel-head{padding:10px 14px;border-bottom:1px solid var(--border);font-weight:500;font-size:12px;display:flex;align-items:center;justify-content:space-between}
+.cc-panel-body{padding:12px 14px}
+.enroll-wrap{display:flex;align-items:center;gap:16px}
+.enroll-circle{position:relative;width:80px;height:80px;flex-shrink:0}
+.enroll-circle svg{transform:rotate(-90deg)}
+.enroll-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:500;color:var(--text)}
+.enroll-detail{flex:1}
+.enroll-line{font-size:11px;color:var(--text2);margin-bottom:4px}
+.enroll-bar-wrap{height:5px;background:var(--surface2);border-radius:3px;border:1px solid var(--border);overflow:hidden;margin-top:2px}
+.enroll-bar-fill{height:100%;border-radius:3px;background:var(--blue)}
+.status-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px}
+.status-row:last-child{border-bottom:none}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sd-green{background:var(--green)}.sd-amber{background:#B45309}.sd-red{background:var(--red)}
+.status-label{flex:1;color:var(--text2)}
+.status-count{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text)}
+.task-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px}
+.task-row:last-child{border-bottom:none}
+.task-badge{font-family:var(--mono);font-size:9px;padding:1px 6px;border-radius:3px;font-weight:500;flex-shrink:0}
+.task-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.task-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
+.task-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.task-text{color:var(--text2);flex:1}
+.milestone-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px}
+.milestone-row:last-child{border-bottom:none}
+.milestone-name{color:var(--text2);flex:1}
+.milestone-date{font-family:var(--mono);font-size:9px;color:var(--text3)}
+/* AI CHAT */
+.ai-panel{display:flex;flex-direction:column;height:300px}
+.ai-messages{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:8px}
+.ai-msg{padding:8px 10px;border-radius:6px;font-size:11px;line-height:1.5;max-width:90%}
+.ai-msg.user{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);align-self:flex-end}
+.ai-msg.bot{background:var(--surface2);color:var(--text2);border:1px solid var(--border);align-self:flex-start}
+.ai-suggestions{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.ai-suggestion{font-size:10px;padding:3px 8px;border-radius:12px;border:1px solid var(--blue-bd);background:var(--blue-bg);color:var(--blue);cursor:pointer}
+.ai-suggestion:hover{background:#dce8f9}
+.ai-input-row{display:flex;gap:6px;margin-top:6px}
+.ai-input{flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:6px 10px;font-size:11px;color:var(--text);font-family:var(--font);outline:none}
+.ai-input:focus{border-color:var(--blue)}
+.ai-send{padding:6px 12px;border-radius:var(--r);background:var(--blue);color:#fff;border:none;cursor:pointer;font-size:11px;font-family:var(--font);font-weight:500}
+.ai-send:hover{background:#1640a0}
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
-.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);width:480px;max-height:80vh;overflow-y:auto}
-.modal-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);width:520px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
+.modal-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--surface);z-index:1}
 .modal-title{font-size:13px;font-weight:600}
 .modal-close{cursor:pointer;color:var(--text3);font-size:15px;padding:4px;line-height:1}
+.modal-close:hover{color:var(--text)}
 .modal-body{padding:16px 18px}
-.modal-foot{padding:10px 18px;border-top:1px solid var(--border);display:flex;gap:7px;justify-content:flex-end;background:var(--surface2)}
+.modal-foot{padding:10px 18px;border-top:1px solid var(--border);display:flex;gap:7px;justify-content:flex-end;background:var(--surface2);position:sticky;bottom:0}
 .r-section{margin-bottom:16px}
 .r-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text3);margin-bottom:7px}
 .r-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text2)}
@@ -184,747 +256,1470 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .r-val{font-family:var(--mono);color:var(--text)}
 .r-val.red{color:var(--red)}.r-val.amber{color:#B45309}.r-val.green{color:var(--green)}
 .note-bar{background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:var(--r);padding:7px 10px;font-size:10px;color:var(--amber);margin-bottom:12px;font-family:var(--mono)}
-.modal-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:11px;color:var(--text);font-family:var(--font);outline:none}
+.success-bar{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--green);font-weight:500;text-align:center}
+.form-group{margin-bottom:12px}
+.form-label{font-size:11px;font-weight:500;color:var(--text2);margin-bottom:4px;display:block}
+.form-label small{font-weight:400;color:var(--text3);margin-left:4px}
+.form-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:11px;color:var(--text);font-family:var(--font);outline:none;transition:border-color 0.12s}
+.form-input:focus{border-color:var(--blue)}
+.form-select{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:11px;color:var(--text);font-family:var(--font);outline:none;cursor:pointer}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.priority-legend{display:flex;gap:10px;margin-top:5px;flex-wrap:wrap}
+.pl-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2)}
+.pl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.doc-add-row{display:flex;gap:6px;margin-top:8px}
+.doc-checkbox-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px}
+.appr-suggest{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:6px 0;margin-top:2px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.appr-suggest-item{padding:6px 12px;font-size:11px;cursor:pointer;color:var(--text2)}
+.appr-suggest-item:hover{background:var(--surface2);color:var(--text)}
+.appr-email{font-size:10px;color:var(--text3);font-family:var(--mono)}
+.send-preview{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;font-size:11px;color:var(--text2);margin-bottom:10px}
+.send-preview strong{color:var(--text);display:block;margin-bottom:4px}
+.schedule-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.settings-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px}
+.settings-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.settings-head{padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between}
+.settings-title{font-size:13px;font-weight:600}
+.settings-body{padding:14px 16px}
+.user-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.user-row:last-child{border-bottom:none}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:var(--blue-bg);border:1px solid var(--blue-bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--blue);flex-shrink:0}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:12px;font-weight:500;color:var(--text)}
+.user-email{font-size:10px;color:var(--text3);font-family:var(--mono)}
+.perm-table{width:100%;border-collapse:collapse;font-size:11px}
+.perm-table th{padding:6px 10px;text-align:left;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);border-bottom:1px solid var(--border);background:var(--surface2)}
+.perm-table td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle}
+.perm-table tr:last-child td{border-bottom:none}
+.perm-check{color:var(--green);font-size:13px}
+.perm-cross{color:var(--red-bd);font-size:13px}
+.current-user-bar{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.role-switch-row{display:flex;gap:6px;flex-wrap:wrap}
+.role-switch-btn{font-size:10px;padding:3px 10px;border-radius:20px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);transition:all 0.12s}
+.role-switch-btn:hover{border-color:var(--border2);color:var(--text)}
+.role-switch-btn.active-role{background:var(--text);color:#fff;border-color:var(--text)}
+.settings-full{grid-column:span 2}
+.org-field{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:11px;gap:10px}
+.org-field:last-child{border-bottom:none}
+.org-label{color:var(--text3);min-width:140px;font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.06em}
+.org-val{color:var(--text2);flex:1}background:var(--text);color:#fff;padding:10px 16px;border-radius:var(--rl);font-size:12px;z-index:200;opacity:0;transition:all 0.2s;pointer-events:none;max-width:320px;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.toast.show{opacity:1}
+.toast.green-t{background:var(--green)}
+.toast.blue-t{background:var(--blue)}
 </style>
 </head>
 <body>
 <div class="app">
-
 <aside class="sidebar">
   <div class="logo">
     <div class="logo-eyebrow">FDA Regulatory</div>
     <div class="logo-name">Protocol Hub</div>
-    <div class="logo-sub">Clinical &amp; regulatory tracker</div>
+    <div class="logo-sub">Clinical &amp; Regulatory Tracker</div>
   </div>
-
   <div class="nav-section">Clinical</div>
+  <div class="nav-item" id="nav-command" onclick="navTo('command')">
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6"/></svg>
+    Command center
+  </div>
   <div class="nav-item active" id="nav-kanban" onclick="navTo('kanban')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
     Protocol board
   </div>
   <div class="nav-item" id="nav-list" onclick="navTo('list')">
-    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
     Documents
-    <span class="nav-badge" id="sb-doc-badge">3</span>
   </div>
   <div class="nav-item" id="nav-timeline" onclick="navTo('timeline')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
     Timeline
-    <span class="nav-badge amber">3</span>
   </div>
-
   <div class="nav-section">Regulatory</div>
   <div class="nav-item" id="nav-regulatory" onclick="navTo('regulatory')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"/></svg>
-    Regulatory tracker
+    Regulatory Tracker
     <span class="nav-badge coral">2</span>
   </div>
-
   <div class="nav-section">General</div>
-  <div class="nav-item" onclick="navTo('kanban')">
+  <div class="nav-item" id="nav-report" onclick="openModal('report')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
     Reports
   </div>
-  <div class="nav-item" onclick="navTo('kanban')">
+  <div class="nav-item" id="nav-activity" onclick="openModal('activity')">
+    <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    Activity log
+  </div>
+  <div class="nav-item" id="nav-settings" onclick="navTo('settings')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
     Settings
   </div>
-
   <div class="sb-bottom">
     <div class="sb-metric"><span><span class="live-dot"></span>System</span><span class="sb-val green">Live</span></div>
+    <div class="sb-metric"><span>Protocols active</span><span class="sb-val green" id="sb-active">1</span></div>
     <div class="sb-metric"><span>Missing docs</span><span class="sb-val red" id="sb-missing">3</span></div>
-    <div class="sb-metric"><span>Reg. pathways</span><span class="sb-val coral">2 active</span></div>
     <div class="sb-metric"><span>Quarter</span><span class="sb-val">Q2 2026</span></div>
+    <div style="border-top:1px solid rgba(255,255,255,0.08);margin-top:8px;padding-top:8px;">
+      <div style="display:flex;align-items:center;gap:8px;padding:4px;">
+        <div style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0;" id="sb-avatar">RS</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:11px;color:#fff;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sb-username">Resh Shah</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);font-family:var(--mono);" id="sb-role">admin</div>
+        </div>
+      </div>
+    </div>
   </div>
 </aside>
-
 <main class="main" id="main"></main>
 </div>
-
 <div class="toast" id="toast"></div>
 <input type="file" id="file-input" style="display:none">
-
-<div class="modal-bg" id="modal">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">Weekly status report — w/c 5 May 2026</div>
-      <div class="modal-close" onclick="closeModal()">&#x2715;</div>
-    </div>
-    <div class="modal-body">
-      <div class="note-bar">Placeholder — auto-generates and emails to group head every Monday 08:00</div>
-      <div class="r-section">
-        <div class="r-label">Clinical summary</div>
-        <div class="r-row"><span>Active protocols</span><span class="r-val">1</span></div>
-        <div class="r-row"><span>Missing documents</span><span class="r-val red" id="rpt-missing">3</span></div>
-        <div class="r-row"><span>Pending approvals</span><span class="r-val amber">3</span></div>
-      </div>
-      <div class="r-section">
-        <div class="r-label">Regulatory summary</div>
-        <div class="r-row"><span>510(k) — CardioSense ECG hardware</span><span class="r-val" style="color:var(--blue)">Pre-submission</span></div>
-        <div class="r-row"><span>De Novo — CardioSense AI algorithm</span><span class="r-val" style="color:var(--coral)">Pre-submission</span></div>
-      </div>
-      <div class="r-section">
-        <div class="r-label">Send to</div>
-        <input class="modal-input" type="email" placeholder="group.head@company.com">
-      </div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary">Send report</button>
-    </div>
-  </div>
-</div>
-
+<div class="modal-bg" id="modal-bg"><div class="modal" id="modal-box"></div></div>
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────────
-
-var protocol = {
-  id: 1, name: "CardioSense ECG — Phase II Clinical Study", type: "IND",
-  stage: 1, urgency: "high", owner: "Dr. Mehta", date: "Jun 30",
-  startMonth: 1, endMonth: 6, submitMonth: 6,
-  docs: [
-    {id:"d1", n:"Form FDA 1571", ok:true},
-    {id:"d2", n:"Investigator Brochure (v2)", ok:true},
-    {id:"d3", n:"Protocol synopsis", ok:false},
-    {id:"d4", n:"Informed consent form", ok:true},
-    {id:"d5", n:"Statistical analysis plan", ok:false},
-    {id:"d6", n:"Case report forms (CRFs)", ok:false}
-  ],
-  approvals: [
-    {n:"Principal Investigator (Dr. Mehta)", s:"approved"},
-    {n:"Medical Monitor", s:"pending"},
-    {n:"Regulatory Affairs Lead", s:"needed"},
-    {n:"Legal / Compliance", s:"needed"}
-  ],
-  timeline: [
-    {d:"Feb 10", e:"IND submitted to FDA"},
-    {d:"Mar 12", e:"30-day FDA review — no clinical hold"},
-    {d:"Apr 1",  e:"Site initiation visit completed"},
-    {d:"Jun 30", e:"Target: Phase II enrollment complete"}
-  ]
+var APPROVER_EMAILS = {
+  "Principal Investigator": "pi@cardiosense.com",
+  "Dr. Mehta": "r.mehta@cardiosense.com",
+  "Medical Monitor": "medmonitor@cardiosense.com",
+  "Regulatory Affairs Lead": "ra.lead@cardiosense.com",
+  "Legal / Compliance": "legal@cardiosense.com",
+  "Legal": "legal@cardiosense.com",
+  "Compliance": "compliance@cardiosense.com"
 };
 
-var stages = [
-  {l:"Pre-submission", k:0}, {l:"In preparation", k:1},
-  {l:"Internal review", k:2}, {l:"Pending approval", k:3}, {l:"Submitted", k:4}
+function getApproverEmail(name) {
+  for (var k in APPROVER_EMAILS) {
+    if (name.toLowerCase().indexOf(k.toLowerCase()) !== -1) return APPROVER_EMAILS[k];
+  }
+  return name.toLowerCase().replace(/[^a-z]/g,"") + "@cardiosense.com";
+}
+
+var DEFAULT_PROTOCOLS = [{
+  id:1, name:"CardioSense ECG — Phase II Clinical Study", type:"IDE",
+  stage:3, urgency:"high", owner:"Dr. Mehta", ownerEmail:"r.mehta@cardiosense.com",
+  date:"2026-06-30", startMonth:1, endMonth:6, submitMonth:6,
+  docs:[
+    {id:"d1",n:"Form FDA 1571",ok:true,file:""},
+    {id:"d2",n:"Investigator Brochure (v2)",ok:true,file:""},
+    {id:"d3",n:"Protocol synopsis",ok:false,file:""},
+    {id:"d4",n:"Informed consent form",ok:true,file:""},
+    {id:"d5",n:"Statistical analysis plan",ok:false,file:""},
+    {id:"d6",n:"Case report forms (CRFs)",ok:false,file:""}
+  ],
+  approvals:[
+    {n:"Principal Investigator (Dr. Mehta)",s:"approved"},
+    {n:"Medical Monitor",s:"pending"},
+    {n:"Regulatory Affairs Lead",s:"needed"},
+    {n:"Legal / Compliance",s:"needed"}
+  ],
+  timeline:[
+    {d:"Feb 10",e:"IND submitted to FDA"},
+    {d:"Mar 12",e:"30-day FDA review — no clinical hold"},
+    {d:"Apr 1",e:"Site initiation visit completed"},
+    {d:"Jun 30",e:"Target: Phase II enrollment complete"}
+  ]
+}];
+
+var DEFAULT_STEPS_510K = [
+  {phase:"Phase 1 — Pre-submission",steps:[
+    {id:"s1",n:"Classify device",desc:"Confirm Class II under 21 CFR 870.2340. Identify predicate: iRhythm Zio Patch (K192614).",status:"done",date:"Jan 2026",docs:["Device classification memo","Predicate search report"],uploaded:{}},
+    {id:"s2",n:"Pre-submission Q-Sub meeting",desc:"Request Q-Sub with FDA to align on testing requirements, software level, and predicate strategy.",status:"done",date:"Feb 2026",docs:["Q-Sub request letter","FDA meeting minutes"],uploaded:{}},
+    {id:"s3",n:"Substantial equivalence analysis",desc:"Document same intended use and technological characteristics as predicate.",status:"done",date:"Feb 2026",docs:["SE comparison table","Predicate device labeling"],uploaded:{}},
+    {id:"s4",n:"Design & performance testing",desc:"Bench: signal accuracy, electrode impedance, battery life, EMC/EMI.",status:"done",date:"Mar 2026",docs:["Bench test report","Clinical performance data","Biocompatibility — ISO 10993"],uploaded:{}},
+    {id:"s5",n:"Software documentation (SaMD Level 2)",desc:"Software Description Document, risk management per IEC 62304, hazard analysis.",status:"done",date:"Mar 2026",docs:["Software Description Document","IEC 62304 lifecycle records","Cybersecurity plan"],uploaded:{}},
+    {id:"s6",n:"Labeling & IFU draft",desc:"Draft Instructions for Use, device labeling, indications for use.",status:"active",date:"Apr 2026",docs:["Draft IFU","Indications for use statement"],uploaded:{}}
+  ]},
+  {phase:"Phase 2 — Submission",steps:[
+    {id:"s7",n:"Compile 510(k) package",desc:"Assemble all sections: cover letter, SE discussion, performance testing, software, labeling.",status:"active",date:"May 2026",docs:["510(k) cover letter","Complete submission package"],uploaded:{}},
+    {id:"s8",n:"Submit via FDA eSTAR portal",desc:"Submit electronically. Pay MDUFA user fee (~$22,205 small business rate).",status:"todo",date:"May 2026",docs:["eSTAR submission file","MDUFA fee payment confirmation"],uploaded:{}}
+  ]},
+  {phase:"Phase 3 — FDA Review (90-day clock)",steps:[
+    {id:"s9",n:"Acceptance review (Day 1–15)",desc:"FDA confirms submission is complete. Refusal to Accept (RTA) possible if deficiencies found.",status:"waiting",date:"Jun 2026",docs:[],uploaded:{}},
+    {id:"s10",n:"Substantive review",desc:"FDA evaluates SE, performance data, labeling. May issue Additional Information (AI) request.",status:"todo",date:"Jun–Aug 2026",docs:[],uploaded:{}},
+    {id:"s11",n:"Respond to Additional Information",desc:"Prepare written response to FDA AI request. Clock restarts upon FDA receipt.",status:"todo",date:"TBD",docs:["AI response letter","Supplemental test data"],uploaded:{}}
+  ]},
+  {phase:"Phase 4 — FDA Decision",steps:[
+    {id:"s12",n:"FDA decision issued",desc:"FDA issues clearance letter with K-number, or requests additional information. Decision expected within 90 days.",status:"todo",date:"Aug 2026",docs:["FDA decision letter"],uploaded:{}},
+    {id:"s13",n:"510(k) clearance received",desc:"Device may now be commercially distributed in the US. K-number assigned.",status:"todo",date:"Aug 2026",docs:["FDA clearance letter (K-number)"],uploaded:{}}
+  ]},
+  {phase:"Phase 5 — Post-Market",steps:[
+    {id:"s14",n:"Post-market obligations",desc:"Register establishment, list device, implement MDR procedures and complaint handling system.",status:"todo",date:"Sep 2026",docs:["FDA establishment registration","Device listing (eList)","MDR procedures SOP"],uploaded:{}}
+  ]}
 ];
 
-var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"];
+var DEFAULT_STEPS_DN = [
+  {phase:"Phase 1 — Pre-submission (longer runway)",steps:[
+    {id:"dn1",n:"Confirm De Novo eligibility",desc:"Verify no predicate for AI/ML AF detection algorithm. Confirm Class II moderate-risk profile.",status:"done",date:"Nov 2025",docs:["De Novo eligibility memo","Predicate search — negative"],uploaded:{}},
+    {id:"dn2",n:"Pre-submission Q-Sub meeting",desc:"Align with FDA on AI/ML documentation, clinical validation design, and proposed special controls.",status:"done",date:"Jan 2026",docs:["Q-Sub request","FDA meeting minutes","AI/ML documentation plan"],uploaded:{}},
+    {id:"dn3",n:"Algorithm development & validation",desc:"Train on 50,000+ labeled ECG recordings. Validate on independent dataset.",status:"done",date:"Feb 2026",docs:["Algorithm validation report","Training/test dataset description","Model performance metrics"],uploaded:{}},
+    {id:"dn4",n:"Clinical study — AI algorithm",desc:"Prospective study comparing AI detection vs. cardiologist adjudication. 1,000+ subjects.",status:"active",date:"Mar–May 2026",docs:["Clinical study protocol (IRB approved)","Interim data analysis","Final study report (pending)"],uploaded:{}},
+    {id:"dn5",n:"AI/ML & PCCP documentation",desc:"Predetermined Change Control Plan, SaMD risk categorization, IEC 62304, Algorithm Change Protocol.",status:"active",date:"Apr 2026",docs:["PCCP","SaMD risk categorization","IEC 62304 records","Algorithm Change Protocol"],uploaded:{}},
+    {id:"dn6",n:"Cybersecurity documentation",desc:"Threat model, SBOM, security testing, postmarket cybersecurity plan per FDA 2023 guidance.",status:"todo",date:"May 2026",docs:["Cybersecurity threat model","SBOM","Security test report"],uploaded:{}}
+  ]},
+  {phase:"Phase 2 — Submission",steps:[
+    {id:"dn7",n:"Compile De Novo request",desc:"Assemble: cover letter, device description, proposed classification, special controls, clinical data.",status:"todo",date:"Jun 2026",docs:["De Novo request package","Proposed special controls","Draft classification regulation"],uploaded:{}},
+    {id:"dn8",n:"Submit De Novo request",desc:"Submit via FDA eSTAR. Pay user fee (~$32,500 small business). FDA has 150 calendar days.",status:"todo",date:"Jun 2026",docs:["eSTAR submission","MDUFA fee confirmation"],uploaded:{}}
+  ]},
+  {phase:"Phase 3 — FDA Review (150-day clock)",steps:[
+    {id:"dn9",n:"Acceptance review",desc:"FDA reviews completeness. If accepted, 150-day clock starts. RTA issued if deficiencies found.",status:"todo",date:"Jul 2026",docs:[],uploaded:{}},
+    {id:"dn10",n:"Substantive review & AI deep dive",desc:"FDA reviews algorithm validation, clinical data, special controls, PCCP.",status:"todo",date:"Jul–Oct 2026",docs:[],uploaded:{}},
+    {id:"dn11",n:"Respond to Deficiency Letter",desc:"Written responses, supplemental clinical data, updated algorithm documentation.",status:"todo",date:"TBD",docs:["Deficiency response letter","Supplemental clinical data","Updated PCCP"],uploaded:{}},
+    {id:"dn12",n:"Advisory panel (if applicable)",desc:"FDA may convene advisory committee for novel AI diagnostic claims.",status:"todo",date:"TBD",docs:["Advisory panel presentation","Clinical evidence dossier"],uploaded:{}}
+  ]},
+  {phase:"Phase 4 — FDA Decision",steps:[
+    {id:"dn13",n:"FDA decision issued",desc:"FDA issues De Novo authorization order or additional information request. 150-day clock concludes.",status:"todo",date:"Nov 2026",docs:["FDA decision letter"],uploaded:{}},
+    {id:"dn14",n:"De Novo authorization granted",desc:"FDA issues order and classification regulation. Device becomes a predicate for future 510(k)s.",status:"todo",date:"Nov 2026",docs:["De Novo authorization letter","Classification regulation","New product code"],uploaded:{}}
+  ]},
+  {phase:"Phase 5 — Post-Market",steps:[
+    {id:"dn15",n:"Special controls implementation",desc:"Implement all special controls: labeling requirements, performance standards, post-market surveillance.",status:"todo",date:"Dec 2026",docs:["Special controls implementation plan","Updated labeling","PMS protocol"],uploaded:{}},
+    {id:"dn16",n:"Post-market surveillance & PCCP",desc:"Execute Predetermined Change Control Plan for algorithm updates. Submit annual performance reports.",status:"todo",date:"Ongoing",docs:["Annual performance report","PCCP update log","MDR SOPs"],uploaded:{}}
+  ]}
+];
 
-// ── REGULATORY DATA ───────────────────────────────────────────────────────────
+var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"];
+var STAGES = [
+  {l:"Concept & feasibility",k:0},{l:"Pre-submission",k:1},{l:"Protocol development",k:2},
+  {l:"Clinical execution",k:3},{l:"Regulatory submission",k:4},{l:"FDA review",k:5},
+  {l:"FDA decision",k:6},{l:"Post-market",k:7}
+];
+var TYPES = ["IND","IDE","510(k)","De Novo","PMA","EUA"];
 
-var track510k = {
-  title: "510(k) — ECG Hardware",
-  sub: "CardioSense ECG sensor & signal acquisition",
-  badge: "510(k)",
-  badgeClass: "pb-510k",
-  color: "var(--blue)",
-  phases: [
-    { label: "Phase 1 — Pre-submission", steps: [
-      { n:"Classify device", desc:"Confirm Class II under 21 CFR 870.2340. Identify predicate: iRhythm Zio Patch (K192614).", status:"done", date:"Jan 2026", docs:["Device classification memo","Predicate search report"] },
-      { n:"Pre-submission Q-Sub meeting", desc:"Request Q-Sub with FDA to align on testing requirements, software level, and predicate strategy.", status:"done", date:"Feb 2026", docs:["Q-Sub request letter","FDA meeting minutes"] },
-      { n:"Substantial equivalence analysis", desc:"Document same intended use and technological characteristics as predicate with no new safety questions.", status:"done", date:"Feb 2026", docs:["SE comparison table","Predicate device labeling"] },
-      { n:"Design & performance testing", desc:"Bench: signal accuracy, electrode impedance, battery life, EMC/EMI. Clinical: sensitivity/specificity vs. 12-lead ECG.", status:"done", date:"Mar 2026", docs:["Bench test report","Clinical performance data","Biocompatibility — ISO 10993"] },
-      { n:"Software documentation (SaMD Level 2)", desc:"Software Description Document, risk management per IEC 62304, hazard analysis, cybersecurity plan.", status:"done", date:"Mar 2026", docs:["Software Description Document","IEC 62304 lifecycle records","Cybersecurity plan"] },
-      { n:"Labeling & IFU draft", desc:"Draft Instructions for Use, device labeling, indications for use aligned with predicate.", status:"active", date:"Apr 2026", docs:["Draft IFU","Indications for use statement"] }
-    ]},
-    { label: "Phase 2 — Submission", steps: [
-      { n:"Compile 510(k) package", desc:"Assemble all sections: cover letter, indications for use, device description, SE discussion, performance testing, software, labeling.", status:"active", date:"May 2026", docs:["510(k) cover letter","Complete submission package"] },
-      { n:"Submit via FDA eSTAR portal", desc:"Submit electronically. Pay MDUFA user fee (~$22,205 small business rate).", status:"todo", date:"May 2026", docs:["eSTAR submission file","MDUFA fee payment confirmation"] }
-    ]},
-    { label: "Phase 3 — FDA Review (90-day clock)", steps: [
-      { n:"Acceptance review (Day 1–15)", desc:"FDA confirms submission is complete. Refusal to Accept (RTA) possible if deficiencies found.", status:"waiting", date:"Jun 2026", docs:[] },
-      { n:"Substantive review", desc:"FDA evaluates SE, performance data, labeling. May issue Additional Information (AI) request — clock stops.", status:"todo", date:"Jun–Aug 2026", docs:[] },
-      { n:"Respond to Additional Information", desc:"Prepare written response to FDA AI request. Clock restarts upon FDA receipt.", status:"todo", date:"TBD", docs:["AI response letter","Supplemental test data"] }
-    ]},
-    { label: "Phase 4 — Decision & Post-Market", steps: [
-      { n:"510(k) clearance received", desc:"FDA issues clearance letter with K-number. Device may now be commercially distributed in the US.", status:"todo", date:"Aug 2026", docs:["FDA clearance letter (K-number)"] },
-      { n:"Post-market obligations", desc:"Register establishment, list device, implement MDR procedures and complaint handling system.", status:"todo", date:"Sep 2026", docs:["FDA establishment registration","Device listing (eList)","MDR procedures SOP"] }
-    ]}
+var state = {
+  protocols: JSON.parse(JSON.stringify(DEFAULT_PROTOCOLS)),
+  steps510k: JSON.parse(JSON.stringify(DEFAULT_STEPS_510K)),
+  stepsDN: JSON.parse(JSON.stringify(DEFAULT_STEPS_DN)),
+  activityLog: [],
+  currentView: "kanban",
+  selectedId: null,
+  pendingUpload: null,
+  pendingRegUpload: null,
+  sortCol: "name", sortDir: 1,
+  reportSchedule: {day:"Monday", time:"08:00", email:""},
+  selectedCCProtocol: 1,
+  currentUser: {id:1, name:"Resh Shah", email:"resh.shah@cardiosense.com", role:"admin"},
+  users: [
+    {id:1, name:"Resh Shah", email:"resh.shah@cardiosense.com", role:"admin"},
+    {id:2, name:"Dr. Mehta", email:"r.mehta@cardiosense.com", role:"editor"},
+    {id:3, name:"Sarah Lin", email:"s.lin@cardiosense.com", role:"reviewer"},
+    {id:4, name:"James Obi", email:"j.obi@cardiosense.com", role:"viewer"}
+  ],
+  chatHistory: [
+    {role:"bot", text:"Hello! I'm your AI assistant for the CardioSense trial. I can summarize protocols, check enrollment status, identify risks, or answer questions about your submissions. How can I help?"}
   ]
 };
 
-var trackDeNovo = {
-  title: "De Novo — AI Algorithm",
-  sub: "CardioSense AI atrial fibrillation detection",
-  badge: "De Novo",
-  badgeClass: "pb-dn",
-  color: "var(--coral)",
-  phases: [
-    { label: "Phase 1 — Pre-submission (longer runway)", steps: [
-      { n:"Confirm De Novo eligibility", desc:"Verify no predicate for AI/ML AF detection algorithm. Confirm Class II moderate-risk profile.", status:"done", date:"Nov 2025", docs:["De Novo eligibility memo","Predicate search — negative"] },
-      { n:"Pre-submission Q-Sub meeting", desc:"Align with FDA on AI/ML documentation per Action Plan, clinical validation design, and proposed special controls.", status:"done", date:"Jan 2026", docs:["Q-Sub request","FDA meeting minutes","AI/ML documentation plan"] },
-      { n:"Algorithm development & validation", desc:"Train on 50,000+ labeled ECG recordings. Validate on independent dataset. Document architecture, training data, performance (sensitivity ≥97%, specificity ≥95%).", status:"done", date:"Feb 2026", docs:["Algorithm validation report","Training/test dataset description","Model performance metrics"] },
-      { n:"Clinical study — AI algorithm", desc:"Prospective study comparing AI detection vs. cardiologist adjudication. 1,000+ subjects, 24-hour wear.", status:"active", date:"Mar–May 2026", docs:["Clinical study protocol (IRB approved)","Interim data analysis","Final study report (pending)"] },
-      { n:"AI/ML & PCCP documentation", desc:"Predetermined Change Control Plan, SaMD risk categorization, IEC 62304, Algorithm Change Protocol, transparency docs per FDA AI/ML guidance.", status:"active", date:"Apr 2026", docs:["PCCP","SaMD risk categorization","IEC 62304 records","Algorithm Change Protocol"] },
-      { n:"Cybersecurity documentation", desc:"Threat model, SBOM (Software Bill of Materials), security testing, postmarket cybersecurity plan per FDA 2023 guidance.", status:"todo", date:"May 2026", docs:["Cybersecurity threat model","SBOM","Security test report"] }
-    ]},
-    { label: "Phase 2 — Submission", steps: [
-      { n:"Compile De Novo request", desc:"Assemble: cover letter, device description, proposed classification, special controls, clinical data, AI/ML docs, labeling.", status:"todo", date:"Jun 2026", docs:["De Novo request package","Proposed special controls","Draft classification regulation"] },
-      { n:"Submit De Novo request", desc:"Submit via FDA eSTAR. Pay user fee (~$32,500 small business). FDA has 150 calendar days to respond.", status:"todo", date:"Jun 2026", docs:["eSTAR submission","MDUFA fee confirmation"] }
-    ]},
-    { label: "Phase 3 — FDA Review (150-day clock)", steps: [
-      { n:"Acceptance review", desc:"FDA reviews completeness. If accepted, 150-day clock starts. RTA issued if deficiencies found.", status:"todo", date:"Jul 2026", docs:[] },
-      { n:"Substantive review & AI deep dive", desc:"FDA reviews algorithm validation, clinical data, special controls, PCCP. Likely to issue Deficiency Letter.", status:"todo", date:"Jul–Oct 2026", docs:[] },
-      { n:"Respond to Deficiency Letter", desc:"Written responses, supplemental clinical data, updated algorithm documentation. Clock extension possible.", status:"todo", date:"TBD", docs:["Deficiency response letter","Supplemental clinical data","Updated PCCP"] },
-      { n:"Advisory panel (if applicable)", desc:"FDA may convene advisory committee for novel AI diagnostic claims. Prepare panel presentation.", status:"todo", date:"TBD", docs:["Advisory panel presentation","Clinical evidence dossier"] }
-    ]},
-    { label: "Phase 4 — Authorization & Post-Market", steps: [
-      { n:"De Novo authorization granted", desc:"FDA issues De Novo order and classification regulation. Device becomes a predicate for future 510(k)s.", status:"todo", date:"Nov 2026", docs:["De Novo authorization letter","Classification regulation","New product code"] },
-      { n:"Special controls implementation", desc:"Implement all special controls in De Novo order: labeling requirements, performance standards, post-market surveillance.", status:"todo", date:"Dec 2026", docs:["Special controls implementation plan","Updated labeling","PMS protocol"] },
-      { n:"Post-market surveillance & PCCP", desc:"Execute Predetermined Change Control Plan for algorithm updates. Submit annual performance reports. MDR active.", status:"todo", date:"Ongoing", docs:["Annual performance report","PCCP update log","MDR SOPs"] }
-    ]}
-  ]
+function loadState() {
+  try {
+    var raw = localStorage.getItem("protocolhub_v3");
+    if (raw) {
+      var p = JSON.parse(raw);
+      state.protocols = p.protocols || state.protocols;
+      state.steps510k = p.steps510k || state.steps510k;
+      state.stepsDN = p.stepsDN || state.stepsDN;
+      state.activityLog = p.activityLog || [];
+      state.reportSchedule = p.reportSchedule || state.reportSchedule;
+      state.chatHistory = p.chatHistory || state.chatHistory;
+      state.users = p.users || state.users;
+      state.currentUser = p.currentUser || state.currentUser;
+    }
+  } catch(e) {}
+}
+function saveState() {
+  try { localStorage.setItem("protocolhub_v3", JSON.stringify({protocols:state.protocols,steps510k:state.steps510k,stepsDN:state.stepsDN,activityLog:state.activityLog,reportSchedule:state.reportSchedule,chatHistory:state.chatHistory,users:state.users,currentUser:state.currentUser})); } catch(e) {}
+}
+
+loadState();
+
+function el(tag, cls) { var e = document.createElement(tag); if(cls) e.className=cls; return e; }
+function elText(tag, cls, text) { var e = el(tag, cls); e.textContent = text; return e; }
+
+// ── PERMISSIONS ───────────────────────────────────────────────────────────────
+var ROLES = {
+  admin:    {label:"Admin",    color:"var(--blue)",   bg:"var(--blue-bg)",   bd:"var(--blue-bd)"},
+  editor:   {label:"Editor",   color:"var(--teal)",   bg:"var(--teal-bg)",   bd:"var(--teal-bd)"},
+  reviewer: {label:"Reviewer", color:"var(--amber)",  bg:"var(--amber-bg)",  bd:"var(--amber-bd)"},
+  viewer:   {label:"Viewer",   color:"var(--text3)",  bg:"var(--surface2)",  bd:"var(--border)"}
 };
 
-// ── STATE ─────────────────────────────────────────────────────────────────────
+var PERMISSIONS = {
+  admin:    {canEdit:true,  canUpload:true,  canApprove:true,  canSettings:true,  canDelete:true},
+  editor:   {canEdit:true,  canUpload:true,  canApprove:true,  canSettings:false, canDelete:false},
+  reviewer: {canEdit:false, canUpload:false, canApprove:false, canSettings:false, canDelete:false},
+  viewer:   {canEdit:false, canUpload:false, canApprove:false, canSettings:false, canDelete:false}
+};
 
-var currentView = "kanban";
-var selectedId = null;
-var pendingUpload = null;
-var sortCol = "name", sortDir = 1;
-
-function missingCount() {
-  return protocol.docs.filter(function(d) { return !d.ok; }).length;
+function can(perm) {
+  var role = state.currentUser ? state.currentUser.role : "viewer";
+  var perms = PERMISSIONS[role] || PERMISSIONS.viewer;
+  return !!perms[perm];
 }
 
-function pendingCount() {
-  return protocol.approvals.filter(function(a) { return a.s !== "approved"; }).length;
+function rolePill(role) {
+  var r = ROLES[role] || ROLES.viewer;
+  var span = elText("span", "", r.label);
+  span.style.cssText = "font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:3px;font-weight:500;background:"+r.bg+";color:"+r.color+";border:1px solid "+r.bd+";";
+  return span;
 }
 
-// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function noAccessBanner(action) {
+  var bar = elText("div","note-bar","Your role ("+((state.currentUser&&state.currentUser.role)||"viewer")+") does not have permission to "+action+". Contact your Admin.");
+  bar.style.cssText="background:var(--red-bg);border:1px solid var(--red-bd);border-radius:var(--r);padding:8px 12px;font-size:11px;color:var(--red);margin-bottom:10px;";
+  return bar;
+}
+function missingFor(p) { return p.docs.filter(function(d){return !d.ok;}).length; }
+function pendingFor(p) { return p.approvals.filter(function(a){return a.s!=="approved";}).length; }
+function totalMissing() { return state.protocols.reduce(function(s,p){return s+missingFor(p);},0); }
+function isOverdue(p) { if(!p.date||p.date==="TBD"||p.date==="Submitted") return false; return new Date(p.date)<new Date() && p.stage<7; }
+function nowStr() { return new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"}); }
+function dateStr() { return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"}); }
+function logActivity(type, msg) { state.activityLog.unshift({type:type,msg:msg,time:nowStr(),date:dateStr()}); if(state.activityLog.length>50) state.activityLog.pop(); saveState(); }
+
+function showToast(msg, cls) {
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.className = "toast show" + (cls?" "+cls:"");
+  clearTimeout(t._t); t._t = setTimeout(function(){t.className="toast";},3500);
+}
 
 function navTo(view) {
-  document.querySelectorAll(".nav-item").forEach(function(el) { el.classList.remove("active"); });
-  var navEl = document.getElementById("nav-" + view);
-  if (navEl) navEl.classList.add("active");
-  currentView = view;
-  selectedId = null;
+  document.querySelectorAll(".nav-item").forEach(function(n){n.classList.remove("active");});
+  var ne = document.getElementById("nav-"+view);
+  if(ne) ne.classList.add("active");
+  state.currentView = view; state.selectedId = null;
   render();
 }
-
-// ── MAIN RENDER ───────────────────────────────────────────────────────────────
 
 function render() {
   var main = document.getElementById("main");
   main.innerHTML = "";
+  if (state.currentView === "regulatory") renderRegulatoryPage(main);
+  else if (state.currentView === "command") renderCommandCenter(main);
+  else if (state.currentView === "settings") renderSettingsPage(main);
+  else renderClinicalPage(main);
+  updateSidebarStats();
+}
 
-  if (currentView === "regulatory") {
-    renderRegulatoryPage(main);
-  } else {
-    renderClinicalPage(main);
+function updateSidebarStats() {
+  var sb = document.getElementById("sb-missing"); if(sb) sb.textContent = totalMissing();
+  var sa = document.getElementById("sb-active"); if(sa) sa.textContent = state.protocols.length;
+  var u = state.currentUser;
+  if(u) {
+    var av=document.getElementById("sb-avatar"); if(av) av.textContent=(u.name||"").split(" ").map(function(w){return w[0];}).join("").substring(0,2).toUpperCase();
+    var un=document.getElementById("sb-username"); if(un) un.textContent=u.name||"";
+    var ur=document.getElementById("sb-role"); if(ur) ur.textContent=u.role||"viewer";
   }
-}
-
-// ── CLINICAL PAGE ─────────────────────────────────────────────────────────────
-
-function renderClinicalPage(main) {
-  // Topbar
-  var topbar = el("div", "topbar");
-  var tl = el("div");
-  tl.appendChild(elText("div", "topbar-title", "Clinical protocol tracker"));
-  tl.appendChild(elText("div", "topbar-sub", "FDA · IND · CardioSense AI Wearable ECG · Q2 2026"));
-  topbar.appendChild(tl);
-  var tr = el("div", "topbar-right");
-  var rptBtn = elText("button", "btn", "Weekly report");
-  rptBtn.onclick = openModal;
-  tr.appendChild(rptBtn);
-  var newBtn = elText("button", "btn btn-primary", "+ New protocol");
-  tr.appendChild(newBtn);
-  topbar.appendChild(tr);
-  main.appendChild(topbar);
-
-  // Integration bar
-  main.appendChild(makeIntBar(["Email","SharePoint","Jira","Confluence","DocuSign"]));
-
-  // Stats
-  var strip = el("div", "stats-strip");
-  strip.appendChild(makeStatCell("Active protocols", "1", "", "Phase II IND"));
-  var mc = missingCount();
-  strip.appendChild(makeStatCell("Documents missing", String(mc), mc > 0 ? "red" : "green", "In active protocol", "stat-missing"));
-  var pc = pendingCount();
-  strip.appendChild(makeStatCell("Approvals pending", String(pc), "amber", "Blocking submission"));
-  strip.appendChild(makeStatCell("Enrollment target", "Jun", "green", "Phase II complete"));
-  main.appendChild(strip);
-
-  // Board wrap
-  var board = el("div", "board-wrap");
-  var controls = el("div", "board-controls");
-
-  // View tabs
-  var tabs = el("div", "view-tabs");
-  ["kanban","list","timeline"].forEach(function(v) {
-    var t = elText("div", "vtab" + (currentView === v ? " active" : ""), v.charAt(0).toUpperCase() + v.slice(1));
-    t.onclick = function() {
-      currentView = v; selectedId = null;
-      document.querySelectorAll(".nav-item").forEach(function(n) { n.classList.remove("active"); });
-      var map = {kanban:"nav-kanban", list:"nav-list", timeline:"nav-timeline"};
-      var ne = document.getElementById(map[v]);
-      if (ne) ne.classList.add("active");
-      render();
-    };
-    tabs.appendChild(t);
-  });
-  controls.appendChild(tabs);
-  board.appendChild(controls);
-
-  var viewArea = el("div");
-  viewArea.id = "view-area";
-  board.appendChild(viewArea);
-  main.appendChild(board);
-
-  renderView();
-}
-
-function renderView() {
-  var area = document.getElementById("view-area");
-  if (!area) return;
-  area.innerHTML = "";
-  if (currentView === "kanban") renderKanban(area);
-  else if (currentView === "list") renderList(area);
-  else renderTimeline(area);
-  updateStats();
-}
-
-function updateStats() {
-  var mc = missingCount();
-  var sm = document.getElementById("stat-missing");
-  if (sm) { sm.textContent = mc; sm.className = "stat-num " + (mc > 0 ? "red" : "green"); }
-  var sb = document.getElementById("sb-missing");
-  if (sb) sb.textContent = mc;
-  var sbd = document.getElementById("sb-doc-badge");
-  if (sbd) sbd.textContent = mc;
-  var rm = document.getElementById("rpt-missing");
-  if (rm) rm.textContent = mc;
-}
-
-function renderKanban(area) {
-  var kb = el("div", "kanban");
-  stages.forEach(function(st) {
-    var inStage = st.k === protocol.stage ? [protocol] : [];
-    var col = el("div", "col");
-    var head = el("div", "col-head");
-    head.appendChild(elText("span", "col-name", st.l));
-    head.appendChild(elText("span", "col-count", String(inStage.length)));
-    col.appendChild(head);
-    var body = el("div", "col-body");
-    inStage.forEach(function(p) {
-      body.appendChild(makeCard(p));
-    });
-    col.appendChild(body);
-    kb.appendChild(col);
-  });
-  area.appendChild(kb);
-  appendDetail(area);
-}
-
-function makeCard(p) {
-  var mc = missingCount(), pc = pendingCount();
-  var card = el("div", "card" + (selectedId === p.id ? " sel" : ""));
-  var top = el("div", "card-top");
-  top.appendChild(elText("span", "type-pill tp-" + p.type, p.type));
-  var urg = el("div", "urgency urg-" + p.urgency);
-  top.appendChild(urg);
-  card.appendChild(top);
-  card.appendChild(elText("div", "card-name", p.name));
-  var flags = el("div", "card-flags");
-  flags.appendChild(elText("span", mc > 0 ? "flag fl-miss" : "flag fl-ok", mc > 0 ? mc + " missing" : "docs complete"));
-  flags.appendChild(elText("span", pc > 0 ? "flag fl-pend" : "flag fl-ok", pc > 0 ? pc + " pending" : "approved"));
-  card.appendChild(flags);
-  var foot = el("div", "card-foot");
-  foot.appendChild(elText("span", "card-owner", p.owner));
-  foot.appendChild(elText("span", "card-date", p.date));
-  card.appendChild(foot);
-  card.onclick = function() { selectedId = selectedId === p.id ? null : p.id; renderView(); };
-  return card;
-}
-
-function appendDetail(area) {
-  if (!selectedId) {
-    area.appendChild(elText("div", "empty-detail", "Select the protocol card to view documents, approval chain, and timeline"));
-    return;
-  }
-  var p = protocol;
-  var mc = missingCount(), pc = pendingCount();
-  var stl = stages.find(function(s) { return s.k === p.stage; }).l;
-  var panel = el("div", "detail-panel");
-
-  var head = el("div", "detail-head");
-  head.appendChild(elText("div", "detail-title", p.name));
-  var meta = el("div", "detail-meta");
-  meta.appendChild(elText("span", "meta-item", p.type));
-  meta.appendChild(elText("span", "meta-item", "Stage: " + stl));
-  meta.appendChild(elText("span", "meta-item", "Lead: " + p.owner));
-  var ms = elText("span", "meta-item", mc + " doc" + (mc !== 1 ? "s" : "") + " missing");
-  ms.style.color = mc > 0 ? "var(--red)" : "var(--green)"; ms.style.fontWeight = "500";
-  meta.appendChild(ms);
-  var ps = elText("span", "meta-item", pc + " approval" + (pc !== 1 ? "s" : "") + " pending");
-  ps.style.color = pc > 0 ? "var(--amber)" : "var(--green)";
-  meta.appendChild(ps);
-  head.appendChild(meta);
-  panel.appendChild(head);
-
-  var body = el("div", "detail-body");
-
-  // Docs section
-  var docSec = el("div", "detail-sec");
-  docSec.appendChild(elText("div", "sec-head", "Required documents — click Upload"));
-  p.docs.forEach(function(d) {
-    var row = el("div", "doc-row" + (d.ok ? "" : " miss"));
-    var dot = el("div", "ddot " + (d.ok ? "ddot-ok" : "ddot-miss"));
-    row.appendChild(dot);
-    var lbl = el("span", "doc-label");
-    lbl.textContent = d.n;
-    if (d.uploadedFile) {
-      var fn = el("span"); fn.style.cssText = "color:var(--text3);font-size:9px;"; fn.textContent = " (" + d.uploadedFile + ")";
-      lbl.appendChild(fn);
-    }
-    row.appendChild(lbl);
-    if (d.ok) {
-      row.appendChild(elText("span", "upload-done", "Uploaded"));
-    } else {
-      var btn = elText("button", "upload-btn", "Upload");
-      (function(docId) { btn.onclick = function(e) { e.stopPropagation(); triggerUpload(docId); }; })(d.id);
-      row.appendChild(btn);
-    }
-    docSec.appendChild(row);
-  });
-  body.appendChild(docSec);
-
-  // Approvals section
-  var apSec = el("div", "detail-sec");
-  apSec.appendChild(elText("div", "sec-head", "Approval chain"));
-  p.approvals.forEach(function(a) {
-    var row = el("div", "appr-row");
-    row.appendChild(elText("span", "appr-name", a.n));
-    row.appendChild(elText("span", "appr-tag at-" + a.s, a.s));
-    apSec.appendChild(row);
-  });
-  body.appendChild(apSec);
-
-  // Timeline section
-  var tlSec = el("div", "detail-sec");
-  tlSec.appendChild(elText("div", "sec-head", "Milestones"));
-  p.timeline.forEach(function(t) {
-    var row = el("div", "tl-row");
-    row.appendChild(elText("span", "tl-date", t.d));
-    row.appendChild(elText("span", "tl-event", t.e));
-    tlSec.appendChild(row);
-  });
-  body.appendChild(tlSec);
-  panel.appendChild(body);
-
-  // Footer
-  var foot = el("div", "detail-foot");
-  foot.appendChild(elText("button", "btn", "Edit protocol"));
-  var upBtn = elText("button", "btn btn-blue", "Upload document");
-  upBtn.style.opacity = mc > 0 ? "1" : "0.4";
-  upBtn.style.pointerEvents = mc > 0 ? "auto" : "none";
-  upBtn.onclick = function() { triggerUpload(null); };
-  foot.appendChild(upBtn);
-  foot.appendChild(elText("button", "btn", "Request approval"));
-  var rptBtn = elText("button", "btn btn-primary", "Generate report");
-  rptBtn.style.marginLeft = "auto";
-  rptBtn.onclick = openModal;
-  foot.appendChild(rptBtn);
-  panel.appendChild(foot);
-  area.appendChild(panel);
-}
-
-function renderList(area) {
-  var wrap = el("div", "list-view");
-  var tbl = document.createElement("table");
-  tbl.className = "list-table";
-  var thead = document.createElement("thead");
-  var hr = document.createElement("tr");
-  var cols = [
-    {k:"name",l:"Protocol",w:"40%"},
-    {k:"stage",l:"Stage",w:"20%"},
-    {k:"missing",l:"Missing docs",w:"15%"},
-    {k:"approvals",l:"Approvals",w:"15%"},
-    {k:"date",l:"Target",w:"10%"}
-  ];
-  cols.forEach(function(c) {
-    var th = document.createElement("th");
-    th.style.width = c.w;
-    th.textContent = c.l + (sortCol === c.k ? (sortDir === 1 ? " ↑" : " ↓") : "");
-    th.onclick = function() { if (sortCol === c.k) sortDir *= -1; else { sortCol = c.k; sortDir = 1; } renderView(); };
-    hr.appendChild(th);
-  });
-  thead.appendChild(hr);
-  tbl.appendChild(thead);
-  var tbody = document.createElement("tbody");
-  var tr = document.createElement("tr");
-  if (selectedId === protocol.id) tr.classList.add("sel-row");
-  var mc = missingCount(), pc = pendingCount();
-  var td1 = document.createElement("td"); td1.appendChild(elText("span","list-name", protocol.name)); tr.appendChild(td1);
-  var td2 = document.createElement("td"); td2.appendChild(elText("span","stage-badge", stages.find(function(s){return s.k===protocol.stage;}).l)); tr.appendChild(td2);
-  var td3 = document.createElement("td");
-  var mcEl = elText("span", "stat-num " + (mc > 0 ? "red" : "green"), mc === 0 ? "None" : mc + " missing");
-  mcEl.style.fontSize = "11px"; td3.appendChild(mcEl); tr.appendChild(td3);
-  var td4 = document.createElement("td");
-  var pcEl = elText("span", "", pc === 0 ? "All approved" : pc + " pending");
-  pcEl.style.color = pc > 0 ? "var(--amber)" : "var(--green)"; pcEl.style.fontFamily = "var(--mono)"; pcEl.style.fontSize = "10px";
-  td4.appendChild(pcEl); tr.appendChild(td4);
-  var td5 = document.createElement("td"); td5.textContent = protocol.date; td5.style.fontFamily = "var(--mono)"; td5.style.fontSize = "10px"; td5.style.color = "var(--text3)"; tr.appendChild(td5);
-  tr.onclick = function() { selectedId = selectedId === protocol.id ? null : protocol.id; renderView(); };
-  tbody.appendChild(tr);
-  tbl.appendChild(tbody);
-  wrap.appendChild(tbl);
-  area.appendChild(wrap);
-  appendDetail(area);
-}
-
-function renderTimeline(area) {
-  var p = protocol;
-  var labelW = 220, totalCols = months.length, todayIdx = 4;
-  var wrap = el("div", "gantt-wrap");
-
-  // Month header
-  var mRow = el("div");
-  mRow.style.cssText = "display:flex;background:var(--surface2);border-bottom:1px solid var(--border);";
-  var lhd = elText("div", "", "Protocol");
-  lhd.style.cssText = "width:" + labelW + "px;flex-shrink:0;padding:6px 14px;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);border-right:1px solid var(--border);";
-  mRow.appendChild(lhd);
-  var mGrid = el("div");
-  mGrid.style.cssText = "flex:1;display:grid;grid-template-columns:repeat(" + totalCols + ",1fr);";
-  months.forEach(function(m, i) {
-    var mc2 = elText("div", "", m + " '26");
-    mc2.style.cssText = "padding:6px 0;text-align:center;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.08em;color:" + (i === todayIdx ? "var(--red)" : "var(--text3)") + ";font-weight:" + (i === todayIdx ? "500" : "400") + ";border-right:1px solid var(--border);";
-    mGrid.appendChild(mc2);
-  });
-  mRow.appendChild(mGrid);
-  wrap.appendChild(mRow);
-
-  // Protocol row
-  var mc = missingCount();
-  var row = el("div", "gantt-row");
-  row.style.cssText = "display:flex;border-bottom:1px solid var(--border);cursor:pointer;" + (selectedId === p.id ? "background:var(--blue-bg);" : "");
-  var lbl = el("div", "gantt-label");
-  lbl.style.cssText = "width:" + labelW + "px;flex-shrink:0;border-right:1px solid var(--border);padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;";
-  lbl.appendChild(elText("div","gantt-protocol-name", p.name));
-  var sub = el("div"); sub.style.cssText = "display:flex;gap:4px;margin-top:3px;";
-  sub.appendChild(elText("span","type-pill tp-" + p.type, p.type));
-  sub.appendChild(elText("span", mc > 0 ? "flag fl-miss" : "flag fl-ok", mc > 0 ? mc + " missing" : "docs ok"));
-  lbl.appendChild(sub);
-  row.appendChild(lbl);
-
-  var barArea = el("div");
-  barArea.style.cssText = "flex:1;position:relative;height:54px;";
-  for (var i = 0; i < totalCols; i++) {
-    var gl = el("div");
-    gl.style.cssText = "position:absolute;top:0;bottom:0;width:1px;background:var(--border);left:" + ((i/totalCols)*100) + "%;";
-    barArea.appendChild(gl);
-  }
-  var tp = ((todayIdx + 0.1) / totalCols) * 100;
-  var todayLine = el("div");
-  todayLine.style.cssText = "position:absolute;top:0;bottom:0;width:1.5px;background:#B91C1C;opacity:0.5;left:" + tp + "%;z-index:2;";
-  barArea.appendChild(todayLine);
-  var tlbl = elText("div","","Today");
-  tlbl.style.cssText = "position:absolute;top:2px;font-family:var(--mono);font-size:7px;color:#B91C1C;left:" + (tp+0.3) + "%;white-space:nowrap;opacity:0.7;";
-  barArea.appendChild(tlbl);
-  var bar = el("div");
-  bar.style.cssText = "position:absolute;top:50%;transform:translateY(-50%);height:18px;border-radius:3px;left:" + ((p.startMonth/totalCols)*100) + "%;width:" + (((p.endMonth-p.startMonth)/totalCols)*100) + "%;background:var(--blue-bg);border:1px solid var(--blue-bd);display:flex;align-items:center;padding:0 7px;overflow:hidden;";
-  bar.appendChild(elText("span","","Dr. Mehta"));
-  bar.firstChild.style.cssText = "font-family:var(--mono);font-size:8px;font-weight:500;color:var(--blue);white-space:nowrap;";
-  barArea.appendChild(bar);
-  var ml = (p.submitMonth / totalCols) * 100;
-  var diamond = el("div");
-  diamond.style.cssText = "position:absolute;top:50%;transform:translateY(-50%) rotate(45deg);width:9px;height:9px;background:" + (mc > 0 ? "var(--red)" : "var(--green)") + ";border-radius:1px;left:calc(" + ml + "% - 4px);z-index:3;";
-  barArea.appendChild(diamond);
-  row.appendChild(barArea);
-  row.onclick = function() { selectedId = selectedId === p.id ? null : p.id; renderView(); };
-  wrap.appendChild(row);
-
-  var legend = el("div");
-  legend.style.cssText = "display:flex;gap:16px;padding:9px 14px;border-top:1px solid var(--border);background:var(--surface2);align-items:center;";
-  legend.innerHTML = '<span style="font-family:var(--mono);font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;">Legend:</span>' +
-    '<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:22px;height:10px;border-radius:2px;background:var(--blue-bg);border:1px solid var(--blue-bd);"></div>Clinical protocol</div>' +
-    '<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:9px;height:9px;transform:rotate(45deg);background:var(--green);border-radius:1px;flex-shrink:0;"></div>Target date (docs ok)</div>' +
-    '<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:9px;height:9px;transform:rotate(45deg);background:var(--red);border-radius:1px;flex-shrink:0;"></div>Target date (docs missing)</div>' +
-    '<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:1.5px;height:14px;background:#B91C1C;opacity:0.5;"></div>Today</div>';
-  wrap.appendChild(legend);
-  area.appendChild(wrap);
-  appendDetail(area);
-}
-
-// ── REGULATORY PAGE ───────────────────────────────────────────────────────────
-
-function renderRegulatoryPage(main) {
-  var topbar = el("div", "topbar");
-  var tl = el("div");
-  tl.appendChild(elText("div","topbar-title","Regulatory submission tracker"));
-  tl.appendChild(elText("div","topbar-sub","CardioSense AI — FDA 510(k) & De Novo · Medical device authorization"));
-  topbar.appendChild(tl);
-  var tr = el("div","topbar-right");
-  var rBtn = elText("button","btn","Weekly report"); rBtn.onclick = openModal; tr.appendChild(rBtn);
-  tr.appendChild(elText("button","btn btn-primary","+ New submission"));
-  topbar.appendChild(tr);
-  main.appendChild(topbar);
-
-  main.appendChild(makeIntBar(["Email","FDA eSTAR portal","DocuSign","SharePoint"]));
-
-  // Stats
-  var all510 = track510k.phases.flatMap(function(ph){return ph.steps;});
-  var allDN  = trackDeNovo.phases.flatMap(function(ph){return ph.steps;});
-  var done510 = all510.filter(function(s){return s.status==="done";}).length;
-  var doneDN  = allDN.filter(function(s){return s.status==="done";}).length;
-  var pct510 = Math.round(done510/all510.length*100);
-  var pctDN  = Math.round(doneDN/allDN.length*100);
-
-  var strip = el("div","stats-strip");
-  strip.appendChild(makeStatCell("Active pathways","2","","510(k) + De Novo"));
-  strip.appendChild(makeStatCell("510(k) progress", pct510+"%","blue", done510+"/"+all510.length+" steps complete"));
-  strip.appendChild(makeStatCell("De Novo progress", pctDN+"%","coral", doneDN+"/"+allDN.length+" steps complete"));
-  strip.appendChild(makeStatCell("Est. 510(k) clearance","Aug '26","green","De Novo: Nov '26"));
-  main.appendChild(strip);
-
-  var board = el("div","board-wrap");
-  var regWrap = el("div","reg-wrap");
-  regWrap.appendChild(buildRegTrack(track510k, pct510));
-  regWrap.appendChild(buildRegTrack(trackDeNovo, pctDN));
-  board.appendChild(regWrap);
-  main.appendChild(board);
-}
-
-function buildRegTrack(track, pct) {
-  var wrap = el("div","reg-track");
-
-  // Head
-  var head = el("div","reg-track-head");
-  var headLeft = el("div");
-  headLeft.appendChild(elText("div","reg-track-title", track.title));
-  headLeft.appendChild(elText("div","reg-track-sub", track.sub));
-  head.appendChild(headLeft);
-  head.appendChild(elText("span","pathway-badge " + track.badgeClass, track.badge));
-  wrap.appendChild(head);
-
-  // Progress bar
-  var prog = el("div","reg-progress");
-  var pw = el("div","prog-wrap");
-  var pf = el("div","prog-fill");
-  pf.style.cssText = "width:" + pct + "%;background:" + track.color + ";";
-  pw.appendChild(pf); prog.appendChild(pw);
-  prog.appendChild(elText("span","prog-pct", pct + "%"));
-  wrap.appendChild(prog);
-
-  // Steps
-  var stepsWrap = el("div","reg-steps");
-  var stepNum = 0;
-  track.phases.forEach(function(phase) {
-    stepsWrap.appendChild(elText("div","phase-label", phase.label));
-    phase.steps.forEach(function(step) {
-      stepNum++;
-      var row = el("div","step-row");
-      row.appendChild(elText("span","step-num", String(stepNum).padStart(2,"0")));
-      var icon = elText("div","step-icon si-" + step.status, statusIcon(step.status));
-      row.appendChild(icon);
-      var content = el("div","step-content");
-      content.appendChild(elText("div","step-name", step.n));
-      content.appendChild(elText("div","step-desc", step.desc));
-      if (step.docs.length > 0) {
-        var docsEl = el("div","step-docs");
-        step.docs.forEach(function(d) { docsEl.appendChild(elText("span","doc-chip", d)); });
-        content.appendChild(docsEl);
-      }
-      var tagLabels = {done:"Complete",active:"In progress",waiting:"Awaiting FDA",fda:"FDA action",todo:"Not started"};
-      content.appendChild(elText("span","step-tag st-" + step.status, tagLabels[step.status]));
-      row.appendChild(content);
-      row.appendChild(elText("div","step-date", step.date));
-      stepsWrap.appendChild(row);
-    });
-  });
-  wrap.appendChild(stepsWrap);
-
-  // Legend
-  var leg = el("div","reg-legend");
-  [["si-done","Complete","var(--green)"],["si-active","In progress","var(--blue)"],["si-waiting","Awaiting FDA","var(--amber)"],["si-fda","FDA action","var(--coral)"],["si-todo","Not started","var(--border2)"]].forEach(function(item) {
-    var li = el("div","leg-item");
-    var dot = el("div","leg-dot"); dot.style.background = item[2]; li.appendChild(dot);
-    li.appendChild(document.createTextNode(item[1]));
-    leg.appendChild(li);
-  });
-  wrap.appendChild(leg);
-  return wrap;
-}
-
-function statusIcon(s) {
-  return {done:"✓",active:"→",waiting:"⏳",fda:"★",todo:"·"}[s] || "·";
-}
-
-// ── UPLOAD ────────────────────────────────────────────────────────────────────
-
-function triggerUpload(docId) {
-  pendingUpload = docId;
-  document.getElementById("file-input").click();
-}
-
-document.getElementById("file-input").addEventListener("change", function(e) {
-  if (!e.target.files.length) return;
-  var file = e.target.files[0];
-  var doc;
-  if (pendingUpload) {
-    doc = protocol.docs.find(function(d) { return d.id === pendingUpload; });
-  } else {
-    doc = protocol.docs.find(function(d) { return !d.ok; });
-  }
-  if (doc) { doc.ok = true; doc.uploadedFile = file.name; }
-  pendingUpload = null;
-  e.target.value = "";
-  renderView();
-  showToast('"' + file.name + '" uploaded — marked complete');
-});
-
-// ── MODAL ─────────────────────────────────────────────────────────────────────
-
-function openModal() { document.getElementById("modal").classList.add("open"); }
-function closeModal() { document.getElementById("modal").classList.remove("open"); }
-
-// ── HELPERS ───────────────────────────────────────────────────────────────────
-
-function el(tag, cls) {
-  var e = document.createElement(tag);
-  if (cls) e.className = cls;
-  return e;
-}
-
-function elText(tag, cls, text) {
-  var e = el(tag, cls);
-  e.textContent = text;
-  return e;
 }
 
 function makeIntBar(chips) {
   var bar = el("div","int-bar");
-  bar.appendChild(document.createTextNode("Integrations:"));
-  chips.forEach(function(label, i) {
-    var chip = el("div","int-chip");
-    var dot = el("div","int-dot" + (i===0?" on":""));
-    chip.appendChild(dot);
-    chip.appendChild(document.createTextNode(label));
-    bar.appendChild(chip);
-  });
+  bar.appendChild(document.createTextNode("Integrations: "));
+  chips.forEach(function(label,i){ var chip=el("div","int-chip"); var dot=el("div","int-dot"+(i===0?" on":"")); chip.appendChild(dot); chip.appendChild(document.createTextNode(label)); bar.appendChild(chip); });
   return bar;
 }
-
-function makeStatCell(label, num, numClass, sub, id) {
-  var cell = el("div","stat-cell");
-  cell.appendChild(elText("div","stat-label", label));
-  var n = elText("div","stat-num" + (numClass ? " "+numClass : ""), num);
-  if (id) n.id = id;
-  cell.appendChild(n);
-  cell.appendChild(elText("div","stat-sub", sub));
-  return cell;
+function makeStatCell(label,num,numCls,sub,id) {
+  var cell=el("div","stat-cell"); cell.appendChild(elText("div","stat-label",label));
+  var n=elText("div","stat-num"+(numCls?" "+numCls:""),num); if(id) n.id=id; cell.appendChild(n);
+  cell.appendChild(elText("div","stat-sub",sub)); return cell;
 }
 
-function showToast(msg) {
-  var t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(function() { t.classList.remove("show"); }, 3000);
+// ── COMMAND CENTER ────────────────────────────────────────────────────────────
+function renderCommandCenter(main) {
+  // Ensure selectedCCProtocol is valid
+  if(!state.protocols.find(function(p){return p.id===state.selectedCCProtocol;})) {
+    state.selectedCCProtocol = state.protocols[0] ? state.protocols[0].id : null;
+  }
+  var selP = state.protocols.find(function(p){return p.id===state.selectedCCProtocol;}) || state.protocols[0];
+
+  var topbar=el("div","topbar");
+  var tl=el("div"); tl.appendChild(elText("div","topbar-title","Clinical trials command center")); tl.appendChild(elText("div","topbar-sub","CardioSense AI program · Real-time operational overview · Q2 2026")); topbar.appendChild(tl);
+  var tr=el("div","topbar-right");
+
+  // Protocol selector dropdown
+  var selWrap=el("div"); selWrap.style.cssText="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);";
+  selWrap.appendChild(elText("span","","Viewing:"));
+  var protSel=el("select","form-select"); protSel.style.cssText="padding:4px 8px;font-size:11px;width:auto;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);font-family:var(--font);color:var(--text);outline:none;";
+  state.protocols.forEach(function(p){ var o=document.createElement("option"); o.value=p.id; o.textContent=p.name.length>40?p.name.substring(0,38)+"…":p.name; if(p.id===state.selectedCCProtocol)o.selected=true; protSel.appendChild(o); });
+  protSel.onchange=function(){state.selectedCCProtocol=parseInt(this.value)||this.value; saveState(); render();};
+  selWrap.appendChild(protSel);
+  tr.appendChild(selWrap);
+
+  var rBtn=elText("button","btn","Reports"); rBtn.onclick=function(){openModal("report");}; tr.appendChild(rBtn);
+  topbar.appendChild(tr); main.appendChild(topbar);
+  main.appendChild(makeIntBar(["EDC System","eTMF","CTMS","eSource","DocuSign"]));
+
+  var board=el("div","board-wrap");
+
+  // Protocol context banner
+  if(selP) {
+    var mc=missingFor(selP), pc=pendingFor(selP), stl=STAGES.find(function(s){return s.k===selP.stage;});
+    var ctxBar=el("div"); ctxBar.style.cssText="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--rl);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;";
+    var ctxName=elText("span","",selP.name); ctxName.style.cssText="font-weight:600;font-size:12px;color:var(--blue);";
+    ctxBar.appendChild(ctxName);
+    [{l:"Type",v:selP.type},{l:"Stage",v:stl?stl.l:"—"},{l:"Lead",v:selP.owner},{l:"Missing docs",v:String(mc),c:mc>0?"var(--red)":"var(--green)"},{l:"Pending approvals",v:String(pc),c:pc>0?"var(--amber)":"var(--green)"}].forEach(function(item){
+      var chip=el("span"); chip.style.cssText="font-size:10px;color:var(--text2);";
+      var label=elText("span","",item.l+": "); label.style.color="var(--text3)"; chip.appendChild(label);
+      var val=elText("span","",item.v); if(item.c) val.style.color=item.c; val.style.fontWeight="500"; chip.appendChild(val);
+      ctxBar.appendChild(chip);
+    });
+    board.appendChild(ctxBar);
+  }
+
+  // Row 1: 4 stat cards (protocol-specific where relevant)
+  var grid=el("div","cc-grid");
+  var enrollPct = selP ? Math.min(99, 50 + selP.id*5 + (missingFor(selP)===0?20:0)) : 78;
+  var enrolled = selP ? Math.round(enrollPct/100*1600) : 847;
+  var cards=[
+    {label:"Active sites",num: selP ? String(8 + (selP.id%5)) : "12",delta:"For "+( selP?selP.name.split("—")[0].trim():"all protocols"),deltaCls:""},
+    {label:"Enrollment",num:String(enrolled),delta:enrollPct+"% of target (1,600)",deltaCls:enrollPct>=70?"pos":""},
+    {label:"Queries open",num: selP ? String(10 + missingFor(selP)*4) : "23",delta:"-18% vs last month",deltaCls:"pos"},
+    {label:"Days to target",num: selP && selP.date ? String(Math.max(0,Math.round((new Date(selP.date)-new Date())/(1000*60*60*24)))) : "44",delta:selP&&selP.date?selP.date:"Jun 30, 2026",deltaCls:""}
+  ];
+  cards.forEach(function(c){var card=el("div","cc-card"); card.appendChild(elText("div","cc-card-label",c.label)); card.appendChild(elText("div","cc-card-num",c.num)); card.appendChild(elText("div","cc-card-delta "+(c.deltaCls||""),c.delta)); grid.appendChild(card);});
+  board.appendChild(grid);
+
+  // Row 2: Enrollment progress + Study status + Tasks
+  var row2=el("div","cc-row2");
+
+  // Enrollment progress (protocol-specific)
+  var ep=el("div","cc-panel"); ep.appendChild(elText("div","cc-panel-head","Enrollment progress"));
+  var epb=el("div","cc-panel-body");
+  var ew=el("div","enroll-wrap");
+  var ec=el("div","enroll-circle");
+  var pct=enrollPct; var r=32, cx=40, cy=40, circ=2*Math.PI*r;
+  var svg=document.createElementNS("http://www.w3.org/2000/svg","svg"); svg.setAttribute("width","80"); svg.setAttribute("height","80"); svg.setAttribute("viewBox","0 0 80 80");
+  var bg=document.createElementNS("http://www.w3.org/2000/svg","circle"); bg.setAttribute("cx",cx); bg.setAttribute("cy",cy); bg.setAttribute("r",r); bg.setAttribute("fill","none"); bg.setAttribute("stroke","#E2DED4"); bg.setAttribute("stroke-width","6");
+  var fg2=document.createElementNS("http://www.w3.org/2000/svg","circle"); fg2.setAttribute("cx",cx); fg2.setAttribute("cy",cy); fg2.setAttribute("r",r); fg2.setAttribute("fill","none"); fg2.setAttribute("stroke","#1A4FBF"); fg2.setAttribute("stroke-width","6"); fg2.setAttribute("stroke-dasharray",circ); fg2.setAttribute("stroke-dashoffset",circ*(1-pct/100)); fg2.setAttribute("stroke-linecap","round");
+  svg.appendChild(bg); svg.appendChild(fg2); ec.appendChild(svg);
+  var pctEl=el("div","enroll-pct"); pctEl.textContent=pct+"%"; ec.appendChild(pctEl);
+  ew.appendChild(ec);
+  var ed=el("div","enroll-detail");
+  ed.appendChild(elText("div","enroll-line",enrolled+" / 1,600 enrolled"));
+  var bw=el("div","enroll-bar-wrap"); var bf=el("div","enroll-bar-fill"); bf.style.width=pct+"%"; bw.appendChild(bf); ed.appendChild(bw);
+  ed.appendChild(elText("div","enroll-line","Target: "+(selP&&selP.date?selP.date:"Jun 2026")));
+  ew.appendChild(ed); epb.appendChild(ew); ep.appendChild(epb); row2.appendChild(ep);
+
+  // Study status
+  var ss=el("div","cc-panel"); ss.appendChild(elText("div","cc-panel-head","Study status"));
+  var ssb=el("div","cc-panel-body");
+  [["sd-green","On track","14"],["sd-amber","At risk","7"],["sd-red","Delayed","3"]].forEach(function(item){var row=el("div","status-row"); var dot=el("div","status-dot "+item[0]); row.appendChild(dot); row.appendChild(elText("span","status-label",item[1])); row.appendChild(elText("span","status-count",item[2])); ssb.appendChild(row);});
+  ss.appendChild(ssb); row2.appendChild(ss);
+
+  // Tasks (protocol-specific)
+  var ta=el("div","cc-panel"); ta.appendChild(elText("div","cc-panel-head","Tasks requiring attention"));
+  var tab=el("div","cc-panel-body");
+  var mcCount = selP ? missingFor(selP) : 5;
+  var pcCount = selP ? pendingFor(selP) : 3;
+  var tasks=[
+    {badge:"task-red",badgeText:"3",text:"SAE reports awaiting review"},
+    {badge:"task-amber",badgeText:String(mcCount),text:"Missing documents"},
+    {badge:"task-blue",badgeText:String(pcCount),text:"Approvals pending"},
+    {badge:"task-amber",badgeText:"4",text:"Protocol deviations to review"},
+    {badge:"task-red",badgeText:"1",text:"IRB amendment pending"}
+  ];
+  tasks.forEach(function(t){var row=el("div","task-row"); row.appendChild(elText("span","task-badge "+t.badge,t.badgeText)); row.appendChild(elText("span","task-text",t.text)); tab.appendChild(row);});
+  ta.appendChild(tab); row2.appendChild(ta);
+  board.appendChild(row2);
+
+  // Row 3: Milestones + AI
+  var row3=el("div","cc-row3");
+
+  // Milestones (protocol-specific from protocol timeline)
+  var um=el("div","cc-panel");
+  var umHeadRow=el("div","cc-panel-head");
+  umHeadRow.appendChild(elText("span","","Upcoming milestones"));
+  if(selP){var editMilBtn=elText("button","btn","Edit in protocol board"); editMilBtn.style.cssText="font-size:9px;padding:2px 8px;"; editMilBtn.onclick=function(){navTo("kanban"); state.selectedId=selP.id; setTimeout(renderView,50);}; umHeadRow.appendChild(editMilBtn);}
+  um.appendChild(umHeadRow);
+  var umb=el("div","cc-panel-body");
+  var milestones = selP && selP.timeline && selP.timeline.length ? selP.timeline : [{d:"Jun 30",e:"Target: Phase II enrollment complete"},{d:"May 30",e:"510(k) submission target"},{d:"May 28",e:"De Novo clinical study report"}];
+  milestones.forEach(function(m){var row=el("div","milestone-row"); row.appendChild(elText("span","milestone-name",m.e)); row.appendChild(elText("span","milestone-date",m.d)); umb.appendChild(row);});
+  um.appendChild(umb); row3.appendChild(um);
+
+  // AI assistant
+  var ai=el("div","cc-panel"); ai.style.gridColumn="span 2";
+  var aiHead=el("div","cc-panel-head"); aiHead.innerHTML='<span>AI assistant</span><span style="font-size:10px;color:var(--text3);font-family:var(--mono)">Powered by Claude · Context: '+(selP?selP.name.split("—")[0].trim():"All protocols")+'</span>'; ai.appendChild(aiHead);
+  var aib=el("div","cc-panel-body"); aib.style.padding="10px 14px";
+  var msgs=el("div","ai-messages"); msgs.id="ai-messages";
+  state.chatHistory.forEach(function(m){appendMsg(m.role,m.text,msgs);}); aib.appendChild(msgs);
+  var sugg=el("div","ai-suggestions");
+  ["Summarize protocol","Draft monitoring report","Identify enrollment risks","Check missing documents","What's the 510(k) status?"].forEach(function(s){var chip=elText("span","ai-suggestion",s); chip.onclick=function(){sendAIMessage(s);}; sugg.appendChild(chip);});
+  aib.appendChild(sugg);
+  var inputRow=el("div","ai-input-row"); var inp=el("input","ai-input"); inp.id="ai-inp"; inp.placeholder="Ask about your trial, protocols, or submissions..."; inp.addEventListener("keydown",function(e){if(e.key==="Enter") sendAIMessage(inp.value);}); var sendBtn=elText("button","ai-send","Ask AI"); sendBtn.onclick=function(){sendAIMessage(inp.value);}; inputRow.appendChild(inp); inputRow.appendChild(sendBtn); aib.appendChild(inputRow); ai.appendChild(aib); row3.appendChild(ai);
+  board.appendChild(row3);
+  main.appendChild(board);
+  setTimeout(function(){var m=document.getElementById("ai-messages"); if(m) m.scrollTop=m.scrollHeight;},50);
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
+function appendMsg(role, text, container) {
+  var c = container || document.getElementById("ai-messages");
+  if(!c) return;
+  var msg=elText("div","ai-msg "+role,text);
+  c.appendChild(msg);
+  c.scrollTop=c.scrollHeight;
+}
+
+function sendAIMessage(text) {
+  if(!text||!text.trim()) return;
+  var inp=document.getElementById("ai-inp"); if(inp) inp.value="";
+  state.chatHistory.push({role:"user",text:text});
+  appendMsg("user",text);
+
+  var mc=totalMissing(), pc=state.protocols.reduce(function(s,p){return s+pendingFor(p);},0);
+  var response = generateAIResponse(text, mc, pc);
+  setTimeout(function(){
+    state.chatHistory.push({role:"bot",text:response});
+    appendMsg("bot",response);
+    saveState();
+  }, 800);
+}
+
+function generateAIResponse(text, mc, pc) {
+  var t=text.toLowerCase();
+  if(t.indexOf("summarize protocol")!==-1||t.indexOf("summary")!==-1)
+    return "CardioSense ECG Phase II is currently in Clinical Execution (Stage 3). You have "+mc+" missing documents and "+pc+" pending approvals. Enrollment is at 847/1,600 (78%). The IDE submission target is Jun 30, 2026. Key risk: Statistical analysis plan and CRFs are not yet uploaded.";
+  if(t.indexOf("enrollment")!==-1||t.indexOf("enroll")!==-1)
+    return "Current enrollment: 847 of 1,600 target subjects (78%). 12 sites are active. You are on track for the Jun 2026 completion target, but 2 sites are flagged as at-risk due to slow screen failure rates. Recommend a monitoring visit to Sites 104 and 107.";
+  if(t.indexOf("risk")!==-1)
+    return "Top risks identified: (1) Protocol synopsis missing — blocks FDA review. (2) 3 SAE reports awaiting review — regulatory obligation. (3) 2 overdue monitoring visits. (4) De Novo cybersecurity documentation not started. Recommend prioritising SAE review and document uploads this week.";
+  if(t.indexOf("missing")!==-1||t.indexOf("document")!==-1)
+    return "You currently have "+mc+" missing documents: Protocol synopsis, Statistical analysis plan, and Case report forms (CRFs) for the Phase II protocol. All three are required before regulatory submission. Would you like me to draft a document checklist email to the study team?";
+  if(t.indexOf("510")!==-1||t.indexOf("510k")!==-1||t.indexOf("status")!==-1)
+    return "510(k) — CardioSense ECG hardware is at Phase 2 (Submission), ~55% complete. Labeling & IFU draft is in progress (active). Package compilation started. Estimated eSTAR submission: May 2026. FDA 90-day review clock would begin June 2026, targeting clearance August 2026.";
+  if(t.indexOf("monitoring report")!==-1||t.indexOf("draft")!==-1)
+    return "Here's a draft monitoring report summary: Site: CardioSense Phase II. Visit date: "+dateStr()+". Enrollment: 847/1,600. Protocol deviations: 4 (2 major, 2 minor). Outstanding queries: 23. Action items: Upload SAE reports, complete CRF review for subjects 201–215, schedule follow-up with Site 104 PI.";
+  if(t.indexOf("de novo")!==-1)
+    return "De Novo — CardioSense AI algorithm is at Phase 1 (Pre-submission), ~37% complete. Clinical study is active (1,000+ subjects, 24-hr wear). PCCP documentation in progress. Cybersecurity documentation not yet started. Estimated submission: June 2026. FDA 150-day review targets authorization November 2026.";
+  return "I can help with protocol summaries, enrollment status, risk identification, document checklists, and submission status. For complex regulatory questions, please consult your Regulatory Affairs Lead. What specific aspect of the CardioSense program would you like to explore?";
+}
+
+// ── CLINICAL ──────────────────────────────────────────────────────────────────
+function renderClinicalPage(main) {
+  var topbar=el("div","topbar");
+  var tl=el("div"); tl.appendChild(elText("div","topbar-title","Clinical Protocol Tracker")); tl.appendChild(elText("div","topbar-sub","FDA · IDE · CardioSense AI Wearable ECG · Q2 2026")); topbar.appendChild(tl);
+  var tr=el("div","topbar-right");
+  var rBtn=elText("button","btn","Reports"); rBtn.onclick=function(){openModal("report");}; tr.appendChild(rBtn);
+  var nBtn=elText("button","btn btn-primary","+ New protocol"); if(can("canEdit")){nBtn.onclick=function(){openModal("newprotocol");};}else{nBtn.disabled=true;nBtn.title="Requires Editor role";nBtn.style.opacity="0.5";nBtn.style.cursor="not-allowed";} tr.appendChild(nBtn);
+  topbar.appendChild(tr); main.appendChild(topbar);
+  main.appendChild(makeIntBar(["Email","SharePoint","Jira","Confluence","DocuSign"]));
+
+  var mc=totalMissing(), pc=state.protocols.reduce(function(s,p){return s+pendingFor(p);},0);
+  var strip=el("div","stats-strip");
+  strip.appendChild(makeStatCell("Active protocols",String(state.protocols.length),"","Phase II IDE"));
+  strip.appendChild(makeStatCell("Documents missing",String(mc),mc>0?"red":"green","Across all protocols","stat-missing"));
+  strip.appendChild(makeStatCell("Approvals pending",String(pc),pc>0?"amber":"green","Blocking submissions"));
+  strip.appendChild(makeStatCell("Enrollment target","Jun '26","green","Phase II complete"));
+  main.appendChild(strip);
+
+  var board=el("div","board-wrap");
+  var controls=el("div","board-controls");
+  var tabs=el("div","view-tabs");
+  ["kanban","list","timeline"].forEach(function(v){
+    var t=elText("div","vtab"+(state.currentView===v?" active":""),v.charAt(0).toUpperCase()+v.slice(1));
+    t.onclick=function(){state.currentView=v; state.selectedId=null; render();};
+    tabs.appendChild(t);
+  });
+  controls.appendChild(tabs);
+  board.appendChild(controls);
+  var va=el("div"); va.id="view-area"; board.appendChild(va);
+  main.appendChild(board);
+  renderView();
+}
+
+function renderView() {
+  var area=document.getElementById("view-area"); if(!area) return;
+  area.innerHTML="";
+  if(state.currentView==="kanban") renderKanban(area);
+  else if(state.currentView==="list") renderList(area);
+  else renderTimeline(area);
+  updateSidebarStats();
+  var sm=document.getElementById("stat-missing");
+  if(sm){var mc=totalMissing(); sm.textContent=mc; sm.className="stat-num "+(mc>0?"red":"green");}
+}
+
+function renderKanban(area) {
+  var wrap=el("div","kanban");
+
+  var row1=el("div","kanban-row row1");
+  var row2stages=[];
+  var divider=el("div","kanban-divider");
+  divider.appendChild(el("div","kanban-divider-line"));
+  divider.appendChild(elText("div","kanban-divider-label","FDA & post-market"));
+  divider.appendChild(el("div","kanban-divider-line"));
+  var row2=el("div","kanban-row row2");
+
+  STAGES.forEach(function(st){
+    var cards=state.protocols.filter(function(p){return p.stage===st.k;});
+    var col=el("div","col");
+    var head=el("div","col-head"); head.appendChild(elText("span","col-name",st.l)); head.appendChild(elText("span","col-count",String(cards.length)));
+    col.appendChild(head);
+    var body=el("div","col-body");
+    cards.forEach(function(p){body.appendChild(makeCard(p));});
+    col.appendChild(body);
+    if(st.k<=4) row1.appendChild(col);
+    else row2.appendChild(col);
+  });
+
+  wrap.appendChild(row1);
+  wrap.appendChild(divider);
+  wrap.appendChild(row2);
+  area.appendChild(wrap);
+  appendDetail(area);
+}
+
+function makeCard(p) {
+  var mc=missingFor(p), pc=pendingFor(p), ov=isOverdue(p);
+  var card=el("div","card"+(state.selectedId===p.id?" sel":"")+(ov?" overdue":""));
+  var top=el("div","card-top");
+  var typeKey=(p.type||"IND").replace(/[^a-zA-Z]/g,"").substring(0,3);
+  top.appendChild(elText("span","type-pill tp-"+typeKey,p.type||"IND"));
+  top.appendChild(el("div","urgency urg-"+(p.urgency||"med")));
+  card.appendChild(top);
+  var nameEl=el("div","card-name"); nameEl.textContent=p.name; nameEl.contentEditable="true"; nameEl.title="Click to edit"; nameEl.style.outline="none"; nameEl.style.borderBottom="1px dashed transparent"; nameEl.style.cursor="text";
+  nameEl.addEventListener("focus",function(){this.style.borderBottomColor="var(--blue)";});
+  nameEl.addEventListener("blur",function(){this.style.borderBottomColor="transparent"; var n=this.textContent.trim(); if(n&&n!==p.name){p.name=n; logActivity("approve","Protocol renamed: "+n); saveState(); renderView();} else this.textContent=p.name;});
+  nameEl.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();this.blur();}});
+  nameEl.onclick=function(e){e.stopPropagation();};
+  card.appendChild(nameEl);
+  var flags=el("div","card-flags");
+  if(ov) flags.appendChild(elText("span","flag fl-miss","OVERDUE"));
+  flags.appendChild(elText("span",mc>0?"flag fl-miss":"flag fl-ok",mc>0?mc+" missing":"docs ok"));
+  flags.appendChild(elText("span",pc>0?"flag fl-pend":"flag fl-ok",pc>0?pc+" pending":"approved"));
+  card.appendChild(flags);
+  var foot=el("div","card-foot"); foot.appendChild(elText("span","card-owner",p.owner||"—"));
+  var dl=p.date?new Date(p.date).toLocaleDateString("en-US",{month:"short",day:"numeric"}):"—";
+  foot.appendChild(elText("span","card-date",dl)); card.appendChild(foot);
+  card.onclick=function(){state.selectedId=state.selectedId===p.id?null:p.id; renderView();};
+  return card;
+}
+
+function appendDetail(area) {
+  if(!state.selectedId){area.appendChild(elText("div","empty-detail","Select a protocol card to view documents, approval chain, and timeline")); return;}
+  var p=state.protocols.find(function(x){return x.id===state.selectedId;}); if(!p) return;
+  var mc=missingFor(p), pc=pendingFor(p), stl=STAGES.find(function(s){return s.k===p.stage;});
+  var panel=el("div","detail-panel");
+  var head=el("div","detail-head");
+  var headRow=el("div"); headRow.style.cssText="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px;";
+  var titleEl=el("div","detail-title"); titleEl.textContent=p.name; titleEl.contentEditable="true"; titleEl.title="Click to edit";
+  titleEl.addEventListener("focus",function(){this.style.borderBottomColor="var(--blue)";});
+  titleEl.addEventListener("blur",function(){this.style.borderBottomColor="transparent"; var n=this.textContent.trim(); if(n&&n!==p.name){p.name=n; logActivity("approve","Protocol renamed: "+n); saveState(); renderView();} else this.textContent=p.name;});
+  titleEl.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();this.blur();}});
+  headRow.appendChild(titleEl);
+  var editBtn=elText("button","btn","✎ Edit"); editBtn.style.cssText="font-size:10px;padding:3px 9px;flex-shrink:0;"; editBtn.onclick=function(e){e.stopPropagation(); openModal("editprotocol",p.id);}; headRow.appendChild(editBtn);
+  head.appendChild(headRow);
+  var meta=el("div","detail-meta");
+  meta.appendChild(elText("span","meta-item",p.type));
+  meta.appendChild(elText("span","meta-item","Stage: "+(stl?stl.l:"—")));
+  meta.appendChild(elText("span","meta-item","Lead: "+p.owner));
+  if(p.ownerEmail) meta.appendChild(elText("span","meta-item",p.ownerEmail));
+  var ms=elText("span","meta-item",mc+" doc"+(mc!==1?"s":"")+" missing"); ms.style.color=mc>0?"var(--red)":"var(--green)"; ms.style.fontWeight="500"; meta.appendChild(ms);
+  var ps=elText("span","meta-item",pc+" approval"+(pc!==1?"s":"")+" pending"); ps.style.color=pc>0?"var(--amber)":"var(--green)"; meta.appendChild(ps);
+  head.appendChild(meta); panel.appendChild(head);
+
+  var body=el("div","detail-body");
+  // Docs
+  // Documents section — with + Add document button
+  var docSec=el("div","detail-sec");
+  var docHead=el("div"); docHead.style.cssText="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;";
+  docHead.appendChild(elText("div","sec-head","Required documents"));
+  var addDocBtn=elText("button","upload-btn","+ Add"); 
+  addDocBtn.onclick=function(e){e.stopPropagation(); openModal("adddoc",p);};
+  docHead.appendChild(addDocBtn);
+  docSec.appendChild(docHead);
+  p.docs.forEach(function(d){
+    var row=el("div","doc-row"+(d.ok?"":" miss")); row.appendChild(el("div","ddot "+(d.ok?"ddot-ok":"ddot-miss")));
+    var lbl=el("span","doc-label"); lbl.textContent=d.n; if(d.file){var fn=el("span"); fn.style.cssText="color:var(--text3);font-size:9px;"; fn.textContent=" ("+d.file+")"; lbl.appendChild(fn);} row.appendChild(lbl);
+    if(d.ok){row.appendChild(elText("span","upload-done","Uploaded"));}
+    else{var btn=elText("button","upload-btn","Upload"); (function(did,pid){btn.onclick=function(e){e.stopPropagation(); triggerClinUpload(did,pid);};})(d.id,p.id); row.appendChild(btn);}
+    var editDocBtn=elText("button","btn btn-grey","Edit"); editDocBtn.style.cssText="font-size:9px;padding:2px 7px;flex-shrink:0;";
+    (function(doc,prot){editDocBtn.onclick=function(e){e.stopPropagation(); openModal("editdoc",{p:prot,d:doc});};})(d,p);
+    row.appendChild(editDocBtn);
+    docSec.appendChild(row);
+  });
+  body.appendChild(docSec);
+
+  // Approvals — click Modify to edit
+  var apSec=el("div","detail-sec");
+  var apHead=el("div"); apHead.style.cssText="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;";
+  apHead.appendChild(elText("div","sec-head","Approval chain"));
+  var addApprBtn=elText("button","upload-btn","+ Add");
+  addApprBtn.onclick=function(e){e.stopPropagation(); openModal("editapprover",{p:p,a:null,idx:-1});};
+  apHead.appendChild(addApprBtn);
+  apSec.appendChild(apHead);
+  p.approvals.forEach(function(a,i){
+    if(!a.email) a.email=getApproverEmail(a.n);
+    var row=el("div","appr-row"); row.style.flexWrap="wrap"; row.style.rowGap="2px";
+    var nameEl=elText("span","",a.n); nameEl.style.cssText="flex:1;color:var(--text2);font-size:11px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;";
+    row.appendChild(nameEl);
+    var tag=elText("span","appr-tag at-"+a.s,a.s);
+    row.appendChild(tag);
+    if(a.s!=="approved"){
+      var nb=elText("button","notify-btn","Notify");
+      (function(appr,prot){nb.onclick=function(e){e.stopPropagation(); openModal("confirmnotify",{p:prot,a:appr});};})(a,p);
+      row.appendChild(nb);
+    }
+    var modBtn=elText("button","btn btn-grey","Edit");
+    modBtn.style.cssText="font-size:9px;padding:2px 7px;flex-shrink:0;white-space:nowrap;";
+    (function(appr,idx){modBtn.onclick=function(e){e.stopPropagation(); openModal("editapprover",{p:p,a:appr,idx:idx});};})(a,i);
+    row.appendChild(modBtn);
+    var emailEl=elText("div","",a.email||"—"); emailEl.style.cssText="width:100%;font-family:var(--mono);font-size:9px;color:var(--text3);";
+    row.appendChild(emailEl);
+    apSec.appendChild(row);
+  });
+  body.appendChild(apSec);
+
+  // Milestones — edit replaces delete
+  var tlSec=el("div","detail-sec");
+  var tlHead=el("div"); tlHead.style.cssText="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;";
+  tlHead.appendChild(elText("div","sec-head","Milestones"));
+  var addMilBtn=elText("button","upload-btn","+ Add");
+  addMilBtn.onclick=function(e){e.stopPropagation(); openModal("addmilestone",{p:p,renderFn:renderMilestones});};
+  tlHead.appendChild(addMilBtn);
+  tlSec.appendChild(tlHead);
+  function renderMilestones(){
+    var existing=tlSec.querySelectorAll(".tl-row"); existing.forEach(function(r){r.parentNode.removeChild(r);});
+    p.timeline.forEach(function(t,i){
+      var row=el("div","tl-row"); row.style.alignItems="center";
+      var dateEl=el("span","tl-date"); dateEl.textContent=t.d; dateEl.contentEditable="true"; dateEl.style.outline="none"; dateEl.style.minWidth="50px"; dateEl.style.borderBottom="1px dashed transparent"; dateEl.title="Click to edit date";
+      dateEl.addEventListener("focus",function(){this.style.borderBottomColor="var(--blue)";});
+      dateEl.addEventListener("blur",function(){this.style.borderBottomColor="transparent"; t.d=this.textContent.trim()||t.d; saveState();});
+      dateEl.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();this.blur();}});
+      dateEl.onclick=function(e){e.stopPropagation();};
+      row.appendChild(dateEl);
+      var evEl=el("span","tl-event"); evEl.textContent=t.e; evEl.contentEditable="true"; evEl.style.outline="none"; evEl.style.borderBottom="1px dashed transparent"; evEl.title="Click to edit milestone";
+      evEl.addEventListener("focus",function(){this.style.borderBottomColor="var(--blue)";});
+      evEl.addEventListener("blur",function(){this.style.borderBottomColor="transparent"; t.e=this.textContent.trim()||t.e; saveState();});
+      evEl.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();this.blur();}});
+      evEl.onclick=function(e){e.stopPropagation();};
+      row.appendChild(evEl);
+      var editMil=elText("button","btn btn-grey","Edit"); editMil.style.cssText="font-size:9px;padding:2px 7px;flex-shrink:0;";
+      (function(idx){editMil.onclick=function(e){e.stopPropagation(); openModal("editmilestone",{p:p,idx:idx,renderFn:renderMilestones});};})(i);
+      row.appendChild(editMil);
+      tlSec.appendChild(row);
+    });
+  }
+  renderMilestones();
+  body.appendChild(tlSec);
+  panel.appendChild(body);
+
+  var foot=el("div","detail-foot");
+  var eb=elText("button","btn","Edit protocol"); if(can("canEdit")){eb.onclick=function(){openModal("editprotocol",p.id);};}else{eb.disabled=true;eb.title="Requires Editor role or above";eb.style.opacity="0.4";eb.style.cursor="not-allowed";} foot.appendChild(eb);
+  var ub=elText("button","btn btn-blue","Upload document"); ub.style.opacity=(mc>0&&can("canUpload"))?"1":"0.4"; ub.style.pointerEvents=(mc>0&&can("canUpload"))?"auto":"none"; ub.title=can("canUpload")?"Upload a missing document":"Requires Editor role or above"; ub.onclick=function(){triggerClinUpload(null,p.id);}; foot.appendChild(ub);
+  var rb=elText("button","btn","Request approval"); if(can("canApprove")){rb.onclick=function(){openModal("requestapproval",p);};}else{rb.disabled=true;rb.title="Requires Editor role or above";rb.style.opacity="0.4";rb.style.cursor="not-allowed";} foot.appendChild(rb);
+  var rpt=elText("button","btn btn-primary","Generate report"); rpt.style.marginLeft="auto"; rpt.onclick=function(){openModal("report");}; foot.appendChild(rpt);
+  panel.appendChild(foot);
+  area.appendChild(panel);
+}
+
+function addMilestone(p, tlSec) {
+  var newMil = {d:"TBD", e:"New milestone"};
+  p.timeline.push(newMil);
+  saveState();
+  // Re-render the milestones section by triggering a view refresh
+  renderView();
+  // Focus the new milestone event field after render
+  setTimeout(function(){
+    var rows = document.querySelectorAll(".tl-row");
+    if(rows.length){
+      var last = rows[rows.length-1];
+      var evEl = last.querySelector(".tl-event");
+      if(evEl){evEl.focus(); var range=document.createRange(); range.selectNodeContents(evEl); var sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(range);}
+    }
+  }, 50);
+}
+
+function cycleApproval(p, a) {
+  var cycle={"needed":"pending","pending":"approved","approved":"needed"};
+  var prev=a.s; a.s=cycle[a.s]||"needed";
+  logActivity("approve","Approval: "+a.n+" → "+a.s+" ("+p.name+")");
+  saveState(); showToast(a.n+": "+a.s,"green-t");
+}
+
+function renderList(area) {
+  var cols=[{k:"name",l:"Protocol",w:"36%"},{k:"stage",l:"Stage",w:"17%"},{k:"missing",l:"Missing docs",w:"13%"},{k:"approvals",l:"Approvals",w:"13%"},{k:"owner",l:"Lead",w:"12%"},{k:"date",l:"Target",w:"9%"}];
+  var fps=[].concat(state.protocols).sort(function(a,b){
+    var va,vb; if(state.sortCol==="missing"){va=missingFor(a);vb=missingFor(b);}else if(state.sortCol==="approvals"){va=pendingFor(a);vb=pendingFor(b);}else if(state.sortCol==="stage"){va=a.stage;vb=b.stage;}else{va=(a[state.sortCol]||"").toString().toLowerCase();vb=(b[state.sortCol]||"").toString().toLowerCase();}
+    if(va<vb)return -1*state.sortDir; if(va>vb)return 1*state.sortDir; return 0;
+  });
+  var wrap=el("div","list-view"); var tbl=document.createElement("table"); tbl.className="list-table";
+  var thead=document.createElement("thead"); var hr=document.createElement("tr");
+  cols.forEach(function(c){var th=document.createElement("th"); th.style.width=c.w; th.textContent=c.l+(state.sortCol===c.k?(state.sortDir===1?" ↑":" ↓"):""); th.onclick=function(){if(state.sortCol===c.k)state.sortDir*=-1;else{state.sortCol=c.k;state.sortDir=1;}renderView();}; hr.appendChild(th);});
+  thead.appendChild(hr); tbl.appendChild(thead);
+  var tbody=document.createElement("tbody");
+  fps.forEach(function(p){
+    var mc=missingFor(p),pc=pendingFor(p),ov=isOverdue(p);
+    var tr=document.createElement("tr"); if(state.selectedId===p.id) tr.classList.add("sel-row");
+    var td1=document.createElement("td"); var nm=elText("span","list-name",p.name); if(ov) nm.style.color="var(--red)"; td1.appendChild(nm); tr.appendChild(td1);
+    var td2=document.createElement("td"); td2.appendChild(elText("span","stage-badge",STAGES.find(function(s){return s.k===p.stage;}).l)); tr.appendChild(td2);
+    var td3=document.createElement("td"); var me=elText("span","",mc===0?"None":mc+" missing"); me.style.color=mc>0?"var(--red)":"var(--green)"; me.style.fontFamily="var(--mono)"; me.style.fontSize="10px"; td3.appendChild(me); tr.appendChild(td3);
+    var td4=document.createElement("td"); var pe=elText("span","",pc===0?"All approved":pc+" pending"); pe.style.color=pc>0?"var(--amber)":"var(--green)"; pe.style.fontFamily="var(--mono)"; pe.style.fontSize="10px"; td4.appendChild(pe); tr.appendChild(td4);
+    var td5=document.createElement("td");
+    var ownerDiv=el("div"); ownerDiv.appendChild(elText("div","",p.owner||"—")); ownerDiv.style.color="var(--text2)";
+    if(p.ownerEmail){var em=elText("div","",p.ownerEmail); em.style.cssText="font-size:9px;color:var(--text3);font-family:var(--mono);"; ownerDiv.appendChild(em);}
+    td5.appendChild(ownerDiv); tr.appendChild(td5);
+    var td6=document.createElement("td"); td6.textContent=p.date?new Date(p.date).toLocaleDateString("en-US",{month:"short",day:"numeric"}):"—"; td6.style.fontFamily="var(--mono)"; td6.style.fontSize="10px"; td6.style.color=ov?"var(--red)":"var(--text3)"; tr.appendChild(td6);
+    tr.onclick=function(){state.selectedId=state.selectedId===p.id?null:p.id; renderView();}; tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody); wrap.appendChild(tbl); area.appendChild(wrap);
+  appendDetail(area);
+}
+
+function renderTimeline(area) {
+  var totalCols=MONTHS.length, todayIdx=4, labelW=220;
+  var wrap=el("div","gantt-wrap");
+  var mRow=el("div"); mRow.style.cssText="display:flex;background:var(--surface2);border-bottom:1px solid var(--border);";
+  var lhd=elText("div","","Protocol"); lhd.style.cssText="width:"+labelW+"px;flex-shrink:0;padding:6px 14px;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);border-right:1px solid var(--border);"; mRow.appendChild(lhd);
+  var mGrid=el("div"); mGrid.style.cssText="flex:1;display:grid;grid-template-columns:repeat("+totalCols+",1fr);";
+  MONTHS.forEach(function(m,i){var mc2=elText("div","",m); mc2.style.cssText="padding:6px 0;text-align:center;font-family:var(--mono);font-size:8px;text-transform:uppercase;color:"+(i===todayIdx?"var(--red)":"var(--text3)")+";font-weight:"+(i===todayIdx?"500":"400")+";border-right:1px solid var(--border);"; mGrid.appendChild(mc2);}); mRow.appendChild(mGrid); wrap.appendChild(mRow);
+  state.protocols.forEach(function(p){
+    var mc=missingFor(p), sm=p.startMonth||0, em=p.endMonth||5, dm=p.submitMonth||5;
+    var row=el("div","gantt-row"); row.style.cssText="display:flex;border-bottom:1px solid var(--border);cursor:pointer;"+(state.selectedId===p.id?"background:var(--blue-bg);":"");
+    var lbl=el("div"); lbl.style.cssText="width:"+labelW+"px;flex-shrink:0;border-right:1px solid var(--border);padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;";
+    var pn=elText("div","",p.name); pn.style.cssText="font-size:11px;font-weight:500;color:var(--text);line-height:1.2;"; lbl.appendChild(pn);
+    var sub=el("div"); sub.style.cssText="display:flex;gap:4px;margin-top:3px;";
+    var typeKey=(p.type||"IND").replace(/[^a-zA-Z]/g,"").substring(0,3);
+    var tp2=elText("span","type-pill tp-"+typeKey,p.type||"IND"); tp2.style.cssText="font-size:7px;padding:1px 5px;"; sub.appendChild(tp2);
+    sub.appendChild(elText("span",mc>0?"flag fl-miss":"flag fl-ok",mc>0?mc+" missing":"docs ok")); lbl.appendChild(sub); row.appendChild(lbl);
+    var barArea=el("div"); barArea.style.cssText="flex:1;position:relative;height:54px;";
+    for(var i=0;i<totalCols;i++){var gl=el("div"); gl.style.cssText="position:absolute;top:0;bottom:0;width:1px;background:var(--border);left:"+((i/totalCols)*100)+"%;"; barArea.appendChild(gl);}
+    var tp=((todayIdx+0.1)/totalCols)*100; var tl2=el("div"); tl2.style.cssText="position:absolute;top:0;bottom:0;width:1.5px;background:#B91C1C;opacity:0.5;left:"+tp+"%;z-index:2;"; barArea.appendChild(tl2);
+    var tlbl=elText("div","","Today"); tlbl.style.cssText="position:absolute;top:2px;font-family:var(--mono);font-size:7px;color:#B91C1C;left:"+(tp+0.3)+"%;white-space:nowrap;opacity:0.7;"; barArea.appendChild(tlbl);
+    var bar=el("div"); bar.style.cssText="position:absolute;top:50%;transform:translateY(-50%);height:18px;border-radius:3px;left:"+((sm/totalCols)*100)+"%;width:"+(((em-sm)/totalCols)*100)+"%;background:var(--blue-bg);border:1px solid var(--blue-bd);display:flex;align-items:center;padding:0 7px;overflow:hidden;";
+    var bl=elText("span","",p.owner||""); bl.style.cssText="font-family:var(--mono);font-size:8px;font-weight:500;color:var(--blue);white-space:nowrap;"; bar.appendChild(bl); barArea.appendChild(bar);
+    var dia=el("div"); dia.style.cssText="position:absolute;top:50%;transform:translateY(-50%) rotate(45deg);width:9px;height:9px;background:"+(mc>0?"var(--red)":"var(--green)")+";border-radius:1px;left:calc("+((dm/totalCols)*100)+"% - 4px);z-index:3;"; barArea.appendChild(dia);
+    row.appendChild(barArea); row.onclick=function(){state.selectedId=state.selectedId===p.id?null:p.id; renderView();}; wrap.appendChild(row);
+  });
+  var legend=el("div"); legend.style.cssText="display:flex;gap:16px;padding:9px 14px;border-top:1px solid var(--border);background:var(--surface2);align-items:center;";
+  legend.innerHTML='<span style="font-family:var(--mono);font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;">Legend:</span><div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:22px;height:10px;border-radius:2px;background:var(--blue-bg);border:1px solid var(--blue-bd);"></div>Protocol</div><div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:9px;height:9px;transform:rotate(45deg);background:var(--green);border-radius:1px;flex-shrink:0;"></div>Target (ok)</div><div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:9px;height:9px;transform:rotate(45deg);background:var(--red);border-radius:1px;flex-shrink:0;"></div>Target (missing)</div><div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);"><div style="width:1.5px;height:14px;background:#B91C1C;opacity:0.5;"></div>Today</div>';
+  wrap.appendChild(legend); area.appendChild(wrap);
+  appendDetail(area);
+}
+
+// ── REGULATORY ────────────────────────────────────────────────────────────────
+function renderRegulatoryPage(main) {
+  var topbar=el("div","topbar"); var tl=el("div"); tl.appendChild(elText("div","topbar-title","Regulatory Submission Tracker")); tl.appendChild(elText("div","topbar-sub","CardioSense AI — FDA 510(k) & De Novo · Medical device authorization")); topbar.appendChild(tl);
+  var tr=el("div","topbar-right"); var rBtn=elText("button","btn","Reports"); rBtn.onclick=function(){openModal("report");}; tr.appendChild(rBtn); tr.appendChild(elText("button","btn btn-primary","+ New submission")); topbar.appendChild(tr); main.appendChild(topbar);
+  main.appendChild(makeIntBar(["Email","FDA eSTAR portal","DocuSign","SharePoint"]));
+  var all510=state.steps510k.flatMap(function(ph){return ph.steps;}); var allDN=state.stepsDN.flatMap(function(ph){return ph.steps;});
+  var done510=all510.filter(function(s){return s.status==="done";}).length; var doneDN=allDN.filter(function(s){return s.status==="done";}).length;
+  var pct510=Math.round(done510/all510.length*100); var pctDN=Math.round(doneDN/allDN.length*100);
+  var strip=el("div","stats-strip");
+  strip.appendChild(makeStatCell("Active pathways","2","","510(k) + De Novo"));
+  strip.appendChild(makeStatCell("510(k) progress",pct510+"%","blue",done510+"/"+all510.length+" steps complete"));
+  strip.appendChild(makeStatCell("De Novo progress",pctDN+"%","coral",doneDN+"/"+allDN.length+" steps complete"));
+  strip.appendChild(makeStatCell("Est. 510(k) clearance","Aug '26","green","De Novo: Nov '26"));
+  main.appendChild(strip);
+  var board=el("div","board-wrap"); var rw=el("div","reg-wrap");
+  rw.appendChild(buildRegTrack("510(k) — ECG Hardware","CardioSense ECG sensor & signal acquisition","510(k)","pb-510k","var(--blue)",state.steps510k,pct510,"510k"));
+  rw.appendChild(buildRegTrack("De Novo — AI Algorithm","CardioSense AI atrial fibrillation detection","De Novo","pb-dn","var(--coral)",state.stepsDN,pctDN,"dn"));
+  board.appendChild(rw); main.appendChild(board);
+}
+
+function buildRegTrack(title,sub,badge,badgeCls,color,phases,pct,trackId) {
+  var wrap=el("div","reg-track");
+  var head=el("div","reg-track-head"); var hl=el("div"); hl.appendChild(elText("div","reg-track-title",title)); hl.appendChild(elText("div","reg-track-sub",sub)); head.appendChild(hl); head.appendChild(elText("span","pathway-badge "+badgeCls,badge)); wrap.appendChild(head);
+  var prog=el("div","reg-progress"); var pw=el("div","prog-wrap"); var pf=el("div","prog-fill"); pf.style.cssText="width:"+pct+"%;background:"+color+";"; pw.appendChild(pf); prog.appendChild(pw); prog.appendChild(elText("span","prog-pct",pct+"%")); wrap.appendChild(prog);
+  var sw=el("div","reg-steps"); var sn=0;
+  phases.forEach(function(phase){
+    sw.appendChild(elText("div","phase-label",phase.label));
+    phase.steps.forEach(function(step){
+      sn++;
+      var row=el("div","step-row");
+      row.appendChild(elText("span","step-num",String(sn).padStart(2,"0")));
+      var icon=elText("div","step-icon si-"+step.status,statusIcon(step.status)); icon.title="Click to toggle status";
+      (function(s){icon.onclick=function(e){e.stopPropagation(); toggleStepStatus(s); render();};})(step); row.appendChild(icon);
+      var content=el("div","step-content"); content.appendChild(elText("div","step-name",step.n)); content.appendChild(elText("div","step-desc",step.desc));
+      if(step.docs.length>0){var de=el("div","step-docs"); step.docs.forEach(function(d){var chip=elText("span","doc-chip"+(step.uploaded[d]?" uploaded":""),d+(step.uploaded[d]?" ✓":"")); chip.title=step.uploaded[d]?"Uploaded: "+step.uploaded[d]:"Click to upload"; (function(dn,s){chip.onclick=function(e){e.stopPropagation(); triggerRegUpload(s,dn);};})(d,step); de.appendChild(chip);}); content.appendChild(de);}
+      var tl={done:"Complete",active:"In progress",waiting:"Awaiting FDA",fda:"FDA action",todo:"Not started"};
+      content.appendChild(elText("span","step-tag st-"+step.status,tl[step.status]||"Not started"));
+      row.appendChild(content); row.appendChild(elText("div","step-date",step.date||"")); sw.appendChild(row);
+    });
+  });
+  wrap.appendChild(sw);
+  var leg=el("div","reg-legend");
+  [["var(--green)","Complete"],["var(--blue)","In progress"],["var(--amber)","Awaiting FDA"],["var(--border2)","Not started"]].forEach(function(item){var li=el("div","leg-item"); var dot=el("div","leg-dot"); dot.style.background=item[0]; li.appendChild(dot); li.appendChild(document.createTextNode(item[1])); leg.appendChild(li);});
+  wrap.appendChild(leg); return wrap;
+}
+
+function statusIcon(s){return {done:"✓",active:"→",waiting:"⏳",fda:"★",todo:"·"}[s]||"·";}
+function toggleStepStatus(step){var cycle={todo:"active",active:"done",done:"waiting",waiting:"todo"}; var prev=step.status; step.status=cycle[step.status]||"todo"; logActivity("approve","Step '"+step.n.substring(0,40)+"' → "+step.status); saveState(); showToast("Step updated → "+step.status,"green-t");}
+
+// ── UPLOADS ───────────────────────────────────────────────────────────────────
+function triggerClinUpload(docId, pid) { state.pendingUpload={docId:docId,pid:pid}; document.getElementById("file-input").click(); }
+function triggerRegUpload(step, docName) { state.pendingRegUpload={step:step,docName:docName}; document.getElementById("file-input").click(); }
+
+document.getElementById("file-input").addEventListener("change",function(e){
+  if(!e.target.files.length) return;
+  var file=e.target.files[0];
+  if(state.pendingRegUpload){
+    var info=state.pendingRegUpload; info.step.uploaded[info.docName]=file.name;
+    logActivity("upload","Doc '"+file.name+"' → reg step: "+info.step.n.substring(0,40));
+    state.pendingRegUpload=null; e.target.value=""; saveState(); render(); showToast('"'+file.name+'" attached to step',"green-t");
+  } else if(state.pendingUpload){
+    var info2=state.pendingUpload; var p=state.protocols.find(function(x){return x.id===info2.pid;}); var doc;
+    if(info2.docId){doc=p&&p.docs.find(function(d){return d.id===info2.docId;});}else{doc=p&&p.docs.find(function(d){return !d.ok;});}
+    if(doc){doc.ok=true; doc.file=file.name;}
+    state.pendingUpload=null; e.target.value=""; logActivity("upload",'"'+file.name+'" uploaded for '+p.name); saveState(); renderView(); showToast('"'+file.name+'" uploaded — marked complete',"green-t");
+  }
+});
+
+// ── MODALS ────────────────────────────────────────────────────────────────────
+function openModal(type, data) {
+  var bg=document.getElementById("modal-bg"); var box=document.getElementById("modal-box"); box.innerHTML="";
+  if(type==="report") buildReportModal(box);
+  else if(type==="newprotocol") buildNewProtocolModal(box);
+  else if(type==="editprotocol") buildEditProtocolModal(box, data);
+  else if(type==="activity") buildActivityModal(box);
+  else if(type==="confirmnotify") buildConfirmNotifyModal(box, data);
+  else if(type==="editapprover") buildEditApproverModal(box, data);
+  else if(type==="adddoc") buildAddDocModal(box, data);
+  else if(type==="editdoc") buildEditDocModal(box, data);
+  else if(type==="addmilestone") buildAddMilestoneModal(box, data);
+  else if(type==="editmilestone") buildEditMilestoneModal(box, data);
+  else if(type==="adduser") buildAddUserModal(box);
+  else if(type==="edituser") buildEditUserModal(box, data);
+  bg.classList.add("open");
+}
+function closeModal(){document.getElementById("modal-bg").classList.remove("open");}
+document.getElementById("modal-bg").addEventListener("click",function(e){if(e.target===this)closeModal();});
+function modalHead(box, title){var head=el("div","modal-head"); head.appendChild(elText("div","modal-title",title)); var mc=elText("div","modal-close","✕"); mc.onclick=closeModal; head.appendChild(mc); box.appendChild(head);}
+
+// REPORT MODAL
+function buildReportModal(box) {
+  modalHead(box,"Reports & scheduling");
+  var body=el("div","modal-body");
+
+  // Simulated send confirmation
+  if(box._sent){body.appendChild(elText("div","success-bar","Report sent successfully to "+box._sentEmail)); var divider=el("div"); divider.style.cssText="border-top:1px solid var(--border);margin:12px 0;"; body.appendChild(divider);}
+
+  body.appendChild(elText("div","note-bar","Demo mode — reports are simulated. Wire up Resend or SendGrid for real delivery."));
+
+  var mc=totalMissing(), pc=state.protocols.reduce(function(s,p){return s+pendingFor(p);},0);
+  var all510=state.steps510k.flatMap(function(ph){return ph.steps;}); var allDN=state.stepsDN.flatMap(function(ph){return ph.steps;});
+  var pct510=Math.round(all510.filter(function(s){return s.status==="done";}).length/all510.length*100);
+  var pctDN=Math.round(allDN.filter(function(s){return s.status==="done";}).length/allDN.length*100);
+
+  var cs=el("div","r-section"); cs.appendChild(elText("div","r-label","Live snapshot — "+dateStr()));
+  [{l:"Active protocols",v:String(state.protocols.length),c:""},{l:"Missing documents",v:String(mc),c:mc>0?"red":"green"},{l:"Pending approvals",v:String(pc),c:pc>0?"amber":""},{l:"510(k) progress",v:pct510+"%",c:"blue"},{l:"De Novo progress",v:pctDN+"%",c:"coral"}].forEach(function(r){
+    var row=el("div","r-row"); row.appendChild(elText("span","",r.l)); var rv=elText("span","r-val "+(r.c||""),r.v); if(r.c==="blue") rv.style.color="var(--blue)"; if(r.c==="coral") rv.style.color="var(--coral)"; row.appendChild(rv); cs.appendChild(row);
+  });
+  body.appendChild(cs);
+
+  var sch=el("div","r-section"); sch.appendChild(elText("div","r-label","Automated schedule"));
+  var schNote=elText("div","","Send this report automatically:"); schNote.style.cssText="font-size:11px;color:var(--text2);margin-bottom:8px;"; sch.appendChild(schNote);
+  var schedRow=el("div","schedule-row");
+  var daySelect=el("select","form-select"); daySelect.style.width="auto"; daySelect.style.padding="5px 8px";
+  ["Monday","Tuesday","Wednesday","Thursday","Friday"].forEach(function(d){var o=document.createElement("option"); o.value=d; o.textContent=d; if(d===state.reportSchedule.day)o.selected=true; daySelect.appendChild(o);});
+  var timeSelect=el("select","form-select"); timeSelect.style.width="auto"; timeSelect.style.padding="5px 8px";
+  ["06:00","07:00","08:00","09:00","10:00"].forEach(function(t){var o=document.createElement("option"); o.value=t; o.textContent=t; if(t===state.reportSchedule.time)o.selected=true; timeSelect.appendChild(o);});
+  schedRow.appendChild(elText("span","","Every")); schedRow.appendChild(daySelect); schedRow.appendChild(elText("span","","at")); schedRow.appendChild(timeSelect);
+  sch.appendChild(schedRow);
+
+  var emailGroup=el("div","form-group"); emailGroup.style.marginTop="10px"; emailGroup.appendChild(elText("label","form-label","Send to (group head)"));
+  var emailInp=el("input","form-input"); emailInp.type="email"; emailInp.placeholder="group.head@company.com"; emailInp.value=state.reportSchedule.email||""; emailGroup.appendChild(emailInp);
+  sch.appendChild(emailGroup);
+  body.appendChild(sch);
+  box.appendChild(body);
+
+  var foot=el("div","modal-foot");
+  var cancelBtn=elText("button","btn","Cancel"); cancelBtn.onclick=closeModal; foot.appendChild(cancelBtn);
+  var schedBtn=elText("button","btn","Save schedule");
+  schedBtn.onclick=function(){state.reportSchedule.day=daySelect.value; state.reportSchedule.time=timeSelect.value; state.reportSchedule.email=emailInp.value; saveState(); showToast("Schedule saved: "+daySelect.value+" "+timeSelect.value+(emailInp.value?" → "+emailInp.value:""),"green-t"); closeModal();};
+  foot.appendChild(schedBtn);
+  var sendBtn=elText("button","btn btn-primary","Send now");
+  sendBtn.onclick=function(){
+    var em=emailInp.value||"group.head@company.com";
+    state.reportSchedule.email=em; logActivity("email","Weekly report sent to "+em); saveState();
+    box._sent=true; box._sentEmail=em;
+    box.innerHTML=""; buildReportModal(box);
+    showToast("Report sent to "+em,"blue-t");
+  };
+  foot.appendChild(sendBtn);
+  box.appendChild(foot);
+}
+
+// CONFIRM NOTIFY MODAL (approval confirmation step)
+function buildConfirmNotifyModal(box, data) {
+  var p=data.p, a=data.a;
+  var email=a.email||getApproverEmail(a.n);
+  modalHead(box,"Confirm approval request");
+  var body=el("div","modal-body");
+  body.appendChild(elText("div","r-label","Review before sending"));
+  var preview=el("div","send-preview");
+  preview.innerHTML="<strong>To:</strong> "+a.n+"<br><strong>Email:</strong> "+email+"<br><strong>Protocol:</strong> "+p.name+"<br><strong>Subject:</strong> Approval request — "+p.name+"<br><br><em>\"You have been identified as a required approver for the above protocol. Please review and provide your approval at your earliest convenience.\"</em>";
+  body.appendChild(preview);
+  var emailGroup=el("div","form-group"); emailGroup.appendChild(elText("label","form-label","Confirm or update email address"));
+  var emailInp=el("input","form-input"); emailInp.type="email"; emailInp.value=email; emailGroup.appendChild(emailInp);
+  body.appendChild(emailGroup);
+  box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var send=elText("button","btn btn-primary","Send approval request");
+  send.onclick=function(){
+    var finalEmail=emailInp.value||email;
+    logActivity("email","Approval request sent to "+a.n+" ("+finalEmail+") for "+p.name);
+    saveState(); closeModal();
+    showToast("Approval request sent to "+a.n+" — "+finalEmail,"blue-t");
+  };
+  foot.appendChild(send); box.appendChild(foot);
+}
+
+// REQUEST APPROVAL MODAL (with email suggestions)
+function buildRequestApprovalModal(box, p) {
+  modalHead(box,"Request approvals — "+p.name);
+  var body=el("div","modal-body");
+  var needed=p.approvals.filter(function(a){return a.s!=="approved";});
+  if(!needed.length){
+    body.appendChild(elText("p","","All approvers have already approved this protocol."));
+    box.appendChild(body);
+    var foot0=el("div","modal-foot"); var done0=elText("button","btn btn-primary","Close"); done0.onclick=closeModal; foot0.appendChild(done0); box.appendChild(foot0);
+    return;
+  }
+  body.appendChild(elText("div","r-label","Pending approvers — edit email then send individually or all at once"));
+
+  var sentSet={};
+
+  needed.forEach(function(a){
+    var email=a.email||getApproverEmail(a.n);
+    var row=el("div"); row.style.cssText="padding:8px 0;border-bottom:1px solid var(--border);";
+
+    // Name + status row
+    var nameRow=el("div"); nameRow.style.cssText="display:flex;align-items:center;gap:8px;margin-bottom:6px;";
+    nameRow.appendChild(elText("span","",a.n));
+    nameRow.appendChild(elText("span","appr-tag at-"+a.s,a.s));
+
+    // Sent indicator (hidden initially)
+    var sentBadge=elText("span","","✓ Sent"); sentBadge.style.cssText="font-family:var(--mono);font-size:9px;color:var(--green);display:none;margin-left:auto;";
+    sentBadge.id="sent-"+a.n.replace(/\s/g,"-");
+    nameRow.appendChild(sentBadge);
+    row.appendChild(nameRow);
+
+    // Email + send button row
+    var emailRow=el("div"); emailRow.style.cssText="display:flex;gap:6px;align-items:center;";
+    var emailInp=el("input","form-input"); emailInp.type="email"; emailInp.value=email; emailInp.placeholder="Email address"; emailInp.style.flex="1"; emailInp.style.fontSize="11px"; emailInp.style.padding="5px 8px";
+    emailRow.appendChild(emailInp);
+
+    var sendBtn=elText("button","btn btn-blue","Send");
+    sendBtn.style.cssText="font-size:11px;padding:5px 12px;flex-shrink:0;white-space:nowrap;";
+    (function(appr, einp, sbadge){
+      sendBtn.onclick=function(){
+        var finalEmail=einp.value.trim()||email;
+        appr.email=finalEmail;
+        logActivity("email","Approval request → "+appr.n+" ("+finalEmail+") for "+p.name);
+        saveState();
+        sbadge.style.display="inline";
+        sendBtn.textContent="Resend";
+        sendBtn.style.background="var(--green-bg)";
+        sendBtn.style.color="var(--green)";
+        sendBtn.style.borderColor="var(--green-bd)";
+        showToast("Sent to "+appr.n+" — "+finalEmail,"blue-t");
+      };
+    })(a, emailInp, sentBadge);
+    emailRow.appendChild(sendBtn);
+    row.appendChild(emailRow);
+    body.appendChild(row);
+  });
+
+  box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var sendAll=elText("button","btn btn-primary","Send to all");
+  sendAll.onclick=function(){
+    needed.forEach(function(a){
+      var finalEmail=a.email||getApproverEmail(a.n);
+      logActivity("email","Approval request → "+a.n+" ("+finalEmail+") for "+p.name);
+      var sb=document.getElementById("sent-"+a.n.replace(/\s/g,"-"));
+      if(sb) sb.style.display="inline";
+    });
+    saveState(); closeModal();
+    showToast("Approval requests sent to "+needed.length+" approver"+(needed.length>1?"s":""),"blue-t");
+  };
+  foot.appendChild(sendAll); box.appendChild(foot);
+}
+
+// NEW PROTOCOL MODAL
+function buildNewProtocolModal(box) {
+  modalHead(box,"Add new protocol");
+  var body=el("div","modal-body");
+  function fg(label, inp, hint) { var g=el("div","form-group"); var lbl=el("label","form-label"); lbl.textContent=label; if(hint){var sm=elText("small","",hint); lbl.appendChild(sm);} g.appendChild(lbl); g.appendChild(inp); body.appendChild(g); return inp; }
+  var nameInp=fg("Protocol name",Object.assign(el("input","form-input"),{placeholder:"e.g. Phase III Cardiology — Protocol 205"}));
+  var typeInp=el("select","form-select"); TYPES.forEach(function(t){var o=document.createElement("option"); o.value=t; o.textContent=t; typeInp.appendChild(o);}); fg("Submission type",typeInp);
+  var stageInp=el("select","form-select"); STAGES.forEach(function(s){var o=document.createElement("option"); o.value=s.k; o.textContent=s.l; stageInp.appendChild(o);}); fg("Current stage",stageInp);
+  var ownerInp=fg("Lead investigator",Object.assign(el("input","form-input"),{placeholder:"e.g. Dr. Smith"}));
+  var emailInp=fg("Lead investigator email",Object.assign(el("input","form-input"),{type:"email",placeholder:"pi@company.com"}));
+  var dateInp=fg("Target submission date",Object.assign(el("input","form-input"),{type:"date"}));
+  var urgInp=el("select","form-select"); ["high","med","low"].forEach(function(u){var o=document.createElement("option"); o.value=u; o.textContent=u.charAt(0).toUpperCase()+u.slice(1); urgInp.appendChild(o);});
+  var urgGroup=el("div","form-group"); urgGroup.appendChild(elText("label","form-label","Priority"));
+  urgGroup.appendChild(urgInp);
+  var legend=el("div","priority-legend");
+  [{c:"var(--red)",l:"High — blocks submission, immediate action required"},{c:"#B45309",l:"Medium — at risk, monitor closely"},{c:"var(--green)",l:"Low — on track, no action needed"}].forEach(function(item){
+    var li=el("div","pl-item"); var dot=el("div","pl-dot"); dot.style.background=item.c; li.appendChild(dot); li.appendChild(document.createTextNode(item.l)); legend.appendChild(li);
+  });
+  urgGroup.appendChild(legend); body.appendChild(urgGroup);
+  box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary","Add protocol");
+  save.onclick=function(){
+    if(!nameInp.value.trim()){showToast("Protocol name required"); return;}
+    var newP={id:Date.now(),name:nameInp.value.trim(),type:typeInp.value,stage:parseInt(stageInp.value),urgency:urgInp.value,owner:ownerInp.value.trim()||"Unassigned",ownerEmail:emailInp.value.trim()||"",date:dateInp.value||"",startMonth:4,endMonth:8,submitMonth:8,docs:[{id:"nd1",n:"Cover letter",ok:false,file:""},{id:"nd2",n:"Protocol synopsis",ok:false,file:""},{id:"nd3",n:"Informed consent form",ok:false,file:""},{id:"nd4",n:"Investigator Brochure",ok:false,file:""}],approvals:[{n:"Principal Investigator",s:"needed"},{n:"Medical Monitor",s:"needed"},{n:"Regulatory Affairs Lead",s:"needed"},{n:"Legal / Compliance",s:"needed"}],timeline:[{d:"Today",e:"Protocol created in tracker"}]};
+    state.protocols.push(newP); logActivity("upload","New protocol: "+newP.name); saveState(); closeModal(); render(); showToast("Protocol added: "+newP.name,"green-t");
+  };
+  foot.appendChild(save); box.appendChild(foot);
+}
+
+// EDIT PROTOCOL MODAL
+function buildEditProtocolModal(box, pid) {
+  var p=state.protocols.find(function(x){return x.id===pid;}); if(!p){closeModal();return;}
+  modalHead(box,"Edit protocol");
+  var body=el("div","modal-body");
+  function fg(label, inp, hint) { var g=el("div","form-group"); var lbl=el("label","form-label"); lbl.textContent=label; if(hint){var sm=elText("small","",hint); lbl.appendChild(sm);} g.appendChild(lbl); g.appendChild(inp); body.appendChild(g); return inp; }
+  fg("Protocol name",Object.assign(el("input","form-input"),{value:p.name}));
+  var nameInp=body.lastChild.lastChild;
+  var typeInp=el("select","form-select"); TYPES.forEach(function(t){var o=document.createElement("option"); o.value=t; o.textContent=t; if(t===p.type)o.selected=true; typeInp.appendChild(o);}); fg("Submission type",typeInp);
+  var stageInp=el("select","form-select"); STAGES.forEach(function(s){var o=document.createElement("option"); o.value=s.k; o.textContent=s.l; if(s.k===p.stage)o.selected=true; stageInp.appendChild(o);}); fg("Current stage",stageInp);
+
+  // Lead + email on same row
+  var lr=el("div","form-row"); var ownerGroup=el("div","form-group"); ownerGroup.style.margin="0"; ownerGroup.appendChild(elText("label","form-label","Lead investigator")); var ownerInp=Object.assign(el("input","form-input"),{value:p.owner}); ownerGroup.appendChild(ownerInp); lr.appendChild(ownerGroup);
+  var emailGroup=el("div","form-group"); emailGroup.style.margin="0"; emailGroup.appendChild(elText("label","form-label","Lead email")); var emailInp=Object.assign(el("input","form-input"),{type:"email",value:p.ownerEmail||"",placeholder:"pi@company.com"}); emailGroup.appendChild(emailInp); lr.appendChild(emailGroup);
+  var lrWrap=el("div","form-group"); lrWrap.appendChild(lr); body.appendChild(lrWrap);
+
+  fg("Target submission date",Object.assign(el("input","form-input"),{type:"date",value:p.date||""}));
+  var dateInp=body.lastChild.lastChild;
+  var urgInp=el("select","form-select"); ["high","med","low"].forEach(function(u){var o=document.createElement("option"); o.value=u; o.textContent=u.charAt(0).toUpperCase()+u.slice(1); if(u===p.urgency)o.selected=true; urgInp.appendChild(o);});
+  var urgGroup=el("div","form-group"); urgGroup.appendChild(elText("label","form-label","Priority")); urgGroup.appendChild(urgInp);
+  var legend=el("div","priority-legend");
+  [{c:"var(--red)",l:"High — blocks submission"},{c:"#B45309",l:"Medium — at risk"},{c:"var(--green)",l:"Low — on track"}].forEach(function(item){var li=el("div","pl-item"); var dot=el("div","pl-dot"); dot.style.background=item.c; li.appendChild(dot); li.appendChild(document.createTextNode(item.l)); legend.appendChild(li);});
+  urgGroup.appendChild(legend); body.appendChild(urgGroup);
+
+  // Documents with add option
+  var docLabel=elText("div","r-label","Documents");
+  docLabel.style.marginTop="8px"; body.appendChild(docLabel);
+  var docList=el("div"); docList.id="doc-list-edit";
+  function renderDocList(){
+    docList.innerHTML="";
+    p.docs.forEach(function(d,i){
+      var row=el("div","doc-checkbox-row");
+      var cb=document.createElement("input"); cb.type="checkbox"; cb.checked=d.ok;
+      cb.onchange=function(){d.ok=cb.checked; if(!d.ok)d.file="";}; row.appendChild(cb);
+      var span=elText("span","",d.n); span.style.flex="1"; row.appendChild(span);
+      var del=elText("button","","×"); del.style.cssText="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:0 4px;"; del.onclick=function(){p.docs.splice(i,1); renderDocList();}; row.appendChild(del);
+      docList.appendChild(row);
+    });
+  }
+  renderDocList(); body.appendChild(docList);
+  var addDocRow=el("div","doc-add-row");
+  var newDocInp=Object.assign(el("input","form-input"),{placeholder:"New document name..."}); addDocRow.appendChild(newDocInp);
+  var addDocBtn=elText("button","btn","+ Add");
+  addDocBtn.onclick=function(){var n=newDocInp.value.trim(); if(!n) return; p.docs.push({id:"nd"+Date.now(),n:n,ok:false,file:""}); newDocInp.value=""; renderDocList();};
+  addDocRow.appendChild(addDocBtn); body.appendChild(addDocRow);
+  box.appendChild(body);
+
+  var foot=el("div","modal-foot");
+  var del=elText("button","btn btn-red","Delete");
+  del.onclick=function(){if(!confirm("Delete '"+p.name+"'?")) return; state.protocols=state.protocols.filter(function(x){return x.id!==pid;}); if(state.selectedId===pid) state.selectedId=null; logActivity("approve","Protocol deleted: "+p.name); saveState(); closeModal(); render(); showToast("Protocol deleted");};
+  foot.appendChild(del);
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary","Save changes");
+  save.onclick=function(){
+    p.name=nameInp.value.trim()||p.name; p.type=typeInp.value; p.stage=parseInt(stageInp.value);
+    p.owner=ownerInp.value.trim(); p.ownerEmail=emailInp.value.trim(); p.date=dateInp.value; p.urgency=urgInp.value;
+    logActivity("approve","Protocol updated: "+p.name); saveState(); closeModal(); render(); showToast("Protocol updated","green-t");
+  };
+  foot.appendChild(save); box.appendChild(foot);
+}
+
+// ACTIVITY MODAL
+function buildActivityModal(box) {
+  modalHead(box,"Activity log");
+  var body=el("div","modal-body");
+  if(!state.activityLog.length){body.appendChild(elText("p","","No activity yet.")); box.appendChild(body); var foot=el("div","modal-foot"); var done=elText("button","btn btn-primary","Done"); done.onclick=closeModal; foot.appendChild(done); box.appendChild(foot); return;}
+  var feed=el("div");
+  state.activityLog.forEach(function(item){
+    var row=el("div"); row.style.cssText="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px;";
+    var t=elText("span","",item.date+" "+item.time); t.style.cssText="font-family:var(--mono);font-size:9px;color:var(--text3);min-width:80px;flex-shrink:0;padding-top:1px;";
+    row.appendChild(t); row.appendChild(elText("span","",item.msg)); feed.appendChild(row);
+  });
+  body.appendChild(feed); box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var clr=elText("button","btn","Clear log"); clr.onclick=function(){state.activityLog=[];saveState();closeModal();showToast("Log cleared");}; foot.appendChild(clr);
+  var done=elText("button","btn btn-primary","Done"); done.onclick=closeModal; foot.appendChild(done);
+  box.appendChild(foot);
+}
+
+// EDIT APPROVER MODAL
+function buildEditApproverModal(box, data) {
+  var p=data.p, a=data.a, idx=data.idx;
+  var isNew=a===null;
+  modalHead(box, isNew?"Add approver":"Edit approver");
+  var body=el("div","modal-body");
+  function fg(label, inp) { var g=el("div","form-group"); g.appendChild(elText("label","form-label",label)); g.appendChild(inp); body.appendChild(g); return inp; }
+  var nameInp=fg("Name",Object.assign(el("input","form-input"),{placeholder:"e.g. Dr. Smith — Medical Monitor",value:isNew?"":a.n}));
+  var emailInp=fg("Email address",Object.assign(el("input","form-input"),{type:"email",placeholder:"approver@company.com",value:isNew?"":(a.email||"")}));
+  var statusGroup=el("div","form-group"); statusGroup.appendChild(elText("label","form-label","Status"));
+  var statusSel=el("select","form-select");
+  [{v:"needed",l:"Needed — approval required, not yet requested"},{v:"pending",l:"Pending — request sent, awaiting response"},{v:"approved",l:"Approved — sign-off received"},{v:"not-required",l:"Not required — excluded from this protocol"}].forEach(function(opt){
+    var o=document.createElement("option"); o.value=opt.v; o.textContent=opt.l;
+    if(!isNew && a.s===opt.v) o.selected=true;
+    statusSel.appendChild(o);
+  });
+  statusGroup.appendChild(statusSel); body.appendChild(statusGroup);
+  box.appendChild(body);
+  var foot=el("div","modal-foot");
+  if(!isNew){var del=elText("button","btn btn-red","Remove approver"); del.onclick=function(){if(!confirm("Remove "+a.n+"?")) return; p.approvals.splice(idx,1); saveState(); closeModal(); renderView(); showToast("Approver removed");}; foot.appendChild(del);}
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary",isNew?"Add approver":"Save changes");
+  save.onclick=function(){
+    if(!nameInp.value.trim()){showToast("Name required"); return;}
+    if(isNew){p.approvals.push({n:nameInp.value.trim(),email:emailInp.value.trim(),s:statusSel.value}); logActivity("approve","Approver added: "+nameInp.value.trim());}
+    else{a.n=nameInp.value.trim(); a.email=emailInp.value.trim(); a.s=statusSel.value; logActivity("approve","Approver updated: "+a.n+" → "+a.s);}
+    saveState(); closeModal(); renderView(); showToast(isNew?"Approver added":"Approver updated","green-t");
+  };
+  foot.appendChild(save); box.appendChild(foot);
+}
+
+// ADD DOCUMENT MODAL
+function buildAddDocModal(box, p) {
+  modalHead(box,"Add required document");
+  var body=el("div","modal-body");
+  var g=el("div","form-group"); g.appendChild(elText("label","form-label","Document name")); var nameInp=Object.assign(el("input","form-input"),{placeholder:"e.g. Investigator Brochure v3"}); g.appendChild(nameInp); body.appendChild(g);
+  var g2=el("div","form-group"); g2.appendChild(elText("label","form-label","Status"));
+  var statusSel=el("select","form-select");
+  [{v:"pending",l:"Pending — not yet uploaded"},{v:"uploaded",l:"Already uploaded — mark as complete"}].forEach(function(opt){var o=document.createElement("option"); o.value=opt.v; o.textContent=opt.l; statusSel.appendChild(o);});
+  g2.appendChild(statusSel); body.appendChild(g2);
+  box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary","Add document");
+  save.onclick=function(){
+    if(!nameInp.value.trim()){showToast("Document name required"); return;}
+    var isUp=statusSel.value==="uploaded";
+    p.docs.push({id:"doc"+Date.now(),n:nameInp.value.trim(),ok:isUp,file:isUp?"(manually marked)":""});
+    logActivity("upload","Document added: "+nameInp.value.trim()+" to "+p.name);
+    saveState(); closeModal(); renderView(); showToast("Document added","green-t");
+  };
+  foot.appendChild(save); box.appendChild(foot);
+}
+
+// EDIT DOCUMENT MODAL
+function buildEditDocModal(box, data) {
+  var p=data.p, d=data.d;
+  modalHead(box,"Edit document");
+  var body=el("div","modal-body");
+  function fg(label, inp) { var g=el("div","form-group"); g.appendChild(elText("label","form-label",label)); g.appendChild(inp); body.appendChild(g); return inp; }
+  var nameInp=fg("Document name",Object.assign(el("input","form-input"),{value:d.n}));
+  var statusGroup=el("div","form-group"); statusGroup.appendChild(elText("label","form-label","Status"));
+  var statusSel=el("select","form-select");
+  [{v:"pending",l:"Pending — not yet uploaded"},{v:"uploaded",l:"Uploaded — mark as complete"}].forEach(function(opt){
+    var o=document.createElement("option"); o.value=opt.v; o.textContent=opt.l;
+    if((d.ok&&opt.v==="uploaded")||(!d.ok&&opt.v==="pending")) o.selected=true;
+    statusSel.appendChild(o);
+  });
+  statusGroup.appendChild(statusSel); body.appendChild(statusGroup);
+  box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var del=elText("button","btn btn-red","Remove"); del.onclick=function(){p.docs=p.docs.filter(function(x){return x.id!==d.id;}); saveState(); closeModal(); renderView(); showToast("Document removed");}; foot.appendChild(del);
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary","Save");
+  save.onclick=function(){
+    if(!nameInp.value.trim()){showToast("Name required"); return;}
+    d.n=nameInp.value.trim();
+    d.ok=statusSel.value==="uploaded";
+    if(d.ok&&!d.file) d.file="(manually marked)";
+    if(!d.ok) d.file="";
+    logActivity("upload","Document updated: "+d.n); saveState(); closeModal(); renderView(); showToast("Document updated","green-t");
+  };
+  foot.appendChild(save); box.appendChild(foot);
+}
+
+// ADD MILESTONE MODAL (with date picker + auto-sort)
+function buildAddMilestoneModal(box, data) {
+  var p=data.p;
+  modalHead(box,"Add milestone");
+  var body=el("div","modal-body");
+  function fg(label, inp) { var g=el("div","form-group"); g.appendChild(elText("label","form-label",label)); g.appendChild(inp); body.appendChild(g); return inp; }
+  var dateInp=fg("Date",Object.assign(el("input","form-input"),{type:"date"}));
+  var eventInp=fg("Milestone description",Object.assign(el("input","form-input"),{placeholder:"e.g. Phase II enrollment complete"}));
+  box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary","Add & sort");
+  save.onclick=function(){
+    if(!eventInp.value.trim()){showToast("Description required"); return;}
+    var rawDate=dateInp.value;
+    var displayDate=rawDate?new Date(rawDate).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"TBD";
+    p.timeline.push({d:displayDate, e:eventInp.value.trim(), _sort:rawDate||"9999-12-31"});
+    sortMilestones(p);
+    logActivity("approve","Milestone added: "+eventInp.value.trim());
+    saveState(); closeModal(); renderView(); showToast("Milestone added and sorted","green-t");
+  };
+  foot.appendChild(save); box.appendChild(foot);
+}
+
+// EDIT MILESTONE MODAL (with date picker + auto-sort)
+function buildEditMilestoneModal(box, data) {
+  var p=data.p, idx=data.idx;
+  var t=p.timeline[idx];
+  modalHead(box,"Edit milestone");
+  var body=el("div","modal-body");
+  function fg(label, inp) { var g=el("div","form-group"); g.appendChild(elText("label","form-label",label)); g.appendChild(inp); body.appendChild(g); return inp; }
+  // Parse existing _sort date back to YYYY-MM-DD for the date input
+  var existingSort=t._sort||"";
+  var dateInp=fg("Date",Object.assign(el("input","form-input"),{type:"date",value:existingSort&&existingSort!=="9999-12-31"?existingSort:""}));
+  var eventInp=fg("Milestone description",Object.assign(el("input","form-input"),{value:t.e,placeholder:"e.g. Phase II enrollment complete"}));
+  box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var del=elText("button","btn btn-red","Delete"); del.onclick=function(){p.timeline.splice(idx,1); saveState(); closeModal(); renderView(); showToast("Milestone deleted");}; foot.appendChild(del);
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary","Save & sort");
+  save.onclick=function(){
+    var rawDate=dateInp.value;
+    t.d=rawDate?new Date(rawDate).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):t.d;
+    t.e=eventInp.value.trim()||t.e;
+    t._sort=rawDate||t._sort||"9999-12-31";
+    sortMilestones(p);
+    saveState(); closeModal(); renderView(); showToast("Milestone updated","green-t");
+  };
+  foot.appendChild(save); box.appendChild(foot);
+}
+
+function sortMilestones(p) {
+  p.timeline.sort(function(a,b){
+    var da=a._sort||"9999-12-31", db=b._sort||"9999-12-31";
+    return da<db?-1:da>db?1:0;
+  });
+}
+
+// ── SETTINGS PAGE ─────────────────────────────────────────────────────────────
+function renderSettingsPage(main) {
+  var topbar=el("div","topbar");
+  var tl=el("div"); tl.appendChild(elText("div","topbar-title","Settings")); tl.appendChild(elText("div","topbar-sub","User management, roles & permissions, organisation profile")); topbar.appendChild(tl);
+  main.appendChild(topbar);
+
+  if(!can("canSettings")) {
+    var restricted=el("div"); restricted.style.padding="40px 20px";
+    restricted.appendChild(noAccessBanner("access settings"));
+    var msg=elText("p","","Settings are only available to Admin users. Contact your administrator to update your role or organisation settings.");
+    msg.style.cssText="font-size:12px;color:var(--text2);margin-top:8px;"; restricted.appendChild(msg);
+    main.appendChild(restricted); return;
+  }
+
+  var wrap=el("div","settings-wrap");
+
+  // Current user + role switcher (full width)
+  var fullCol=el("div","settings-section settings-full");
+  var fHead=el("div","settings-head"); fHead.appendChild(elText("span","settings-title","Signed in as")); fullCol.appendChild(fHead);
+  var fBody=el("div","settings-body");
+  var cuBar=el("div","current-user-bar");
+  var cuLeft=el("div"); cuLeft.style.cssText="display:flex;align-items:center;gap:10px;";
+  var cuAv=elText("div","user-avatar",(state.currentUser.name||"").split(" ").map(function(w){return w[0];}).join("").substring(0,2).toUpperCase()); cuLeft.appendChild(cuAv);
+  var cuInfo=el("div"); cuInfo.appendChild(elText("div","user-name",state.currentUser.name)); cuInfo.appendChild(elText("div","user-email",state.currentUser.email)); cuLeft.appendChild(cuInfo);
+  cuBar.appendChild(cuLeft); cuBar.appendChild(rolePill(state.currentUser.role)); fBody.appendChild(cuBar);
+  fBody.appendChild(elText("div","","Demo — switch role to test access restrictions across the entire app:"));
+  fBody.lastChild.style.cssText="font-size:11px;color:var(--text3);margin:6px 0;";
+  var switchRow=el("div","role-switch-row");
+  Object.keys(ROLES).forEach(function(r){
+    var btn=elText("button","role-switch-btn"+(state.currentUser.role===r?" active-role":""),ROLES[r].label);
+    btn.onclick=function(){
+      state.currentUser.role=r;
+      var match=state.users.find(function(u){return u.id===state.currentUser.id;}); if(match) match.role=r;
+      saveState(); render(); showToast("Role switched to "+ROLES[r].label,"blue-t");
+    };
+    switchRow.appendChild(btn);
+  });
+  fBody.appendChild(switchRow); fullCol.appendChild(fBody); wrap.appendChild(fullCol);
+
+  // User management
+  var userSec=el("div","settings-section");
+  var uHead=el("div","settings-head"); uHead.appendChild(elText("span","settings-title","Users ("+state.users.length+")"));
+  var addUserBtn=elText("button","btn btn-primary","+ Add user"); addUserBtn.style.fontSize="11px"; addUserBtn.onclick=function(){openModal("adduser",null);}; uHead.appendChild(addUserBtn);
+  userSec.appendChild(uHead);
+  var uBody=el("div","settings-body");
+  state.users.forEach(function(u){
+    var row=el("div","user-row");
+    var av=elText("div","user-avatar",u.name.split(" ").map(function(w){return w[0];}).join("").substring(0,2).toUpperCase()); row.appendChild(av);
+    var info=el("div","user-info"); info.appendChild(elText("div","user-name",u.name+(u.id===state.currentUser.id?" (you)":""))); info.appendChild(elText("div","user-email",u.email)); row.appendChild(info);
+    row.appendChild(rolePill(u.role));
+    if(u.id!==state.currentUser.id){var editBtn=elText("button","btn btn-grey","Edit"); editBtn.style.cssText="font-size:10px;padding:3px 9px;"; (function(usr){editBtn.onclick=function(){openModal("edituser",usr);};})(u); row.appendChild(editBtn);}
+    uBody.appendChild(row);
+  });
+  userSec.appendChild(uBody); wrap.appendChild(userSec);
+
+  // Permissions matrix
+  var permSec=el("div","settings-section");
+  var pHead=el("div","settings-head"); pHead.appendChild(elText("span","settings-title","Permissions matrix")); permSec.appendChild(pHead);
+  var pBody=el("div","settings-body"); pBody.style.padding="0";
+  var tbl=document.createElement("table"); tbl.className="perm-table";
+  var thead=document.createElement("thead"); var hr=document.createElement("tr");
+  ["Permission","Admin","Editor","Reviewer","Viewer"].forEach(function(h){var th=document.createElement("th"); th.textContent=h; hr.appendChild(th);}); thead.appendChild(hr); tbl.appendChild(thead);
+  var tbody=document.createElement("tbody");
+  [
+    ["View all protocols & documents","canEdit","canEdit","canEdit","canEdit"],
+    ["Edit protocol details","canEdit","canEdit",null,null],
+    ["Upload documents","canUpload","canUpload",null,null],
+    ["Manage approvals & notify","canApprove","canApprove",null,null],
+    ["Add / edit milestones","canEdit","canEdit",null,null],
+    ["Delete protocols or documents","canDelete",null,null,null],
+    ["Access settings & user mgmt","canSettings",null,null,null]
+  ].forEach(function(perm){
+    var tr=document.createElement("tr");
+    var td0=document.createElement("td"); td0.textContent=perm[0]; td0.style.cssText="font-weight:500;color:var(--text);"; tr.appendChild(td0);
+    ["admin","editor","reviewer","viewer"].forEach(function(role,i){
+      var td=document.createElement("td"); td.style.textAlign="center";
+      var hasPerm=perm[i+1]&&PERMISSIONS[role][perm[i+1]];
+      td.innerHTML=hasPerm?"<span class='perm-check'>✓</span>":"<span class='perm-cross'>—</span>";
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody); pBody.appendChild(tbl); permSec.appendChild(pBody); wrap.appendChild(permSec);
+
+  // Organisation profile (full width)
+  var orgSec=el("div","settings-section settings-full");
+  var oHead=el("div","settings-head"); oHead.appendChild(elText("span","settings-title","Organisation profile")); orgSec.appendChild(oHead);
+  var oBody=el("div","settings-body");
+  [["Company name","CardioSense Medical Devices Inc."],["FDA establishment number","3014567890"],["Primary regulatory contact","Resh Shah — resh.shah@cardiosense.com"],["DUNS number","12-345-6789"],["Registered address","123 Innovation Drive, San Jose, CA 95110"],["Active FDA submissions","510(k) + De Novo (2 active)"]].forEach(function(item){
+    var row=el("div","org-field"); row.appendChild(elText("span","org-label",item[0])); row.appendChild(elText("span","org-val",item[1])); oBody.appendChild(row);
+  });
+  orgSec.appendChild(oBody); wrap.appendChild(orgSec);
+  main.appendChild(wrap);
+}
+
+// ADD / EDIT USER MODALS
+function buildAddUserModal(box) {
+  modalHead(box,"Add user");
+  var body=el("div","modal-body");
+  function fg(label,inp){var g=el("div","form-group");g.appendChild(elText("label","form-label",label));g.appendChild(inp);body.appendChild(g);return inp;}
+  var nameInp=fg("Full name",Object.assign(el("input","form-input"),{placeholder:"e.g. Dr. Chen"}));
+  var emailInp=fg("Email",Object.assign(el("input","form-input"),{type:"email",placeholder:"user@company.com"}));
+  var rg=el("div","form-group"); rg.appendChild(elText("label","form-label","Role"));
+  var roleSel=el("select","form-select");
+  Object.keys(ROLES).forEach(function(r){var o=document.createElement("option"); o.value=r; o.textContent=ROLES[r].label+" — "+{admin:"Full access including settings",editor:"Edit protocols, upload docs, manage approvals",reviewer:"View and comment only",viewer:"Read-only access"}[r]; roleSel.appendChild(o);});
+  rg.appendChild(roleSel); body.appendChild(rg); box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary","Add user");
+  save.onclick=function(){
+    if(!nameInp.value.trim()||!emailInp.value.trim()){showToast("Name and email required"); return;}
+    state.users.push({id:Date.now(),name:nameInp.value.trim(),email:emailInp.value.trim(),role:roleSel.value});
+    logActivity("approve","User added: "+nameInp.value.trim()+" ("+roleSel.value+")");
+    saveState(); closeModal(); render(); showToast("User added","green-t");
+  };
+  foot.appendChild(save); box.appendChild(foot);
+}
+
+function buildEditUserModal(box, u) {
+  modalHead(box,"Edit user — "+u.name);
+  var body=el("div","modal-body");
+  function fg(label,inp){var g=el("div","form-group");g.appendChild(elText("label","form-label",label));g.appendChild(inp);body.appendChild(g);return inp;}
+  var nameInp=fg("Full name",Object.assign(el("input","form-input"),{value:u.name}));
+  var emailInp=fg("Email",Object.assign(el("input","form-input"),{type:"email",value:u.email}));
+  var rg=el("div","form-group"); rg.appendChild(elText("label","form-label","Role"));
+  var roleSel=el("select","form-select");
+  Object.keys(ROLES).forEach(function(r){var o=document.createElement("option"); o.value=r; o.textContent=ROLES[r].label+" — "+{admin:"Full access including settings",editor:"Edit protocols, upload docs, manage approvals",reviewer:"View and comment only",viewer:"Read-only access"}[r]; if(r===u.role) o.selected=true; roleSel.appendChild(o);});
+  rg.appendChild(roleSel); body.appendChild(rg); box.appendChild(body);
+  var foot=el("div","modal-foot");
+  var del=elText("button","btn btn-red","Remove user"); del.onclick=function(){if(!confirm("Remove "+u.name+"?")) return; state.users=state.users.filter(function(x){return x.id!==u.id;}); logActivity("approve","User removed: "+u.name); saveState(); closeModal(); render(); showToast("User removed");}; foot.appendChild(del);
+  var cancel=elText("button","btn","Cancel"); cancel.onclick=closeModal; foot.appendChild(cancel);
+  var save=elText("button","btn btn-primary","Save");
+  save.onclick=function(){u.name=nameInp.value.trim()||u.name; u.email=emailInp.value.trim()||u.email; u.role=roleSel.value; logActivity("approve","User updated: "+u.name+" → "+u.role); saveState(); closeModal(); render(); showToast("User updated","green-t");};
+  foot.appendChild(save); box.appendChild(foot);
+}
+
 render();
 </script>
 </body>
